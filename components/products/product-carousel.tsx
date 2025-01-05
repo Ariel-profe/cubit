@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+
 import useMeasure from "react-use-measure";
 import { IProduct } from "@/interface";
 import { ProductCard } from "./product-card";
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
 const CARD_WIDTH = 350;
 const MARGIN = 20;
