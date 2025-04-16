@@ -1,0 +1,74 @@
+---
+import { actions } from "astro:actions";
+
+import MainLayout from "@/layouts/MainLayout.astro";
+import Pagination from "@/components/shared/Pagination.astro";
+import ProductImage from "@/components/products/ProductImage.astro";
+import { Formatter } from "@/utils";
+import Button from "@/components/shared/Button.astro";
+
+const searchParams = Astro.url.searchParams;
+const pageParam = Number(searchParams.get("page") ?? 1);
+
+const { data, error } = await Astro.callAction(actions.getNotebooksByPage, {
+    page: pageParam,
+});
+
+if (error) {
+    return Astro.redirect("/admin");
+}
+
+const { totalPages, notebooks } = data;
+---
+
+<MainLayout title="Admin - Productos">
+    <h1>PRODUCTOS</h1>
+
+    <div class="flex justify-end mb-5 w-full">
+        <Button
+            title="Crear producto"
+            href="/admin/notebooks/new"
+            className="max-w-xs"
+        />
+    </div>
+
+    <table class="w-full mt-5 border">
+        <thead>
+            <tr>
+                <th class="text-left">Imagen</th>
+                <th class="text-left">Producto</th>
+                <th class="text-left">Precio</th>
+                <th class="text-left">Stock</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {
+                notebooks?.map((product) => (
+                    <tr>
+                        <td>
+                            {/* Todo: esto dara un error si no hay imagenes */}
+                            <ProductImage
+                                src={product.images.split(",")[0]}
+                                alt={product.title}
+                                className="w-16 h-16"
+                            />
+                        </td>
+                        <td>
+                            <a
+                                href={`/admin/${product.category}/${product.slug}`}
+                                class="hover:underline cursor-pointer text-tertiary"
+                            >
+                                {product.title}
+                            </a>
+                        </td>
+                        <td>{Formatter.currency(product.price)}</td>
+                        <td>{product.stock}</td>
+                    </tr>
+                ))
+            }
+        </tbody>
+    </table>
+
+    <Pagination totalPages={totalPages} />
+</MainLayout>

@@ -1,0 +1,11 @@
+{
+    "exportall.config.relExclusion": [
+        "/src/interfaces/notebooks-with-images.interface.ts",
+        "/src/interfaces"
+    ],
+    "exportall.config.folderListener": [
+        "/src/interfaces",
+        "/src/actions/products",
+        "/src/components"
+    ]
+}

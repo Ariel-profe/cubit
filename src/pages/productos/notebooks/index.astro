@@ -1,0 +1,38 @@
+---
+import { actions } from "astro:actions";
+
+import MainLayout from "@/layouts/MainLayout.astro";
+import Pagination from "@/components/shared/Pagination.astro";
+import { Title } from "@/components/shared/Title";
+import ProductsList from "@/components/products/ProductsList.astro";
+
+const searchParams = Astro.url.searchParams;
+const pageParam = Number(searchParams.get("page") ?? 1);
+
+const { data, error } = await Astro.callAction(actions.getNotebooksByPage, {
+    page: pageParam,
+});
+
+if (error) {
+    return Astro.redirect("/");
+}
+
+const { totalPages, notebooks } = data;
+
+if (data.products?.length === 0) {
+    return Astro.redirect(`/productos/notebooks?page=${totalPages}`);
+}
+---
+
+<MainLayout title="Notebooks">
+    <Title
+        client:load
+        text="LAS MEJORES NOTEBOOKS DEL MERCADO"
+        delay={150}
+        animateBy="words"
+        direction="top"
+    />
+    <ProductsList products={notebooks ?? []} />
+
+    <Pagination totalPages={totalPages} />
+</MainLayout>

@@ -1,0 +1,124 @@
+---
+import Button from "@/components/shared/Button.astro";
+import { Title } from "@/components/shared/Title";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Formatter } from "@/utils";
+import { actions } from "astro:actions";
+
+const { data, error } = await Astro.callAction(
+    actions.loadProductsFromCart,
+    {},
+);
+
+if (error || !data || data.length === 0) {
+    return Astro.redirect("/");
+}
+
+const total = data.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0,
+);
+
+---
+
+<MainLayout title="Carrito de compras">
+    <Title
+    client:load
+    text="CARRITO DE COMPRAS"
+    delay={150}
+    animateBy="words"
+    direction="top"
+/>
+
+    <section class="grid sm:grid-cols-2 gap-5 mt-5">
+        <!-- Productos -->
+        <div class="order-2 sm:order-1">
+            <a
+                href="javascript:history.back()"
+                class="hover:underline text-tertiary">Regresar</a
+            >
+
+            {
+                data.map((product) => (
+                    <div class="flex gap-5 mt-5">
+                        <img
+                            src={product.image}
+                            alt={product.title}
+                            class="w-20 h-20"
+                        />
+
+                        <div>
+                            <a
+                                href={`/productos/${product.category}/${product.slug}`}
+                                class="hover:text-secondary hover:underline"
+                            >
+                                {product.title}
+                            </a>
+                            <p>Cantidad: {product.quantity}</p>
+                            <p>Precio: ${product.price}</p>
+                            <button
+                                data-id={product.productId}
+                                class="text-red-600 btn-delete cursor-pointer md:hover:text-red-700 transition"
+                            >
+                                Remover
+                            </button>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+
+        <!-- Totales -->
+        <div
+            class="bg-slate-950 h-[330px] text-white p-6 rounded-lg shadow-lg order-1"
+        >
+            <h2 class="text-lg font-semibold mb-4">Resumen de compra</h2>
+
+            <div class="flex justify-between text-gray-400 mb-2">
+                <span>Envío</span>
+                <span>Gratis</span>
+            </div>
+
+            <div class="flex justify-between text-gray-400 mb-4">
+                <span>SubTotal </span>
+                <span>{Formatter.currency(total)}</span>
+            </div>
+            <div class="flex justify-between text-gray-400 mb-4">
+                <span>Impuesto </span>
+                <span>{Formatter.currency(total * 0.15)}</span>
+            </div>
+
+            <div class="flex justify-between text-xl font-bold mb-5">
+                <span>Total</span>
+                <span>{Formatter.currency(total * 1.15)}</span>
+            </div>
+
+            <Button title="PAGAR" />
+        </div>
+    </section>
+
+    <script>
+        import { navigate } from "astro:transitions/client";
+        import { CartCookiesClient } from "@/utils";
+        import { itemsInCart } from "@/store";
+
+        document.addEventListener("astro:page-load", () => {
+            const deleteButtons: NodeListOf<HTMLButtonElement> =
+                document.querySelectorAll(".btn-delete");
+
+            deleteButtons.forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    const target = event.target as HTMLButtonElement;
+                    const productId = target.dataset.id ?? "";
+
+                    const cart = CartCookiesClient.removeItem(productId);
+
+                    itemsInCart.set(cart.length);
+
+                    // window.location.reload();
+                    navigate("/cart");
+                });
+            });
+        });
+    </script></MainLayout
+>

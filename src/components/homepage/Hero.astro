@@ -1,0 +1,38 @@
+---
+import Button from "../shared/Button.astro";
+import { Title } from "../shared/Title";
+---
+
+<section class="2xl:-mt-40 ">
+    <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="flex flex-col items-center justify-center md:items-start gap-5 w-full md:w-1/3 max-w-md">
+            <span class="xl:text-2xl uppercase text-quaternary">
+                Insumos tecnológicos
+            </span>
+            <Title
+                client:load
+                text="COMPRÁ RÁPIDO Y SEGURO"
+                delay={150}
+                animateBy="words"
+                direction="top"
+                className="font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center"
+            />
+
+            <p class="mb-5 text-slate-300 lg:text-2xl font-semibold">
+                En Cubit tenemos los mejores productos de Mendoza los cuales
+                responderán a la necesidad de mejorar tu perfomance.
+            </p>
+
+            <Button title="Productos" href="/productos" >
+        </div>
+
+        <div class="absolute -z-10 inset-0 grayscale-50 blur-md md:relative md:grayscale-0 md:blur-none w-full md:w-2/3 overflow-hidden">
+            <img
+                src="src/assets/hero.png"
+                class=" max-lg:h-auto"
+                alt="hero"
+                class="overflow-hidden"
+            />
+        </div>
+    </div>
+</section>

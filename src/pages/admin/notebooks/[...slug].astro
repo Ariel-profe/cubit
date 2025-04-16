@@ -1,0 +1,819 @@
+---
+import ProductImage from "@/components/products/ProductImage.astro";
+import ProductSlideshow from "@/components/products/ProductSlideshow.astro";
+import Button from "@/components/shared/Button.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import {
+  validNotebookBrands,
+  validNotebookProcessors,
+} from "@/utils/admin/notebook-validation";
+import { validNotebookOs } from "@/utils/admin/notebook-validation";
+import { validNotebookStorage1 } from "@/utils/admin/notebook-validation";
+import { validNotebookStorage2 } from "@/utils/admin/notebook-validation";
+import {
+  validNotebookBluetooth,
+  validNotebookGraphicMemories,
+  validNotebookKeypads,
+  validNotebookLan,
+  validNotebookOptions,
+  validNotebookRamMemories,
+  validNotebookScreens,
+  validNotebookTypes,
+  validNotebookUsb,
+  validNotebookWebCams,
+  validNotebookWifi,
+} from "@/utils/admin/notebook-validation";
+import { actions } from "astro:actions";
+
+const { slug } = Astro.params;
+
+const { data, error } = await Astro.callAction(
+  actions.getNotebookBySlug,
+  slug ?? "",
+);
+
+if (error) {
+  return Astro.redirect("/404");
+}
+
+const { product, images } = data;
+---
+
+<MainLayout title="Mantenimiento de producto">
+  <h1>{product.title}</h1>
+  <a href="javascript:history.back()" class="text-blue-500">← Volver</a>
+
+  <form class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <input type="hidden" name="id" value={product.id} />
+
+    <!-- Datos generales -->
+    <div class="mt-2">
+      <h2 class="text-lg font-semibold">Datos generales</h2>
+
+      <!-- Titulo -->
+      <div class="mb-4">
+        <label class="block">Título</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={product.title}
+          class="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <!-- Slug -->
+      <div class="mb-4">
+        <label class="block">Slug</label>
+        <input
+          type="text"
+          id="slug"
+          name="slug"
+          value={product.slug}
+          class="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <!-- Marca -->
+        <div class="mb-4">
+          <label class="block">Marca</label>
+          <select
+            class="w-full p-2 border border-gray-300 rounded"
+            name="brand"
+          >
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookBrands.map((opt) => (
+                <option
+                  value={opt}
+                  class="capitalize"
+                  selected={opt === product.brand}
+                >
+                  {opt.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <!-- Código -->
+        <div class="mb-4">
+          <label class="block">Código</label>
+          <input
+            type="text"
+            id="code"
+            name="code"
+            value={product.code}
+            class="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <!-- MODELO -->
+        <div class="mb-4">
+          <label class="block">Modelo</label>
+          <input
+            type="text"
+            id="model"
+            name="model"
+            value={product.model}
+            class="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+        <!-- ID/UPCEAN -->
+        <div class="mb-4">
+          <label class="block">ID/UPC EAN</label>
+          <input
+            type="text"
+            id="upcEan"
+            name="upcEan"
+            value={product.upcEan}
+            class="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <!-- Precio -->
+        <div class="mb-4">
+          <label class="block">Precio</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value={product.price}
+            class="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        <!-- Stock -->
+        <div class="mb-4">
+          <label class="block">Stock</label>
+          <input
+            type="number"
+            id="stock"
+            name="stock"
+            value={product.stock}
+            class="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <!-- Peso -->
+        <div class="mb-4">
+          <label class="block">Peso (en gramos)</label>
+          <input
+            type="number"
+            id="weight"
+            name="weight"
+            value={product.weight}
+            class="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        <!-- Garantía -->
+        <div class="mb-4">
+          <label class="block">Garantía</label>
+          <select
+            class="w-full p-2 border border-gray-300 rounded"
+            name="warranty"
+          >
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookOptions.map((opt) => (
+                <option
+                  value={opt}
+                  class="capitalize"
+                  selected={opt === product.warranty}
+                >
+                  {opt.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+
+      <!-- Labels -->
+      <div class="mb-4">
+        <label class="block"
+          >Etiquetas <small class="text-gray-500">(Separado por comas)</small
+          ></label
+        >
+        <input
+          type="text"
+          id="tags"
+          name="tags"
+          value={product.tags}
+          class="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Type -->
+        <div class="mb-4">
+          <label class="block">Tipo</label>
+          <select class="w-full p-2 border border-gray-300 rounded" name="type">
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookTypes.map((type) => (
+                <option
+                  value={type}
+                  class="capitalize"
+                  selected={type === product.type}
+                >
+                  {type.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <!-- Bluetooth -->
+        <div class="mb-4">
+          <label class="block">Bluetooth</label>
+          <select
+            class="w-full p-2 border border-gray-300 rounded"
+            name="bluetooth"
+          >
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookBluetooth.map((opt) => (
+                <option
+                  value={opt}
+                  class="capitalize"
+                  selected={opt === product.bluetooth}
+                >
+                  {opt.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Tarjeta Grafica -->
+        <div class="mb-4">
+          <label class="block">Tarjeta gráfica</label>
+          <select
+            class="w-full p-2 border border-gray-300 rounded"
+            name="graphicCard"
+          >
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookGraphicMemories.map((type) => (
+                <option
+                  value={type}
+                  class="capitalize"
+                  selected={type === product.graphicCard}
+                >
+                  {type.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <!-- Pantalla -->
+        <div class="mb-4">
+          <label class="block">Pantalla</label>
+          <select
+            class="w-full p-2 border border-gray-300 rounded"
+            name="screen"
+          >
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookScreens.map((opt) => (
+                <option
+                  value={opt}
+                  class="capitalize"
+                  selected={opt === product.screen}
+                >
+                  {opt.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Sistema Operativo -->
+        <div class="mb-4">
+          <label class="block">Sistema operativo</label>
+          <select class="w-full p-2 border border-gray-300 rounded" name="os">
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookOs.map((type) => (
+                <option
+                  value={type}
+                  class="capitalize"
+                  selected={type === product.os}
+                >
+                  {type.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <!-- Procesador -->
+        <div class="mb-4">
+          <label class="block">Procesador</label>
+          <select
+            class="w-full p-2 border border-gray-300 rounded"
+            name="processor"
+          >
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookProcessors.map((opt) => (
+                <option
+                  value={opt}
+                  class="capitalize"
+                  selected={opt === product.processor}
+                >
+                  {opt.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Almacenamiento 1 -->
+        <div class="mb-4">
+          <label class="block">Almacenamiento 1</label>
+          <select
+            class="w-full p-2 border border-gray-300 rounded"
+            name="storage1"
+          >
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookStorage1.map((type) => (
+                <option
+                  value={type}
+                  class="capitalize"
+                  selected={type === product.storage1}
+                >
+                  {type.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <!-- Almacenamiento 2 -->
+        <div class="mb-4">
+          <label class="block">Almacenamiento 2</label>
+          <select
+            class="w-full p-2 border border-gray-300 rounded"
+            name="storage2"
+          >
+            <option value="">[ Seleccione ]</option>
+            {
+              validNotebookStorage2.map((opt) => (
+                <option
+                  value={opt}
+                  class="capitalize"
+                  selected={opt === product.storage2}
+                >
+                  {opt.toUpperCase()}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+
+      <!-- CHECKS -->
+
+      <div class="flex flex-wrap items-start lg:items-center justify-between">
+        <!-- USB -->
+        <div class="mb-4">
+          <label class="block">Puerto USB</label>
+          <div class="flex mt-2">
+            {
+              validNotebookUsb.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-1"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.usb.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- MEMORIA RAM -->
+        <div class="mb-4">
+          <label class="block">Memoria RAM</label>
+          <div class="flex mt-2">
+            {
+              validNotebookRamMemories.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-2"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.memoryRam.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-start lg:items-center justify-between">
+        <!-- WEBCAM -->
+        <div class="mb-4">
+          <label class="block">Webcam</label>
+          <div class="flex mt-2">
+            {
+              validNotebookWebCams.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-3"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.webCam.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+        <!-- LAN -->
+        <div class="mb-4">
+          <label class="block">LAN</label>
+          <div class="flex mt-2">
+            {
+              validNotebookLan.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-4"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.lan.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-start lg:items-center justify-between">
+        <!-- WIFI -->
+        <div class="mb-4">
+          <label class="block">WiFi</label>
+          <div class="flex mt-2">
+            {
+              validNotebookWifi.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-5"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.wiFi.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+        <!-- TECLADO -->
+        <div class="mb-4">
+          <label class="block">Teclado</label>
+          <div class="flex mt-2">
+            {
+              validNotebookKeypads.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-6"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.keypad.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-start lg:items-center justify-between">
+        <!-- TECLADO NUM -->
+        <div class="mb-4">
+          <label class="block">Teclado numérico</label>
+          <div class="flex mt-2">
+            {
+              validNotebookOptions.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-7"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.numKeypad.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+        <!-- LECTOR DE TARJETAS -->
+        <div class="mb-4">
+          <label class="block">Lector de tarjetas</label>
+          <div class="flex mt-2">
+            {
+              validNotebookOptions.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-8"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.cardReader.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-start lg:items-center justify-between">
+        <!-- VGA -->
+        <div class="mb-4">
+          <label class="block">VGA</label>
+          <div class="flex mt-2">
+            {
+              validNotebookOptions.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-9"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.vga.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+        <!-- HDMI -->
+        <div class="mb-4">
+          <label class="block">HDMI</label>
+          <div class="flex mt-2">
+            {
+              validNotebookOptions.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-10"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.hdmi.split(",").includes(item) ? "active" : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-start lg:items-center justify-between">
+        <!-- DISPLAY PORT -->
+        <div class="mb-4">
+          <label class="block">Display Port</label>
+          <div class="flex mt-2">
+            {
+              validNotebookOptions.map((item) => (
+                <button
+                  type="button"
+                  class="btn-check-11"
+                  onclick="this.classList.toggle('active')"
+                  class:list={
+                    product.displayPort.split(",").includes(item)
+                      ? "active"
+                      : ""
+                  }
+                >
+                  {item}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imagenes -->
+    <div>
+      <!-- File upload -->
+      <div class="mt-4">
+        <!-- Guardar  -->
+        <div class="flex justify-end mb-5 w-full">
+          <!-- <button class="bg-secondary mb-5 p-2 rounded text-white">Guardar producto</button> -->
+          <Button title="Guardar Producto" className="max-w-xs" />
+        </div>
+
+        <!-- File input -->
+        <div class="flex items-center justify-center w-full">
+          <label
+            class="flex flex-col items-center justify-center w-full h-52 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-700"
+            id="drop-zone"
+          >
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg
+                class="w-8 h-8 mb-4 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 16V4a2 2 0 012-2h6a2 2 0 012 2v12m-6 4l-4-4m0 0l4-4m-4 4h12"
+                ></path>
+              </svg>
+              <p class="mb-2 text-sm text-gray-500" id="lbl-selected-files">
+                <span class="font-semibold">Click aquí </span> o arrastra los archivos
+              </p>
+              <p class="text-xs text-gray-500">
+                SVG, PNG, JPG or GIF (max. 800x400px)
+              </p>
+            </div>
+
+            <!-- class="hidden" -->
+            <!-- accept only images -->
+            <input
+              id="file-upload"
+              name="imageFiles"
+              type="file"
+              accept="image/*"
+              multiple
+            />
+          </label>
+        </div>
+
+        <!-- Slideshow -->
+        <ProductSlideshow images={images} />
+
+        <table class="w-full border">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              images.map((image) => (
+                <tr class="border">
+                  <td class="flex justify-center">
+                    <ProductImage
+                      src={image}
+                      alt={product.title}
+                      className="w-16 h-16 rounded"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <button class="btn-delete-image">X</button>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+
+  <style>
+    @reference "tailwindcss";
+
+    button[class^="btn-check"],
+    .btn-delete-image {
+      @apply rounded border cursor-pointer border-gray-300 w-fit min-w-[40px] h-fit min-h-10 px-1.5 mr-4 hover:bg-blue-800 hover:text-white transition-all;
+    }
+
+    .active {
+      @apply bg-blue-700 text-white;
+    }
+
+    option {
+      @apply bg-slate-800;
+    }
+  </style>
+</MainLayout>
+
+<script>
+  import { actions } from "astro:actions";
+  import Swal from "sweetalert2";
+  import { selectChecbox } from "@/utils/admin/select-button-form-property";
+  import { navigate } from "astro:transitions/client";
+  import { isInputError } from "astro:actions";
+
+  document.addEventListener("astro:page-load", () => {
+    const form = document.querySelector("form") as HTMLFormElement;
+
+    const usbButtons = document.querySelectorAll(".btn-check-1");
+    const memryRamButtons = document.querySelectorAll(".btn-check-2");
+    const webCamButtons = document.querySelectorAll(".btn-check-3");
+    const lanButtons = document.querySelectorAll(".btn-check-4");
+    const wiFiButtons = document.querySelectorAll(".btn-check-5");
+    const keypadButtons = document.querySelectorAll(".btn-check-6");
+    const numKeypadButtons = document.querySelectorAll(".btn-check-7");
+    const cardReaderButtons = document.querySelectorAll(".btn-check-8");
+    const vgaButtons = document.querySelectorAll(".btn-check-9");
+    const hdmiButtons = document.querySelectorAll(".btn-check-10");
+    const displayPortButtons = document.querySelectorAll(".btn-check-11");
+
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const selectedUsb = selectChecbox(usbButtons);
+      const selectedMemoryRam = selectChecbox(memryRamButtons);
+      const selectedWebCam = selectChecbox(webCamButtons);
+      const selectedLan = selectChecbox(lanButtons);
+      const selectedWiFi = selectChecbox(wiFiButtons);
+      const selectedKeypad = selectChecbox(keypadButtons);
+      const selectedNumKeypad = selectChecbox(numKeypadButtons);
+      const selectedCardReader = selectChecbox(cardReaderButtons);
+      const selectedVga = selectChecbox(vgaButtons);
+      const selectedHdmi = selectChecbox(hdmiButtons);
+      const selectedDisplayPort = selectChecbox(displayPortButtons);
+
+      const formData = new FormData(form);
+      formData.set("usb", selectedUsb);
+      formData.set("memoryRam", selectedMemoryRam);
+      formData.set("webCam", selectedWebCam);
+      formData.set("lan", selectedLan);
+      formData.set("wiFi", selectedWiFi);
+      formData.set("keypad", selectedKeypad);
+      formData.set("numKeypad", selectedNumKeypad);
+      formData.set("cardReader", selectedCardReader);
+      formData.set("vga", selectedVga);
+      formData.set("hdmi", selectedHdmi);
+      formData.set("displayPort", selectedDisplayPort);
+
+      const formValues = Object.fromEntries(formData.entries());
+
+      const { data, error } = await actions.createUpdateNotebook(formData);
+
+      if (error) {
+        if (isInputError(error)) {
+          const errors = error.fields as { [key: string]: string[] };
+          const errorMessage = Object.values(errors)
+            .flat()
+            .map((err) => `<p>${err}</p>`)
+            .join("");
+
+          return Swal.fire({
+            icon: "error",
+            title: "Error",
+            html: errorMessage,
+          });
+        } else {
+          return Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al guardar el producto.",
+          });
+        }
+      }
+
+      navigate(`/admin/notebooks`);
+    });
+  });
+</script>

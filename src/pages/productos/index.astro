@@ -1,0 +1,35 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import CategoriesList from "@/components/categories/CategoriesList.astro";
+import { Title } from "@/components/shared/Title";
+---
+
+<MainLayout title="Productos">
+  <!-- <div class="flex items-center justify-center gap-2 text-xl md:text-2xl lg:text-3xl xl:text-5xl">
+        <p>Lo mejor de</p>
+        <RotatingText
+        client:load
+        texts={['notebooks', 'auriculares', 'pads', 'mouse', 'memorias', 'monitores']}
+        mainClassName="px-2 sm:px-2 md:px-3 bg-tertiary text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+        staggerFrom={"last"}
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "-120%" }}
+        staggerDuration={0.025}
+        splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+        transition={{ type: "spring", damping: 30, stiffness: 400 }}
+        rotationInterval={2000}
+        />
+        <p>lo tenemos para vos!</p>
+      </div> -->
+
+  <Title
+    client:load
+    text="PRODUCTOS DE EXCELENCIA PARA VOS"
+    delay={150}
+    animateBy="words"
+    direction="top"
+  />
+
+  <CategoriesList />
+</MainLayout>

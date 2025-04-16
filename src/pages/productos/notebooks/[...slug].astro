@@ -1,0 +1,121 @@
+---
+import { actions } from "astro:actions";
+
+import MainLayout from "@/layouts/MainLayout.astro";
+import ProductSlideshow from "@/components/products/ProductSlideshow.astro";
+import Button from "@/components/shared/Button.astro";
+
+const { slug } = Astro.params;
+
+const { data, error } = await Astro.callAction(
+  actions.getNotebookBySlug,
+  slug ?? "",
+);
+
+if (error) {
+  return Astro.redirect("/404");
+}
+
+const { product, images } = data;
+---
+
+<MainLayout title={product.title} description={product.title}>
+  <!-- image={image} -->
+  <div class="flex flex-col lg:flex-row gap-4 justify-center lg:mt-10 w-full z-20">
+    <ProductSlideshow images={images} />
+
+    <section class="mt-10 lg:mt-0">
+      <h2 class="text-2xl font-bold">{product.title}</h2>
+      <h2 class="font-bold">${product.price}</h2>
+
+      <h3 class="mt-5">Cantidad</h3>
+      <div class="flex items-center gap-2 mt-2 mb-5">
+        <button class="border border-secondary h-10 aspect-square cursor-pointer md:hover:border-tertiary transition" id="decrement-btn">-</button>
+        <input type="number" min="1" value="1" class="w-full text-center" />
+        <button class="border border-secondary h-10 aspect-square cursor-pointer md:hover:border-tertiary transition" id="increment-btn">+</button>
+      </div>
+
+      <!-- <MainButton title="Añadir al carrito" id="add-to-cart" /> -->
+      <Button title="Añadir al carrito" id="add-to-cart" />
+
+      <input type="hidden" id="product-id" value={product.id} />
+    </section>
+  </div>
+</MainLayout>
+
+<script>
+  import { itemsInCart } from "@/store";
+  import { CartCookiesClient } from "@/utils";
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("astro:page-load", () => {
+    const quantityInput = document.querySelector("input") as HTMLInputElement;
+    const productIdInput = document.querySelector(
+      "#product-id",
+    ) as HTMLInputElement;
+    const decrementButton = document.querySelector(
+      "#decrement-btn",
+    ) as HTMLButtonElement;
+    const incrementButton = document.querySelector(
+      "#increment-btn",
+    ) as HTMLButtonElement;
+    const addToCardButton = document.querySelector(
+      "#add-to-cart",
+    ) as HTMLButtonElement;
+
+    let quantity = 1;
+
+    if (!incrementButton || !quantityInput) return;
+
+    decrementButton.addEventListener("click", () => {
+      quantity = Math.max(quantity - 1, 1);
+      quantityInput.value = quantity.toString();
+    });
+
+    incrementButton.addEventListener("click", () => {
+      quantity = Math.min(quantity + 1, 5);
+      quantityInput.value = quantity.toString();
+    });
+
+    addToCardButton.addEventListener("click", () => {
+      addToCardButton.disabled = true;
+
+      const cart = CartCookiesClient.addItem({
+        productId: productIdInput.value,
+        quantity: quantity,
+      });
+
+      itemsInCart.set(cart.length);
+
+      // TODO: cambiar cuando tengamos los viewTransitions
+      // window.location.href = '/cart';
+      navigate("/cart");
+    });
+  });
+</script>
+
+<style>
+  @reference "tailwindcss";
+
+  h3 {
+    @apply font-bold;
+  }
+
+  li {
+    @apply hover:underline cursor-pointer;
+  }
+
+  .disabledBtn {
+    @apply cursor-not-allowed;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield; /* Para Firefox */
+  }
+</style>
