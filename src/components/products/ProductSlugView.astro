@@ -1,0 +1,124 @@
+---
+import { Formatter } from "@/utils";
+import ProductDetails from "./ProductDetails.astro";
+import ProductSlideshow from "./ProductSlideshow.astro";
+import Button from "../shared/Button.astro";
+
+interface Props {
+    product: any;
+    images: string[];
+}
+
+const { images, product } = Astro.props;
+---
+
+<!-- component -->
+<div class="mx-auto shadow-lg rounded-lg overflow-hidden lg:py-20 lg:px-6">
+    <div class="grid lg:grid-cols-2 w-full lg:gap-10">
+        <!-- Product Image -->
+        <ProductSlideshow images={images} />
+
+        <!-- Product Details -->
+        <div class="">
+            <h1 class="text-2xl lg:text-3xl font-bold text-slate-100 mb-4">
+                {product.title}
+            </h1>
+
+            <p class="text-lg underline underline-offset-4 text-slate-300 mb-2 capitalize">
+                Especificaciones:
+            </p>
+
+            <!-- Reviews -->
+            <!-- <div class="flex items-center mb-4">
+                <span
+                    class="bg-green-500 text-white text-sm font-semibold px-2.5 py-0.5 rounded"
+                    >4.5 ★</span
+                >
+                <span class="text-sm text-gray-500 ml-2">1,234 reviews</span>
+            </div> -->
+
+            <ProductDetails product={product} />
+
+            <p class="text-3xl font-bold text-quinary py-2">
+                {Formatter.currency(product.price)}
+            </p>
+
+            <h3 class="mt-2">Cantidad</h3>
+            <div class="flex items-center gap-2 mt-2 mb-5 w-3xs">
+                <button
+                    class="border border-secondary h-10 aspect-square cursor-pointer md:hover:border-tertiary transition"
+                    id="decrement-btn">-</button
+                >
+                <input
+                    type="number"
+                    min="1"
+                    value="1"
+                    class="w-full text-center"
+                />
+                <button
+                    class="border border-secondary h-10 aspect-square cursor-pointer md:hover:border-tertiary transition"
+                    id="increment-btn">+</button
+                >
+            </div>
+
+            <input type="hidden" id="product-id" value={product.id} />
+
+            <div class="flex space-x-4">
+                <Button title="Añadir al carrito" id="add-to-cart" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    import { itemsInCart } from "@/store";
+    import { CartCookiesClient } from "@/utils";
+    import { navigate } from "astro:transitions/client";
+
+    document.addEventListener("astro:page-load", () => {
+        const quantityInput = document.querySelector(
+            "input",
+        ) as HTMLInputElement;
+        const productIdInput = document.querySelector(
+            "#product-id",
+        ) as HTMLInputElement;
+        const decrementButton = document.querySelector(
+            "#decrement-btn",
+        ) as HTMLButtonElement;
+        const incrementButton = document.querySelector(
+            "#increment-btn",
+        ) as HTMLButtonElement;
+        const addToCardButton = document.querySelector(
+            "#add-to-cart",
+        ) as HTMLButtonElement;
+
+        let quantity = 1;
+
+        if (!incrementButton || !quantityInput) return;
+
+        decrementButton.addEventListener("click", () => {
+            quantity = Math.max(quantity - 1, 1);
+            quantityInput.value = quantity.toString();
+        });
+
+        incrementButton.addEventListener("click", () => {
+            quantity = Math.min(quantity + 1, 5);
+            quantityInput.value = quantity.toString();
+        });
+
+        addToCardButton.addEventListener("click", () => {
+            addToCardButton.disabled = true;
+
+            const cart = CartCookiesClient.addItem({
+                productId: productIdInput.value,
+                quantity: quantity,
+            });
+
+            itemsInCart.set(cart.length);
+
+            // TODO: cambiar cuando tengamos los viewTransitions
+            // window.location.href = '/cart';
+            navigate("/cart");
+        });
+    });
+</script>

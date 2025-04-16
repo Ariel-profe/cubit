@@ -1,0 +1,42 @@
+---
+import ProductDetailsItem from './ProductDetailsItem.astro';
+
+interface Props {
+    product: any;
+}
+
+const {product} = Astro.props;
+
+const category = product.category;
+---
+
+<ul class="grid grid-cols-2 md:grid-cols-3 gap-5">
+   {
+    category === "notebooks" && (
+        <ProductDetailsItem key="tipo" value={product.type} />
+        <ProductDetailsItem key="sistema operativo" value={product.os} />
+        <ProductDetailsItem key="procesador" value={product.processor} />
+        <ProductDetailsItem key="memoria ram" value={product.memoryRam} />
+        <ProductDetailsItem key="tarjeta gráfica" value={product.graphicCard} />
+        <ProductDetailsItem key="pantalla" value={product.screen} />
+        <ProductDetailsItem key="Bluetooth" value={product.bluetooth} />
+        <ProductDetailsItem key="lector de tarjetas" value={product.cardReader} />
+        <ProductDetailsItem key="display port" value={product.displayPort} />
+        <ProductDetailsItem key="hdmi" value={product.hdmi} />
+        <ProductDetailsItem key="teclado" value={product.keypad} />
+        <ProductDetailsItem key="teclado numérico" value={product.numKeypad} />
+        <ProductDetailsItem key="lan" value={product.lan} />
+        <ProductDetailsItem key="modelo" value={product.model} />
+        <ProductDetailsItem key="almacenamiento 1" value={product.storage1} />
+        <ProductDetailsItem key="almacenamiento 2" value={product.storage2} />
+        <ProductDetailsItem key="id/upcean" value={product.upcEan} />
+        <ProductDetailsItem key="usb" value={product.usb} />
+        <ProductDetailsItem key="vga" value={product.vga} />
+        <ProductDetailsItem key="webcam" value={product.webCam} />
+        <ProductDetailsItem key="peso" value={product.weight + "gr"} />
+        <ProductDetailsItem key="wifi" value={product.wiFi} />
+        <ProductDetailsItem key="garantía" value={product.warranty} />
+    )
+   }
+</ul>
+

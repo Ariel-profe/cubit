@@ -39,10 +39,11 @@ const {
 
     <title>Cubit - {title}</title>
   </head>
-  <body class="bg-primary text-slate-300">
+  <body class="bg-primary text-slate-300 relative">
+    <div class="absolute inset-0 h-full -z-30 bg-[url('/src/assets/background.svg')]"></div>
     <div class="flex flex-col">
-      <Navbar />
-      <main class="w-full max-w-[1600px] mx-auto px-3 m-auto mt-24 lg:mt-28 grow">
+      <Navbar />        
+      <main class="relative w-full max-w-[1600px] mx-auto px-3 m-auto mt-24 lg:mt-28 grow">
         <slot />
       </main>
       <Footer />

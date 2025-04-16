@@ -1,12 +1,27 @@
 ---
+import Card from "@/components/shared/Card.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
+import { actions } from "astro:actions";
 
+const { data: categoriesDB, error } = await Astro.callAction(actions.getCategories, {});
 
+if (error) {
+  return Astro.redirect("/404");
+}
+
+const { categories } = categoriesDB;
+
+const { data, error: errorDB } = await Astro.callAction(actions.getNotebooksCounted, {});
 ---
 
 <MainLayout title="Administracion">
 
-
-    <a href="/admin/notebooks">Notebooks</a>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 place-items-center">
+        {
+            categories.map( category => (
+                <Card quantity={data?.products[0].value} title={category.name} href={"/" + category.id} isAdminCard />
+            ))
+        }
+    </div>
 
 </MainLayout>

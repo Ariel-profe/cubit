@@ -1,5 +1,6 @@
 ---
 import Button from "@/components/shared/Button.astro";
+import ReturnButton from "@/components/shared/ReturnButton.astro";
 import { Title } from "@/components/shared/Title";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { Formatter } from "@/utils";
@@ -33,11 +34,7 @@ const total = data.reduce(
     <section class="grid sm:grid-cols-2 gap-5 mt-5">
         <!-- Productos -->
         <div class="order-2 sm:order-1">
-            <a
-                href="javascript:history.back()"
-                class="hover:underline text-tertiary">Regresar</a
-            >
-
+            <ReturnButton />
             {
                 data.map((product) => (
                     <div class="flex gap-5 mt-5">
@@ -50,7 +47,7 @@ const total = data.reduce(
                         <div>
                             <a
                                 href={`/productos/${product.category}/${product.slug}`}
-                                class="hover:text-secondary hover:underline"
+                                class="hover:text-tertiary hover:underline"
                             >
                                 {product.title}
                             </a>

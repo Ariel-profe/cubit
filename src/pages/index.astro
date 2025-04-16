@@ -1,7 +1,7 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import Hero from "@/components/homepage/Hero.astro";
-import { CollapseCard } from "@/components/shared/CollapseCards";
+import { Features } from "@/components/shared/Features";
 // import { getSession } from 'auth-astro/server';
 // const session = await getSession(Astro.request)
 // const {user} = session ?? {}
@@ -9,5 +9,5 @@ import { CollapseCard } from "@/components/shared/CollapseCards";
 
 <MainLayout title="Inicio">
   <Hero />
-  <CollapseCard client:idle />
+  <Features client:idle />
 </MainLayout>

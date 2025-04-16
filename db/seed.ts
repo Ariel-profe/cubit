@@ -12,20 +12,20 @@ export default async function seed() {
 		{ id: 'user', name: 'Usuario' },
 	];
 
-	const johnDoe = {
+	const arielElias = {
 		// id: UUID(),
-		id: 'ABC-123-JHON',
-		name: 'John Doe',
-		email: 'johndoe@mail.com',
+		id: 'ABC-123-ARIEL',
+		name: 'Ariel Elias',
+		email: 'ariel@mail.com',
 		password: bcrypt.hashSync('123456'),
 		role: 'admin'
 	};
 
-	const janeDoe = {
+	const danielaAmin = {
 		// id: UUID(),
-		id: 'ABC-123-JANE',
-		name: 'Jane Doe',
-		email: 'janedoe@mail.com',
+		id: 'ABC-123-DANIELA',
+		name: 'Daniela Amin',
+		email: 'daniela@mail.com',
 		password: bcrypt.hashSync('123456'),
 		role: 'client'
 	};
@@ -38,7 +38,7 @@ export default async function seed() {
 	];
 
 	await db.insert(Role).values(roles);
-	await db.insert(User).values([johnDoe, janeDoe]);
+	await db.insert(User).values([arielElias, danielaAmin]);
 	await db.insert(Category).values(categories);
 
 	const queries: any = [];
@@ -80,7 +80,7 @@ export default async function seed() {
 			weight: p.weight,
 			wiFi: p.wiFi,
 
-			user: johnDoe.id
+			user: arielElias.id
 		};
 
 		queries.push( db.insert(Notebook).values(notebook));

@@ -5,6 +5,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import Pagination from "@/components/shared/Pagination.astro";
 import { Title } from "@/components/shared/Title";
 import ProductsList from "@/components/products/ProductsList.astro";
+import ReturnButton from "@/components/shared/ReturnButton.astro";
 
 const searchParams = Astro.url.searchParams;
 const pageParam = Number(searchParams.get("page") ?? 1);
@@ -32,6 +33,8 @@ if (data.products?.length === 0) {
         animateBy="words"
         direction="top"
     />
+
+    <ReturnButton />
     <ProductsList products={notebooks ?? []} />
 
     <Pagination totalPages={totalPages} />
