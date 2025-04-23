@@ -1,0 +1,38 @@
+export interface INotebook {
+    // id         : string;
+    title       : string;
+    brand       : string;
+    price       : number;
+    code        : string;
+    images      : string[];
+    status      : boolean;
+    stock       : number;
+    slug        : string;
+    tags        : string[];
+    category    : string;
+    type        : ValidTypes;
+    model       : string;
+    upcEan      : string;
+    processor   : string;
+    memoryRam   : string;
+    graphicCard : string;
+    storage1    : string;
+    storage2    : string;
+    screen      : string;
+    keypad      : string;
+    numKeypad   : string;
+    os          : string;
+    cardReader  : string;
+    webCam      : string;
+    usb         : string[];
+    lan         : string;
+    wiFi        : string;
+    bluetooth   : string;
+    vga         : string;
+    hdmi        : string;
+    displayPort : string;
+    weight      : number;
+    warranty    : string;
+};
+
+export type ValidTypes = "hogar" | "empresa" | "profesional" | "gamer";
