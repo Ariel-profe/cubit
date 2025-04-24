@@ -21,7 +21,7 @@ export default function NotebooksPage () {
 
   return (
     <div>
-        <Title title="Notebooks" className="text-4xl" />
+        <Title title="Notebooks" className="text-2xl md:text-4xl" />
 
 
         {/* <button onClick={() => handleType("all")}>Todas</button>

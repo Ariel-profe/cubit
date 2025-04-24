@@ -2,13 +2,12 @@ import { Title } from "@/components/ui/title";
 
 export const Hero = () => {
   return (
-    <section className="">
-    <div className="flex flex-col md:flex-row items-center justify-between mt-10 md:mt-0">
+
+    <div className="flex flex-col md:flex-row items-center justify-between mt-10 md:mt-0 relative">
         <div className="flex flex-col items-center justify-center md:items-start gap-1 w-full md:w-1/3 max-w-md">
-          
             <Title
                 title="COMPRÁ RÁPIDO Y SEGURO"
-                subtitle=" En Cubit tenemos los mejores productos technológicos para tu hogar y oficina."
+                subtitle=" En Cubit tenemos los mejores productos tecnológicos para tu hogar y oficina."
                 className="font-bold text-5xl md:text-6xl lg:text-7xl text-center"
             />
         </div>
@@ -21,7 +20,6 @@ export const Hero = () => {
             />
         </div>
     </div>
-</section>
 
   )
 }

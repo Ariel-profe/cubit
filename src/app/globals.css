@@ -2,7 +2,7 @@
 
 :root {
   --background: #060a1b;
-  --primary: #0e3192;
+  --primary: #1036a0;
   --secondary: #239EFE;
   --tertiary: #01AFD1;
   --quaternary: #7DBAFB;
@@ -16,6 +16,16 @@
   --color-quaternary: var(--quaternary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* Buttons */
+
+.btn-primary {
+  @apply bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded transition-all;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 hover:bg-gray-300 text-black py-2 px-4 rounded transition-all;
 }
 
 @keyframes fadeIn {

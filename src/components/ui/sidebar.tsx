@@ -56,7 +56,7 @@ export const Sidebar = () => {
             <Link
                 href="/nosotros"
                 onClick={(closeSideMenu)}
-                className="flex items-center mt-5 p-2 hover:bg-background rounded transition-all"
+                className="flex items-center mt-5 p-2 hover:bg-background rounded transition-all sm:hidden"
             >
                 <IoCubeOutline size={20}/>
                 <span className="ml-3 text-base tracking-wide">Nosotros</span>
@@ -65,7 +65,7 @@ export const Sidebar = () => {
             <Link
                 href="/products"
                 onClick={(closeSideMenu)}
-                className="flex items-center mt-5 p-2 hover:bg-background rounded transition-all"
+                className="flex items-center mt-5 p-2 hover:bg-background rounded transition-all sm:hidden"
             >
                 <IoCubeOutline size={20}/>
                 <span className="ml-3 text-base tracking-wide">Productos</span>
@@ -74,7 +74,7 @@ export const Sidebar = () => {
             <Link
                 href="/servicios"
                 onClick={(closeSideMenu)}
-                className="flex items-center mt-5 p-2 hover:bg-background rounded transition-all"
+                className="flex items-center mt-5 p-2 hover:bg-background rounded transition-all sm:hidden"
             >
                 <IoPersonOutline size={20}/>
                 <span className="ml-3 text-base tracking-wide">Servicios</span>
@@ -102,7 +102,7 @@ export const Sidebar = () => {
                 <span className="ml-3 text-base tracking-wide">Ordenes</span>
             </Link>
             <Link
-                href="/"
+                href="/auth/login"
                 onClick={(closeSideMenu)}
                 className="flex items-center mt-5 p-2 hover:bg-background rounded transition-all"
             >

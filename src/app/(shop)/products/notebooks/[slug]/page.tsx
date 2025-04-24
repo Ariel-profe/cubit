@@ -6,8 +6,7 @@ interface Props {
     params: {
         slug: string;
     };
-}
-
+};
 
 export default function ProductBySlugPage({ params }: Props) {
 

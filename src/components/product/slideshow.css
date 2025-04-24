@@ -10,7 +10,6 @@
     object-fit: cover;
   }
   
-  
   .swiper {
     width: 100%;
     margin-left: auto;
@@ -30,19 +29,29 @@
   }
   
   .mySwiper .swiper-slide {
-    width: 25%;
+    width: 55%;
     height: 100%;
-    opacity: 0.4;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: auto;
+  }
+
+  @media (min-width: 765px) {
+    .mySwiper .swiper-slide {
+      opacity: 0.4
+    }
+
+    .swiper-slide img {
+     width: 80%;
+    }
   }
   
   .mySwiper .swiper-slide-thumb-active {
     opacity: 1;
   }
   
-  .swiper-slide img {
-    display: block;
-    width: 80%;
-    height: 100%;
-    object-fit: cover;
-    margin: auto;
-  }
