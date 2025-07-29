@@ -1,6 +1,5 @@
-import { ITypeAccesoryCard } from '../../interfaces/typeAccesoryCard';
 
-export const accesoryTypes:ITypeAccesoryCard[] = [
+export const accesoryTypes = [
     {
         id: 1,
         name: 'auricular',

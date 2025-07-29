@@ -16,7 +16,6 @@ export * from './ui/search-input';
 export * from './ui/breadcrumb';
 export * from './ui/dropdown-menu';
 
-
 //Homepage
 export * from './homepage/container-scroll';
 export * from './homepage/call-to-action';
@@ -44,6 +43,8 @@ export * from './products/categories-grid';
 export * from './products/category-card';
 export * from './products/product-card';
 export * from './products/products-grid';
+export * from './products/filters/notebook-filters';
+
 
 // Cart
 export * from './cart/order-summary';

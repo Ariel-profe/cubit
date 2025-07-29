@@ -1,17 +1,17 @@
-"use server";
-
 import { prisma } from "@/lib/prisma";
 
 interface PaginationOptions {
     page?: number;
     take?: number;
     model: any;
+    filters?: Record<string, string>;
 };
 
 export const getPaginatedProductsWithImages = async ({
     page = 1,
     take = 12,
-    model 
+    model,
+    filters = {}
 }: PaginationOptions) => {
 
     switch (model) {
@@ -69,17 +69,32 @@ export const getPaginatedProductsWithImages = async ({
         default:
             throw new Error("Modelo no válido");
     };
-    
-    // Validar que la pagina y el limite sean numeros
+
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;
 
+    // Normalize filters: remove empty or 'all' values
+    const normalizedFilters = Object.entries(filters)
+        .filter(([_, value]) => value && value !== "" && value !== "all")
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
     try {
-        // Obtener los productos
+        // Build Prisma-compatible 'where' clause for multiple filters
+        const where: any = {
+            status: true,
+        };
+
+        Object.entries(normalizedFilters).forEach(([key, value]) => {
+            // For string fields, use 'contains'; for others, use equality
+            if (typeof value === "string") {
+                where[key] = { contains: value, mode: "insensitive" };
+            } else {
+                where[key] = value;
+            }
+        });
+
         const products = await model.findMany({
-            where: {
-                status: true
-            },
+            where,
             take: take,
             skip: (page - 1) * take,
             include: {
@@ -98,11 +113,10 @@ export const getPaginatedProductsWithImages = async ({
             orderBy: {
                 title: "asc"
             }
-        });        
+        });
 
-        // Obtener el total de paginas
-        const totalCount = await model.count({});
-        const totalPages = Math.ceil(totalCount / take);       
+        const totalCount = await model.count({ where });
+        const totalPages = Math.ceil(totalCount / take);      
 
         return {
             currentPage: page,
@@ -113,7 +127,7 @@ export const getPaginatedProductsWithImages = async ({
                 images: product.ProductImage.map((img: any) => img.url)
             }))
         }
-        
+
     } catch (error) {
         throw new Error("No se pudieron cargar los productos")
     }

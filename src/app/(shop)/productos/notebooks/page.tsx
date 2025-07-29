@@ -3,46 +3,41 @@ export const revalidate = 604800; // 7 days
 
 import { redirect } from "next/navigation";
 import { getPaginatedProductsWithImages } from "@/actions";
-import { Pagination, ProductsGrid, Title } from "@/components";
-// import { useState } from "react";
+import { NotebookFilters, Pagination, ProductsGrid, Title } from "@/components";
 
 interface Props {
-  searchParams: Promise<{ page?: string }>
+  searchParams?: Promise<{ page?: string, type?: string, processor?: string, memoryRam?: string, graphicCard?: string }>;
 };
 
-export default async function NotebooksPage ({searchParams}: Props) {
+export default async function NotebooksPage({ searchParams }: Props) {
 
-  const page = (await searchParams).page ? parseInt((await searchParams).page!) : 1;
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const page = resolvedSearchParams.page ? parseInt(resolvedSearchParams.page) : 1;
+  const type = resolvedSearchParams.type || "";
+  const processor = resolvedSearchParams.processor || "";
+  const memoryRam = resolvedSearchParams.memoryRam || "";
+  const graphicCard = resolvedSearchParams.graphicCard || "";
 
-  const {products, currentPage, totalPages} = await getPaginatedProductsWithImages({page, model: "notebook"});  
+  const { products, totalPages } = await getPaginatedProductsWithImages({ page, model: "notebook", filters: { type, processor, memoryRam, graphicCard } });
 
-  if (products.length === 0) {
-    redirect("/productos");
-  };
-
-  // const [filteredProducts, setFilteredProducts] = useState(products);
-
-  // const handleType = (type: string) => {
-  //   if(type === "all") {
-  //     setFilteredProducts(products);
-  //     return;
-  //   }
-  //   const filtered = products.filter((product) => product.type === type);
-  //   setFilteredProducts(filtered);
-  // }
 
   return (
     <div className="container mx-auto px-3">
-        <Title title="Notebooks"/>
+      <Title title="Notebooks" />
 
-
-        {/* <button onClick={() => handleType("all")}>Todas</button>
-        <button onClick={() => handleType("hogar")}>Tipo Hogar</button>
-        <button onClick={() => handleType("gamer") }>Tipo Gamer</button> */}
-
-        {/* <ProductsGrid products={filteredProducts} /> */}
-        <ProductsGrid products={products} />
-        <Pagination totalPages={totalPages} />
+      <div className="flex flex-col lg:flex-row gap-4">
+        <NotebookFilters />
+        {
+          products.length === 0 ? (
+            <p className="flex items-center justify-center text-lg w-full">No se encontraron productos.</p>
+          ) : (
+            <div className="w-full lg:w-3/4">
+              <ProductsGrid products={products} />
+              <Pagination totalPages={totalPages} />
+            </div>
+          )
+        }
+      </div>
 
     </div>
   )
