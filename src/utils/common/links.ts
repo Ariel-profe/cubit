@@ -6,22 +6,22 @@ export const footerLinks = [
             {
                 id: 1,
                 title: "notebooks",
-                href: "/products/notebooks"
+                href: "/productos/notebooks"
             },
             {
                 id: 2,
-                title: "Mouse",
-                href: "/products/mouse"
+                title: "mouse",
+                href: "/productos/mouses"
             },
             {
                 id: 3,
                 title: "pads",
-                href: "/products/pads"
+                href: "/productos/pads"
             },
             {
                 id: 4,
-                title: "pantallas",
-                href: "/products/pantallas"
+                title: "auriculares",
+                href: "/productos/auriculares"
             },
         ]
     },

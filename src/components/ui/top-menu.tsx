@@ -2,14 +2,24 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { IoSearchOutline, IoCartOutline } from "react-icons/io5";
-import { useUIStore } from "@/store";
+import { IoSearchOutline, IoCartOutline, IoDiceOutline, IoAccessibilityOutline, IoMegaphoneOutline } from "react-icons/io5";
+
+import { useCartStore, useUIStore } from "@/store";
+import { SearchInput } from "@/components";
 
 export const TopMenu = () => {
 
   const { openSideMenu } = useUIStore(state => state);
+  const totalItemsInCart = useCartStore(state => state.getTotalItems());
 
-  const [scroll, setScroll] = useState(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const [scroll, setScroll] = useState<boolean>(false);
+
+  const [isSearchVisible, setIsSearchVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -19,39 +29,76 @@ export const TopMenu = () => {
 
   return (
     <nav
-      className={`sticky top-0 w-full mx-auto flex justify-between items-center px-3 py-2 border-slate-700 z-10  ${scroll ? "backdrop-blur-sm border-b" : "backdrop-blur-none border-none"} transition-all duration-300 ease-in`}>
-      {/* Logo */}
-      <div>
-        <Link href="/">
-          <img src="/imgs/common/logo.webp" alt="cubit-logo" className="h-12" />
-        </Link>
+      className={
+        `sticky top-0 w-full mx-auto p-2 z-20 
+        ${scroll ? "bg-[#0d0220]" : "bg-transparent"} transition-all duration-200 ease-in`
+      }
+    >
+      <div className="max-w-[1600px] mx-auto flex justify-between items-center w-full">
+        {/* Logo */}
+        <div>
+          <Link href="/">
+            <img src="/imgs/common/logo.webp" alt="cubit-logo" className="h-12" />
+          </Link>
+        </div>
+
+        {/* Center Menu */}
+        <div className={`hidden ${!isSearchVisible ? "sm:block" : "sm:hidden"} fadeIn`}>
+          <Link href="/nosotros" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary">
+            <IoAccessibilityOutline className="inline-block mr-1" />
+            Nosotros
+          </Link>
+          <Link href="/servicios" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary">
+            <IoMegaphoneOutline className="inline-block mr-1" />
+            Servicios
+          </Link>
+          <Link href="/productos" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary">
+            <IoDiceOutline className="inline-block mr-1" />
+            Productos
+          </Link>
+        </div>
+
+        {/* Search */}
+        <div className="flex items-center gap-x-2">
+          {
+            isSearchVisible ? (
+              <SearchInput setIsSearchVisible={setIsSearchVisible} />
+            ) : (
+              <button
+                className="m-2 p-2 transition-all sm:hover:text-quaternary cursor-pointer"
+                onClick={() => setIsSearchVisible(true)}
+              >
+                <IoSearchOutline className="w-5 h-5" />
+              </button>
+            )
+          }
+
+          {/* Cart */}
+          <Link href={
+            ((totalItemsInCart === 0) && loaded)
+              ? "/empty"
+              : "/carrito"
+          }>
+            <div className="relative sm:hover:text-quaternary rounded-full p-2 transition-all">
+              {
+                (loaded && totalItemsInCart > 0) && (
+                  <span className="absolute text-xs rounded-full px-1 font-bold -top-0.5 -right-0.5 bg-tertiary text-black fadeIn">
+                    {totalItemsInCart}
+                  </span>
+                )
+              }
+
+              <IoCartOutline className="w-5 h-5" />
+            </div>
+          </Link>
+
+          {/* Menu */}
+          <button className="m-2 p-2 rounded-md transition-all sm:hover:bg-quaternary sm:hover:text-black cursor-pointer" onClick={openSideMenu}>
+            Menú
+          </button>
+
+        </div>
       </div>
-
-      {/* Center Menu */}
-      <div className="hidden sm:block">
-        <Link href="/about" className="m-2 p-2 rounded-md transition-all sm:hover:text-slate-100">Nosotros</Link>
-        <Link href="/products" className="m-2 p-2 rounded-md transition-all sm:hover:text-slate-100">Productos</Link>
-        <Link href="/services" className="m-2 p-2 rounded-md transition-all sm:hover:text-slate-100">Servicios</Link>
-      </div>
-
-      {/* Search,Cart, Menu */}
-      <div className="flex items-center gap-x-2">
-        <Link href="/search" className="sm:hover:bg-slate-800 rounded-full p-2 transition-all">
-          <IoSearchOutline className="w-5 h-5" />
-        </Link>
-        <Link href="/cart">
-          <div className="relative sm:hover:bg-slate-800 rounded-full p-2 transition-all" >
-            <span className="absolute text-xs rounded-full px-1 font-bold top-0 right-0 bg-primary text-white">3</span>
-            <IoCartOutline className="w-5 h-5" />
-          </div>
-        </Link>
-
-        <button className="m-2 p-2 rounded-md transition-all sm:hover:bg-slate-800 cursor-pointer" onClick={openSideMenu}>
-          Menú
-        </button>
-
-      </div>
-
     </nav>
   )
 }

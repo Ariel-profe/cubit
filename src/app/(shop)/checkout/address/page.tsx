@@ -1,91 +1,30 @@
-import { Title } from '@/components';
-import Link from 'next/link';
+import { getDepartments, getUserAddress } from '@/actions';
+import { auth } from '@/auth.config';
+import { AddressForm, Title } from '@/components';
 
-export default function AddressPage() {
+export default async function AddressPage() {
+
+  const departments = await getDepartments();
+
+  const session = await auth();
+
+  if(!session?.user){
+    return (
+      <h3 className='text-5xl'>Error 500 - No hay sesión de usuario</h3>
+    )
+  };
+
+  const userAddress = await getUserAddress(session.user.id) ?? undefined;
+
   return (
-    <div className="flex flex-col sm:justify-center sm:items-center">
+    <section className="flex flex-col sm:justify-center sm:items-center container mx-auto px-3 mt-10 lg:mt-20">
 
       <div className="w-full flex flex-col justify-center text-left">
 
-        <Title title="Información personal" subtitle="Coloca tus datos" className='text-2xl md:text-4xl' />
-
-        <div className="grid grid-cols-1 gap-2 sm:gap-5 sm:grid-cols-2">
-          <div className="flex flex-col mb-2">
-            <span>Nombres</span>
-            <input
-              type="text"
-              className="p-2 border rounded-md bg-slate-300 text-slate-800"
-            />
-          </div>
-
-          <div className="flex flex-col mb-2">
-            <span>Apellidos</span>
-            <input
-              type="text"
-              className="p-2 border rounded-md bg-slate-300 text-slate-800"
-            />
-          </div>
-
-          <div className="flex flex-col mb-2">
-            <span>Dirección</span>
-            <input
-              type="text"
-              className="p-2 border rounded-md bg-slate-300 text-slate-800"
-            />
-          </div>
-
-          <div className="flex flex-col mb-2">
-            <span>Dirección 2 (opcional)</span>
-            <input
-              type="text"
-              className="p-2 border rounded-md bg-slate-300 text-slate-800"
-            />
-          </div>
-
-
-          <div className="flex flex-col mb-2">
-            <span>Código postal</span>
-            <input
-              type="text"
-              className="p-2 border rounded-md bg-slate-300 text-slate-800"
-            />
-          </div>
-
-          <div className="flex flex-col mb-2">
-            <span>Ciudad</span>
-            <input
-              type="text"
-              className="p-2 border rounded-md bg-slate-300 text-slate-800"
-            />
-          </div>
-
-          <div className="flex flex-col mb-2">
-            <span>País</span>
-            <select
-              className="p-2 border rounded-md bg-slate-300 text-slate-800"
-            >
-              <option value="">[ Seleccione ]</option>
-              <option value="CRI">Costa Rica</option>
-            </select>
-          </div>
-
-          <div className="flex flex-col mb-2">
-            <span>Teléfono</span>
-            <input
-              type="text"
-              className="p-2 border rounded-md bg-slate-300 text-slate-800"
-            />
-          </div>
-
-          <div className="flex flex-col mb-2 sm:mt-10">
-            <Link
-              href='/checkout'
-              className="btn-primary flex w-full sm:w-1/2 justify-center ">
-              Siguiente
-            </Link>
-          </div>
-        </div>
+        <Title title="Información personal" subtitle="Coloca tus datos para generar el pedido" className='text-2xl md:text-4xl' />
+        
+        <AddressForm departments={departments} userStoredAddress={userAddress} />
       </div>
-    </div>
+    </section>
   );
 }

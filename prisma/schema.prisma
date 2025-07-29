@@ -1,0 +1,766 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  client
+  user
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  role          Role      @default(user)
+  image         String?
+  counterVisits Int       @default(0)
+  status        Boolean   @default(true)
+
+  // Relations
+  address UserAddress?
+  Order   Order[]
+}
+
+model Department {
+  id           String         @id
+  name         String
+  UserAddress  UserAddress[]
+  OrderAddress OrderAddress[]
+}
+
+model UserAddress {
+  id        String  @id @default(uuid())
+  firstName String
+  lastName  String
+  address   String
+  address2  String?
+  city      String
+  zipCode   String
+  phone     String
+  cuit      String
+
+  // Relations
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+}
+
+// Orden de compras
+model Order {
+  id            String    @id @default(uuid())
+  subTotal      Float
+  tax           Float
+  total         Float
+  itemsInOrder  Int
+  isPaid        Boolean   @default(false)
+  isPaidAt      DateTime?
+  isSentByEmail Boolean   @default(false)
+  delivered     DateTime?
+  status        Boolean   @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  OrderItem    OrderItem[]
+  OrderAddress OrderAddress?
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  quantity Int
+  price    Float
+
+  // Relations
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  backpack      Backpack?    @relation(fields: [backpackId], references: [id])
+  backpackId    String?
+  caddy         Caddy?       @relation(fields: [caddyId], references: [id])
+  caddyId       String?
+  carry         Carry?       @relation(fields: [carryId], references: [id])
+  carryId       String?
+  coolerpad     Coolerpad?   @relation(fields: [coolerpadId], references: [id])
+  coolerpadId   String?
+  cover         Cover?       @relation(fields: [coverId], references: [id])
+  coverId       String?
+  docking       Docking?     @relation(fields: [dockingId], references: [id])
+  dockingId     String?
+  hdd           Hdd?         @relation(fields: [hddId], references: [id])
+  hddId         String?
+  headphone     Headphone?   @relation(fields: [headphoneId], references: [id])
+  headphoneId   String?
+  mouse         Mouse?       @relation(fields: [mouseId], references: [id])
+  mouseId       String?
+  networkCard   NetworkCard? @relation(fields: [networkCardId], references: [id])
+  networkCardId String?
+  notebook      Notebook?    @relation(fields: [notebookId], references: [id])
+  notebookId    String?
+  pad           Pad?         @relation(fields: [padId], references: [id])
+  padId         String?
+  ram           Ram?         @relation(fields: [ramId], references: [id])
+  ramId         String?
+  source        Source?      @relation(fields: [sourceId], references: [id])
+  sourceId      String?
+  ssd           Ssd?         @relation(fields: [ssdId], references: [id])
+  ssdId         String?
+  support       Support?     @relation(fields: [supportId], references: [id])
+  supportId     String?
+  videoCard     VideoCard?   @relation(fields: [videoCardId], references: [id])
+  videoCardId   String?
+}
+
+model OrderAddress {
+  id        String  @id @default(uuid())
+  firstName String
+  lastName  String
+  address   String
+  address2  String?
+  zipCode   String
+  city      String
+  phone     String
+  cuit      String
+
+  // Relation
+
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId String
+
+  Order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @unique
+}
+
+model Category {
+  id          String        @id @default(uuid())
+  name        String        @unique
+  Backpack    Backpack[]
+  Caddy       Caddy[]
+  Carry       Carry[]
+  Coolerpad   Coolerpad[]
+  Cover       Cover[]
+  Docking     Docking[]
+  Hdd         Hdd[]
+  Headphone   Headphone[]
+  Mouse       Mouse[]
+  NetworkCard NetworkCard[]
+  Notebook    Notebook[]
+  Pad         Pad[]
+  Ram         Ram[]
+  Source      Source[]
+  Ssd         Ssd[]
+  Support     Support[]
+  VideoCard   VideoCard[]
+}
+
+model ProductImage {
+  id  Int    @id @default(autoincrement())
+  url String
+
+  notebook   Notebook? @relation(fields: [notebookId], references: [id])
+  notebookId String?
+
+  caddy   Caddy?  @relation(fields: [caddyId], references: [id])
+  caddyId String?
+
+  backpack   Backpack? @relation(fields: [backpackId], references: [id])
+  backpackId String?
+
+  carry   Carry?  @relation(fields: [carryId], references: [id])
+  carryId String?
+
+  coolerpad   Coolerpad? @relation(fields: [coolerpadId], references: [id])
+  coolerpadId String?
+
+  cover   Cover?  @relation(fields: [coverId], references: [id])
+  coverId String?
+
+  docking   Docking? @relation(fields: [dockingId], references: [id])
+  dockingId String?
+
+  hdd   Hdd?    @relation(fields: [hddId], references: [id])
+  hddId String?
+
+  headphone   Headphone? @relation(fields: [headphoneId], references: [id])
+  headphoneId String?
+
+  mouse   Mouse?  @relation(fields: [mouseId], references: [id])
+  mouseId String?
+
+  networkCard   NetworkCard? @relation(fields: [networkCardId], references: [id])
+  networkCardId String?
+
+  pad   Pad?    @relation(fields: [padId], references: [id])
+  padId String?
+
+  ram   Ram?    @relation(fields: [ramId], references: [id])
+  ramId String?
+
+  source   Source? @relation(fields: [sourceId], references: [id])
+  sourceId String?
+
+  ssd   Ssd?    @relation(fields: [ssdId], references: [id])
+  ssdId String?
+
+  support   Support? @relation(fields: [supportId], references: [id])
+  supportId String?
+
+  videoCard   VideoCard? @relation(fields: [videoCardId], references: [id])
+  videoCardId String?
+}
+
+model Backpack {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual            String
+  materials           String[]
+  color               String
+  model               String
+  compartments        Int
+  lateralPockets      Int
+  superiorPockets     Int
+  frontPockets        Int
+  notebookCompartment String
+  notebookSize        String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Caddy {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual      String
+  thickness     String
+  compatibility String[]
+  includes      String[]
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Carry {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual       String
+  material       String
+  type           String
+  connectionType String
+  size           String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Coolerpad {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual    String
+  heightLevel Int
+  fan         Int
+  usbPorts    Int
+  rgbLighting String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Cover {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual      String
+  notebookSize  String
+  stamp         String
+  materials     String
+  colors        String[]
+  otherFeatures String[]
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Docking {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual       String
+  compatibility  String[]
+  connectionType String[]
+  usbVersion     String[]
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Hdd {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual  String
+  model     String
+  format    String
+  capacity  String
+  rpm       String
+  thickness String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Headphone {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual       String
+  type           String
+  connectionType String
+  microphone     String
+  sensitivity    String
+  frequencyRange String
+  ledLighting    String
+  gamer          String
+  colors         String[]
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Mouse {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual       String
+  model          String
+  connectionType String[]
+  dpi            Int
+  colors         String[]
+  rgbLighting    String
+  buttons        Int
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model NetworkCard {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual       String
+  connectionType String
+  usbConnection  String
+  speed          String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Notebook {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  upcEan      String
+  processor   String
+  os          String
+  graphicCard String
+  type        String
+  model       String
+  memoryRam   String
+  storage1    String
+  storage2    String
+  screen      String
+  keypad      String
+  numKeypad   String
+  cardReader  String
+  webCam      String
+  usb         String[]
+  lan         String
+  wiFi        String
+  bluetooth   String
+  vga         String
+  hdmi        String
+  displayPort String
+  weight      Int
+  warranty    String   @default("si")
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Pad {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual    String
+  colorStamp  String[]
+  materials   String[]
+  extent      String
+  size        String
+  rgbLighting String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Ram {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual String
+  type     String
+  capacity String
+  speed    String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Source {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual  String
+  brandsUse String[]
+  volts     String[]
+  pin       String
+  amperage  String
+  watts     String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Ssd {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual String
+  model    String
+  format   String
+  capacity String
+  type     String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model Support {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual   String
+  model      String
+  maxSupport String
+  materials  String[]
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}
+
+model VideoCard {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  title     String
+  slug      String   @unique
+  brand     String
+  price     Int      @default(0)
+  inStock   Int
+  tags      String[] @default([])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Caracteristicas
+  idManual       String
+  connectorType  String
+  connectionType String
+  resolution     String
+
+  // Relaciones
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  ProductImage ProductImage[]
+  OrderItem    OrderItem[]
+
+  @@index([code, brand])
+}

@@ -8,8 +8,9 @@ export const Footer = () => {
     const year = new Date().getFullYear();
 
     return (
-        <footer className="relative  mt-20 mb-5 w-full">
-            <div className="w-full mx-auto">
+        <footer className="relative my-5 px-2 w-full">
+            <hr className="h-0.5 text-slate-800 max-w-[1600px] mx-auto" />
+            <div className="container mx-auto pt-5">
                 <div className="grid justify-between grid-cols-1 gap-4 md:grid-cols-2">
                     <img className="h-10" src="/imgs/common/logo.webp" />
 
@@ -18,7 +19,7 @@ export const Footer = () => {
                             {
                                 footerLinks.map(item => (
                                     <div key={item.title}>
-                                        <h5 className="block mb-1 text-base font-semibold text-slate-400">{item.title}</h5>
+                                        <h5 className="block mb-1 text-base font-semibold text-quaternary">{item.title}</h5>
                                         {
                                             item.links.map(i => (
                                                 <li key={i.id}>
@@ -36,10 +37,10 @@ export const Footer = () => {
                             </ul>
                     </div>
                 </div>
-                <div className="flex flex-col items-center justify-center w-full py-4 mt-12 border-t border-slate-200 md:flex-row md:justify-between">
+                <div className="flex flex-col items-center justify-center w-full py-4 mt-12 md:flex-row md:justify-between">
                     <p className="block mb-4 text-sm text-center text-slate-400 md:mb-0">
                         Copyright © {year} {" "}
-                        <a href="https://amn.com.ar" target="_blank" className="underline text-primary">AMN Consultora Informática</a>. Todos los derechos reservados.
+                        <a href="https://amn.com.ar" target="_blank" className="underline text-quaternary hover:text-quaternary/80 transition-colors">AMN Consultora Informática</a>. <br className="sm:hidden" /> Todos los derechos reservados.
                     </p>
 
                     {/* Social links */}

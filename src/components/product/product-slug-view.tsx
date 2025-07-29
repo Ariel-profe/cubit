@@ -1,18 +1,19 @@
-import { Button } from "@/components/ui/button";
-import { Title } from "@/components/ui/title";
 import { ProductDetails } from "./product-details";
-import { QuantitySelector } from "./quantity-selector";
 import { ProductSlideshow } from "./product-slideshow";
 import { ProductMobileSlideshow } from "./product-mobile-slideshow";
+import { StockLabel } from "./stock-label";
+import { Title } from "@/components/ui/title";
+import { AddToCart } from "./add-to-cart";
 
 interface Props {
     product: any;
 }
 
-export const ProductSlugView = ({ product }: Props) => {
+export const ProductSlugView = ({ product }: Props) => {       
+    
     return (
-        <div className="mx-auto shadow-lg rounded-lg overflow-hidden mt-10 lg:my-20">
-            <div className="grid md:grid-cols-2 w-full lg:gap-10">
+        <section className="shadow-lg rounded-lg mt-10 container mx-auto px-3">
+            <div className="grid md:grid-cols-2 w-full lg:gap-5">
 
                 {/* Mobile Slideshow */}
                 <div className="col-span-1">
@@ -31,14 +32,15 @@ export const ProductSlugView = ({ product }: Props) => {
                 </div>
 
                 {/* Product Details */}
-                <div className="col-span-1 px-1">
-                    <Title title={product.title} className="text-2xl lg:text-3xl" />
+                <div className="col-span-1 pb-2">
+                    <Title title={product.title} className="text-2xl lg:text-3xl capitalize" />
 
-                    <p className="text-2xl font-semibold text-slate-400 mb-4">
+                   <StockLabel slug={product.slug} category={product.category }/>
+                    <p className="text-2xl font-semibold mb-4">
                        Precio: ${product.price}
                     </p>
 
-                    <p className="text-lg underline underline-offset-4 text-slate-300 mb-2 capitalize">
+                    <p className="text-lg underline underline-offset-4 mb-2 capitalize">
                         Especificaciones:
                     </p>
 
@@ -54,11 +56,10 @@ export const ProductSlugView = ({ product }: Props) => {
                     <ProductDetails product={product} />
 
                     <h3 className="m-2">Cantidad</h3>
-                    <QuantitySelector quantity={1} />
-                    
-                    <Button title="Añadir al carrito" />
+
+                    <AddToCart product={product} />
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

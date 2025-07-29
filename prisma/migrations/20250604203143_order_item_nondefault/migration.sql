@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "OrderItem" ALTER COLUMN "notebookId" DROP DEFAULT,
+ALTER COLUMN "caddyId" DROP DEFAULT;

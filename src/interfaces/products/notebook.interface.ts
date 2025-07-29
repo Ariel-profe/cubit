@@ -1,16 +1,24 @@
+import { IProductImage } from "./product-image.interface";
+
 export interface INotebook {
-    // id         : string;
-    title       : string;
-    brand       : string;
-    price       : number;
+    // Required
+    id         : string;
     code        : string;
-    images      : string[];
-    status      : boolean;
-    stock       : number;
+    title       : string;
     slug        : string;
-    tags        : string[];
+    brand       : string;
     category    : string;
-    type        : ValidTypes;
+    images      : string[];
+    ProductImage?: IProductImage[];
+    price       : number;
+    inStock     : number;
+    tags        : string[];
+    status      : boolean;
+    createdAt   : Date;
+    updatedAt   : Date;
+
+    // Specific
+    type        : ValidNotebookTypes;
     model       : string;
     upcEan      : string;
     processor   : string;
@@ -35,4 +43,4 @@ export interface INotebook {
     warranty    : string;
 };
 
-export type ValidTypes = "hogar" | "empresa" | "profesional" | "gamer";
+export type ValidNotebookTypes = 'hogar' | 'empresa' | 'profesional' | 'gamer';

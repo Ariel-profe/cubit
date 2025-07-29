@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
 import type { ICategory } from "@/interfaces";
+import { GlowingEffect } from '../ui/glowing-effect';
 
 interface Props {
   category: ICategory;
@@ -10,12 +10,18 @@ interface Props {
 
 export const CategoryCard = ({ category }: Props) => {
   return (
-    <SpotlightCard>
-      <Link href={`/products/${category.href}`} className="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 max-w-sm mx-auto group">
-        <img src={category.image} alt={category.title} className="absolute inset-0 h-full w-full object-cover opacity-20 md:opacity-0 group-hover:opacity-30 transition-all" />
-        <div className="absolute inset-0 bg-"></div>
-        <h3 className="z-10 mt-3 text-xl font-bold text-white capitalize text-end">{category.title}</h3>
-      </Link>
-    </SpotlightCard>
+    <Link href={`/productos/${category.href}`} className="flex flex-col items-center justify-center pb-1 group relative transition-colors">
+      <GlowingEffect
+        spread={40}
+        glow={true}
+        disabled={false}
+        proximity={64}
+        inactiveZone={0.01}
+      />
+      <img src={category.image} alt={category.title} className="h-full w-full object-cover grayscale opacity-35 group-hover:grayscale-0 group-hover:opacity-70 transition-all" />
+      <div className="absolute bottom-0 right-0 group">
+        <h3 className="text-xl px-2 font-bold group-hover:text-secondary capitalize self-end backdrop-blur-sm">{category.title}</h3>
+      </div>
+    </Link>
   );
 };

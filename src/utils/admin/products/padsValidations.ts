@@ -1,0 +1,6 @@
+export const validPadBrands = ['asus','benq','cdtek','genius','hyperx','logitech','netmak','noganet','razer','thermaltake','xtech'];
+export const validPadExtents = ['134x71x25 mm', '200x230x2 mm','210x190 mm','230x160x3 mm','235x210x2 mm','250x230x2 mm','270x215x2 mm','270x215x3 mm','300x700x2 mm', '320x270x2 mm','320x270x3 mm','330x230x0,28 mm','340x240x2 mm', '340x280x1 mm', '340x280x3 mm','350x250x2 mm','353x256x6 mm', '355x254x3 mm', '355x255x2,2 mm', '355x255x4 mm','355x255x12 mm','359,4x299,4x5 mm','360x300x2 mm','360x300x3 mm','360x300x4 mm','400x900x3 mm','420x90x8 mm','450x400x3 mm','450x400x4 mm','460x85x25 mm', '460x400x3 mm','480x400x3,5 mm','650x350 mm','800x300x3 mm','840x380x3 mm','900x400x4 mm', '920x294x3 mm','980x280x2 mm','980x280x3 mm', 'n/a'];
+export const validPadColorStamp = ['amarillo','azul','gris','lila','negro','rojo','rosa','verde', "estampado"];
+export const validPadMaterial = ['aluminio', 'ecocuero', 'goma', 'plastico', 'polimero', 'silicona', 'tela'];
+export const validPadSizes = ['small', 'medium', 'standard', 'large', 'extended'];
+export const validPadOpts = ['si', 'no'];

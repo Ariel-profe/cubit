@@ -12,6 +12,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 import './slideshow.css';
+import { ProductImage } from "./product-image";
 
 
 interface Props {
@@ -28,7 +29,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
         <div className={className}>
             <Swiper
                 style={{
-                    '--swiper-navigation-color': '#fff',
+                    '--swiper-navigation-color': '#00f',
                     '--swiper-pagination-color': '#fff',
                 } as CSSProperties}
                 spaceBetween={10}
@@ -43,7 +44,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
                 {
                     images.map((image) => (
                         <SwiperSlide key={image}>
-                            <img src={`/products/${image}`} alt={`${title}`} className="object-contain w-[600px] h-[600px] rounded" />
+                            <ProductImage src={image} alt={`${title}`} className="object-contain w-[600px] h-[600px] rounded" />
                         </SwiperSlide>
                     ))
                 }
@@ -61,7 +62,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
                 {
                     images.map((image) => (
                         <SwiperSlide key={image}>
-                            <img src={`/products/${image}`} alt={`${title}`} className="object-contain rounded w-[300px] h-[300px] cursor-pointer" />
+                            <ProductImage src={image} alt={`${title}`} className="object-contain rounded w-[300px] h-[300px] cursor-pointer" />
                         </SwiperSlide>
                     ))
                 }

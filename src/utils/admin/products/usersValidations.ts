@@ -1,0 +1,1 @@
+export const validUsersRoles = ['admin', 'client', 'user'];

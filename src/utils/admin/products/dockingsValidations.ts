@@ -1,0 +1,9 @@
+export const validDockingBrands = ['netmak', 'nisuta', 'xtech'];
+export const validDockingComp = ['android', 'ios', 'linux', 'samsung dex' ,'windows'];
+export const validDockingConnections = ['usb a', 'usb c'];
+export const validDockingUsbVersions = ['2.0', '3.0', '3.1'];
+export const validDockingNumberOpts = [0, 1, 2, 3, 4, 5];
+export const validDockingOpts = ['si', 'no'];
+export const validDockingNetConnectors = ['glan', 'n/a'];
+export const validDockingVideoConnectors = ['hdmi'];
+export const validDockingMaterials = ['aluminio', 'plastico'];

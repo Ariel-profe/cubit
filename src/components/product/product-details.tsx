@@ -6,12 +6,12 @@ interface Props {
 
 export const ProductDetails = ({ product }: Props) => {
     return (
-        <ul className="grid grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+        <ul className="grid grid-cols-2 lg:grid-cols-3 gap-2">
             {
-                product.category === "notebooks" && (
+                product.category === "notebook" && (
                     <>
                         <ProductDetailsItem title="tipo" value={product.type} />
-                        <ProductDetailsItem title="sistema operativo" value={product.os} />
+                        <ProductDetailsItem title="sist operativo" value={product.os} />
                         <ProductDetailsItem title="procesador" value={product.processor} />
                         <ProductDetailsItem title="memoria ram" value={product.memoryRam} />
                         <ProductDetailsItem title="tarjeta gráfica" value={product.graphicCard} />
@@ -33,6 +33,16 @@ export const ProductDetails = ({ product }: Props) => {
                         <ProductDetailsItem title="peso" value={product.weight + "gr"} />
                         <ProductDetailsItem title="wifi" value={product.wiFi} />
                         <ProductDetailsItem title="garantía" value={product.warranty} />
+                    </>
+                )
+            }
+            {
+                product.category === "caddy" && (
+                    <>
+                        <ProductDetailsItem title="tipo" value={product.type} />
+                        <ProductDetailsItem title="sist operativo" value={product.os} />
+                        <ProductDetailsItem title="procesador" value={product.processor} />
+                        <ProductDetailsItem title="memoria ram" value={product.memoryRam} />
                     </>
                 )
             }
