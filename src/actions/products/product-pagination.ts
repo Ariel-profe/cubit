@@ -75,7 +75,7 @@ export const getPaginatedProductsWithImages = async ({
 
     // Normalize filters: remove empty or 'all' values
     const normalizedFilters = Object.entries(filters)
-        .filter(([_, value]) => value && value !== "" && value !== "all")
+        .filter(([_, value]) => value !== undefined && value !== "" && value !== "all")
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
     try {
@@ -85,10 +85,38 @@ export const getPaginatedProductsWithImages = async ({
         };
 
         Object.entries(normalizedFilters).forEach(([key, value]) => {
-            // For string fields, use 'contains'; for others, use equality
-            if (typeof value === "string") {
+            // Handle arrays and comma-separated strings for multi-value fields
+            if (
+                Array.isArray(value) ||
+                (typeof value === "string" &&
+                    (key.toLowerCase().includes("colors") 
+                        ||key.toLowerCase().includes("compatibility")
+                        || key.toLowerCase().includes("connectionType")
+                        || key.toLowerCase().includes("volts")
+                        || key.toLowerCase().includes("brandsUse")
+                        || key.toLowerCase().includes("colorStamp")
+                        || key.toLowerCase().includes("materials")
+                    ))
+            ) {
+                const arrValue =
+                    Array.isArray(value)
+                        ? value
+                        : value.split(",").map((v: string) => {
+                            const num = Number(v.trim());
+                            return isNaN(num) ? v.trim() : num;
+                        });
+                where[key] = { hasSome: arrValue };
+            }
+            // Handle numbers
+            else if (typeof value === "number" || (!isNaN(Number(value)) && value !== "")) {
+                where[key] = Number(value);
+            }
+            // Handle strings
+            else if (typeof value === "string") {
                 where[key] = { contains: value, mode: "insensitive" };
-            } else {
+            }
+            // Fallback for other types
+            else {
                 where[key] = value;
             }
         });

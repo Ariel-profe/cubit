@@ -20,8 +20,8 @@ export interface IHeadphone {
     type: string;
     connectionType: string;
     frequencyRange: string;
-    colors: string[];
     microphone: string;
     ledLighting: string;
     gamer: string;
+    colors: string[];
 };

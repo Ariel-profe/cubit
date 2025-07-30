@@ -1,50 +1,57 @@
 // This page is revalidated every 7 days
 export const revalidate = 604800; // 7 days
 
-import { redirect } from "next/navigation";
 import { getPaginatedProductsWithImages } from "@/actions";
-import { Pagination, ProductsGrid, Title } from "@/components";
-// import { useState } from "react";
+import { Pagination, ProductsGrid, Title, ProductFilters } from "@/components";
+import { validCaddyBrands, validCaddyComp, validCaddyThickness } from "@/utils";
 
 interface Props {
-  searchParams: Promise<{ page?: string }>
-}
-
-export default async function CaddyPage ({searchParams}: Props) {
-
-  const page = (await searchParams).page ? parseInt((await searchParams).page!) : 1;
-
-  const {products, currentPage, totalPages} = await getPaginatedProductsWithImages({page, model: "caddy"});   
-  
-
-  if (products.length === 0) {
-    redirect("/productos");
+  searchParams?: {
+    page?: string,
+    brand?: string,
+    // Specific
+    thickness?: string,
+    compatibility?: string[],
   };
+};
 
-  // const [filteredProducts, setFilteredProducts] = useState(products);
+export default async function CaddyPage({ searchParams }: Props) {
 
-  // const handleType = (type: string) => {
-  //   if(type === "all") {
-  //     setFilteredProducts(products);
-  //     return;
-  //   }
-  //   const filtered = products.filter((product) => product.type === type);
-  //   setFilteredProducts(filtered);
-  // }
+  const resolvedSearchParams = searchParams ?? {};
+  const page = resolvedSearchParams.page ? parseInt(resolvedSearchParams.page) : 1;
+  const brand = resolvedSearchParams.brand || "";
+  const thickness = resolvedSearchParams.thickness || "";
+  
+  const compatibility = Array.isArray(resolvedSearchParams.compatibility)
+    ? resolvedSearchParams.compatibility.join(",")
+    : resolvedSearchParams.compatibility || "";
+
+  const { products, totalPages } = await getPaginatedProductsWithImages({ page, model: "caddy", filters: { brand, thickness, compatibility } });
 
   return (
-    <div className="container mx-auto px-3">
-        <Title title="Caddy"/>
+    <section className="container mx-auto px-3 mt-10 lg:mt-20">
+      <Title title="Caddys" />
 
+      <div className="flex flex-col lg:flex-row gap-4">
+        <ProductFilters
+          filters={[
+            { label: "Marca", id: "brand", options: [...validCaddyBrands], defaultLabel: "Todas" },
+            { label: "Espesor", id: "thickness", options: [...validCaddyThickness], defaultLabel: "Todos" },
+            { label: "Compatibilidad", id: "compatibility", options: [...validCaddyComp], defaultLabel: "Todas" },
+          ]}
+        />
+        {
+          products.length === 0 ? (
+            <p className="flex items-center justify-center text-lg text-center w-full lg:w-5/6">No se encontraron productos.</p>
+          ) : (
+            <div className="w-full lg:w-5/6">
+              <ProductsGrid products={products} />
+              <Pagination totalPages={totalPages} />
+            </div>
+          )
+        }
+      </div>
 
-        {/* <button onClick={() => handleType("all")}>Todas</button>
-        <button onClick={() => handleType("hogar")}>Tipo Hogar</button>
-        <button onClick={() => handleType("gamer") }>Tipo Gamer</button> */}
-
-        {/* <ProductsGrid products={filteredProducts} /> */}
-        <ProductsGrid products={products} />
-        <Pagination totalPages={totalPages} />
-
-    </div>
+    </section>
   )
 }

@@ -9,7 +9,7 @@ const featuresTiers = [
   {
     title: "Accesorios",
     buttonText: "Descubrir",
-    href: "/products",
+    href: "/productos",
     popular: false,
     inverse: false,
     features: [
@@ -23,7 +23,7 @@ const featuresTiers = [
   {
     title: "Notebooks",
     buttonText: "Descubrir",
-    href: "/products",
+    href: "/productos/notebooks",
     popular: true,
     inverse: true,
     features: [
@@ -38,7 +38,7 @@ const featuresTiers = [
   {
     title: "Marcas Premium",
     buttonText: "Descubrir",
-    href: "/brands",
+    href: "/marcas",
     popular: false,
     inverse: false,
     features: [

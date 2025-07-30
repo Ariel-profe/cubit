@@ -13,7 +13,7 @@ export const Title = ({title, subtitle, className}: Props) => {
         "my-2",
         className
     )}>
-        <h1 className={`${titleFont.className} antialiased text-tertiary text-2xl md:text-3xl lg:text-4xl font-semibold capitalize`}>
+        <h1 className={`${titleFont.className} antialiased text-tertiary text-3xl lg:text-4xl font-semibold capitalize`}>
             {title}
         </h1>
         {

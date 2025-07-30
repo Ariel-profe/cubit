@@ -43,16 +43,16 @@ export const TopMenu = () => {
         </div>
 
         {/* Center Menu */}
-        <div className={`hidden ${!isSearchVisible ? "sm:block" : "sm:hidden"} fadeIn`}>
-          <Link href="/nosotros" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary">
+        <div className={`hidden ${!isSearchVisible ? "sm:flex lg:text-lg" : "sm:hidden"} fadeIn`}>
+          <Link href="/nosotros" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary flex items-center">
             <IoAccessibilityOutline className="inline-block mr-1" />
             Nosotros
           </Link>
-          <Link href="/servicios" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary">
+          <Link href="/servicios" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary flex items-center">
             <IoMegaphoneOutline className="inline-block mr-1" />
             Servicios
           </Link>
-          <Link href="/productos" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary">
+          <Link href="/productos" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary flex items-center">
             <IoDiceOutline className="inline-block mr-1" />
             Productos
           </Link>

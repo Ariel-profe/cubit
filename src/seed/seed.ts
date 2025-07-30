@@ -197,7 +197,7 @@ export const seedHdds: SeedHdd[] = [
     idManual: 'WD5000LPCX',
     model: 'wd blue',
     format: '2,5"',
-    capacity: '500gb',
+    capacity: '500 gb',
     rpm: '5400',
     thickness: '7mm'
   }
@@ -220,7 +220,7 @@ export const seedHeadphones: SeedHeadphone[] = [
     updatedAt: new Date(),
     idManual: '939-001846',
     type: 'out ear',
-    connectionType: '1x3,5mm',
+    connectionType: '1x3,5 mm',
     microphone: 'si',
     sensitivity: '104db',
     frequencyRange: '20Hz a 20kHz',
@@ -272,7 +272,7 @@ export const seedNetworkCards: SeedNetworkCard[] = [
     updatedAt: new Date(),
     idManual: 'NSCOUSREDCH',
     connectionType: 'lan',
-    usbConnection: 'a 2.0',
+    usbConnection: 'usb a 2.0',
     speed: '100Mbps'
   }
 ];
@@ -320,7 +320,7 @@ export const seedNotebooks: SeedNotebook[] = [
   {
     title: 'Notebook Lenovo intel core i5 16gb ram 500gb dd',
     code: 'xyz123',
-    brand: 'asus',
+    brand: 'lenovo',
     price: 20000,
     images: [
       'notebook-1.jpg',

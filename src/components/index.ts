@@ -43,8 +43,7 @@ export * from './products/categories-grid';
 export * from './products/category-card';
 export * from './products/product-card';
 export * from './products/products-grid';
-export * from './products/filters/notebook-filters';
-
+export * from './products/product-filters';
 
 // Cart
 export * from './cart/order-summary';
