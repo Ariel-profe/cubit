@@ -1,6 +1,7 @@
 
 // Admin utilities
 export * from "./admin/admin-links";
+export * from "./admin/invoice/contact-details";
 
 // Products
 export * from "./products/categories";

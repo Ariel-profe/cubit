@@ -4,7 +4,7 @@
 import { ReactNode, useCallback, useEffect, useState } from "react"
 import { motion } from "motion/react"
 
-const words = ["Hola", "Bonjour", "Ciao", "Olà", "Hello", "Hallå", "Guten tag", "হ্যালো"]
+const words = ["Somos", "CUBIT", "y", "tenemos", "todo", "lo", "que", "necesitas"]
 
 const opacity = {
     initial: {
