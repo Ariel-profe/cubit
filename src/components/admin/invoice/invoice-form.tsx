@@ -1,12 +1,13 @@
-import { BasicDetails, ContactDetails, ItemList, TaxAndTotals } from "@/components";
+import { EmissionData1, EmissionData3, TaxAndTotals, TypeOfReceipt, EmissionData2 } from "@/components";
 
 export const InvoiceForm = () => {
   return (
     <div className="space-y-6">
-        <BasicDetails />
-        <ContactDetails />
-        <ItemList />
-        <TaxAndTotals />
+      <TypeOfReceipt />
+      <EmissionData1 />
+      <EmissionData2 />
+      <EmissionData3 />
+      <TaxAndTotals />
     </div>
   )
 }

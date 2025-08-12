@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Button, InvoiceForm, InvoicePreview, Title } from "@/components";
+import { Button, BudgetForm, BudgetPreview, Title } from "@/components";
 import { IoEyeOutline } from "react-icons/io5";
 
 export default function BudgetPage() {
 
-    const [showPreview, setShowPreview] = useState(false);
+    const [showPreview, setShowPreview] = useState<boolean>(false);
 
     if (showPreview) {
-        return <InvoicePreview />;
+        return <BudgetPreview onBack={() => setShowPreview(false)} />;
     };
 
   return (
@@ -26,7 +26,7 @@ export default function BudgetPage() {
             </Button>
         </div>
 
-        <InvoiceForm />
+        <BudgetForm />
     </section>
   )
 }

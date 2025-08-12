@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { useSession } from 'next-auth/react'
-import { IoAnalyticsOutline, IoCloseOutline, IoCubeOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline, IoSearchOutline, IoTicketOutline } from "react-icons/io5";
-
-import clsx from "clsx";
-import { useUIStore } from "@/store";
-import { logout } from "@/actions";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from 'next-auth/react'
+import { IoAnalyticsOutline, IoCloseOutline, IoCubeOutline, IoLogInOutline, IoLogOutOutline, IoPersonOutline, IoSearchOutline, IoTicketOutline } from "react-icons/io5";
+import clsx from "clsx";
+
+import { logout } from "@/actions";
+import { useUIStore } from "@/store";
 
 export const Sidebar = () => {
 
@@ -59,7 +59,7 @@ export const Sidebar = () => {
             {/* Sidebar content */}
             <nav className={
                 clsx(
-                    "fixed p-5 right-0 top-0 w-[400px] h-screen bg-primary text-white z-20 transform transition-all duration-300",
+                    "fixed p-8 right-0 top-0 w-[400px] h-screen bg-primary text-white z-20 transform transition-all duration-300",
                     {
                         "translate-x-full": !isSideMenuOpen
                     }

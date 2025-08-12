@@ -2,11 +2,11 @@ import { IoDownloadOutline } from "react-icons/io5";
 
 import { Button, Title } from "@/components";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatCurrency } from "@/utils";
+import { formatCurrency, onicContactDetails } from "@/utils";
 
 const items = [
-  { id: 1, description: "Servicio de consultoría", quantity: 2, rate: 150, total: 300 },
-  { id: 2, description: "Desarrollo de software", quantity: 1, rate: 500, total: 500 },
+  { id: 1, description: "Servicio de consultoría", quantity: 2, tax: 150, total: 300 },
+  { id: 2, description: "Desarrollo de software", quantity: 1, tax: 500, total: 500 },
 ]
 
 export const InvoicePreview = () => {
@@ -44,8 +44,8 @@ export const InvoicePreview = () => {
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <h3 className="text-lg font-semibold">De:</h3>
-              <p>AMN Consultora Informatica</p>
-              <p>amn@consultora.com</p>
+              <p>{onicContactDetails.companyName}</p>
+              <p>{onicContactDetails.companyEmail}</p>
             </div>
 
             <div>
@@ -73,8 +73,8 @@ export const InvoicePreview = () => {
                     <td className="py-2 text-center">{item.quantity}</td>
                     <td className="py-2 text-right">
                       {
-                        typeof item.rate === 'number'
-                          ? formatCurrency(item.rate)
+                        typeof item.tax === 'number'
+                          ? formatCurrency(item.tax)
                           : "$" + 0.00
                       }
                     </td>

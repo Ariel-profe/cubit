@@ -44,15 +44,15 @@ export const TopMenu = () => {
 
         {/* Center Menu */}
         <div className={`hidden ${!isSearchVisible ? "sm:flex lg:text-lg" : "sm:hidden"} fadeIn`}>
-          <Link href="/nosotros" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary flex items-center">
+          <Link href="/nosotros" className="m-2 p-2 rounded-md transition-all sm:hover:text-tertiary flex items-center">
             <IoAccessibilityOutline className="inline-block mr-1" />
             Nosotros
           </Link>
-          <Link href="/servicios" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary flex items-center">
+          <Link href="/servicios" className="m-2 p-2 rounded-md transition-all sm:hover:text-tertiary flex items-center">
             <IoMegaphoneOutline className="inline-block mr-1" />
             Servicios
           </Link>
-          <Link href="/productos" className="m-2 p-2 rounded-md transition-all sm:hover:text-quaternary flex items-center">
+          <Link href="/productos" className="m-2 p-2 rounded-md transition-all sm:hover:text-tertiary flex items-center">
             <IoDiceOutline className="inline-block mr-1" />
             Productos
           </Link>
@@ -65,7 +65,7 @@ export const TopMenu = () => {
               <SearchInput setIsSearchVisible={setIsSearchVisible} />
             ) : (
               <button
-                className="m-2 p-2 transition-all sm:hover:text-quaternary cursor-pointer"
+                className="m-2 p-2 transition-all sm:hover:text-tertiary cursor-pointer"
                 onClick={() => setIsSearchVisible(true)}
               >
                 <IoSearchOutline className="w-5 h-5" />
@@ -79,7 +79,7 @@ export const TopMenu = () => {
               ? "/empty"
               : "/carrito"
           }>
-            <div className="relative sm:hover:text-quaternary rounded-full p-2 transition-all">
+            <div className="relative sm:hover:text-tertiary rounded-full p-2 transition-all">
               {
                 (loaded && totalItemsInCart > 0) && (
                   <span className="absolute text-xs rounded-full px-1 font-bold -top-0.5 -right-0.5 bg-tertiary text-black fadeIn">
@@ -93,7 +93,7 @@ export const TopMenu = () => {
           </Link>
 
           {/* Menu */}
-          <button className="m-2 p-2 rounded-md transition-all sm:hover:bg-quaternary sm:hover:text-black cursor-pointer" onClick={openSideMenu}>
+          <button className="m-2 p-2 rounded-md transition-all sm:hover:bg-tertiary sm:hover:text-black cursor-pointer" onClick={openSideMenu}>
             Menú
           </button>
 

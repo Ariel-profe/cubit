@@ -7,23 +7,17 @@ import { InvoiceItem } from "@/components";
 const items = [
   {
     id: 1,
-    name: "Producto 1",
-    description: "Descripción del producto 1",
-    quantity: 2,
-    rate: 500,
-    price: 100,
-  },
-  {
-    id: 2,
-    name: "Producto 2",
-    description: "Descripción del producto 2",
+    code: "",
+    description: "",
     quantity: 1,
-    rate: 500,
-    price: 200,
+    measureUnit: "Unidad",
+    price: 0,
+    bonusPercentage: 0,
+    subtotal: 0,
   }
 ];
 
-export const ItemList = () => {
+export const EmissionData3 = () => {
 
   const addItem = () => {
     // Lógica para agregar un nuevo producto a la lista
@@ -33,7 +27,7 @@ export const ItemList = () => {
   return (
     <Card>
       <CardHeader className="flex items-center justify-between">
-        <CardTitle>Lista de productos</CardTitle>
+        <CardTitle>Datos de la operación (3 de 4)</CardTitle>
         <Button
           size="sm"
           className="mt-2"

@@ -47,9 +47,9 @@ export const ContainerScroll = ({
         }}
       >
         <Header translate={translate} titleComponent={titleComponent} />
-        <Card rotate={rotate} translate={translate} scale={scale}>
+        <CardOne rotate={rotate} translate={translate} scale={scale}>
           {children}
-        </Card>
+        </CardOne>
       </div>
     </div>
   );
@@ -68,7 +68,7 @@ export const Header = ({ translate, titleComponent }: any) => {
   );
 };
 
-export const Card = ({
+export const CardOne = ({
   rotate,
   scale,
   children,

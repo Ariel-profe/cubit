@@ -20,7 +20,7 @@ export const CategoryCard = ({ category }: Props) => {
       />
       <img src={category.image} alt={category.title} className="h-full w-full object-cover grayscale opacity-35 group-hover:grayscale-0 group-hover:opacity-70 transition-all" />
       <div className="absolute bottom-0 right-0 group">
-        <h3 className="text-xl px-2 font-bold group-hover:text-secondary capitalize self-end backdrop-blur-sm">{category.title}</h3>
+        <h3 className="text-xl px-2 font-bold group-hover:text-tertiary capitalize self-end backdrop-blur-sm">{category.title}</h3>
       </div>
     </Link>
   );

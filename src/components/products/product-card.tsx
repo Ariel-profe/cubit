@@ -44,7 +44,7 @@ export const ProductCard = ({ product }: Props) => {
 
             <div className="px-4 flex flex-col gap-2 max-w-xs text-center">
                 <h3 className="text-lg md:text-xl group-hover:text-white capitalize">{product.title}</h3>
-                <p className="text-base md:text-lg font-bold text-blue-400 group-hover:text-secondary">${product.price.toLocaleString('es-AR')}</p>
+                <p className="text-base md:text-lg font-bold text-tertiary group-hover:text-tertiary/75">${product.price.toLocaleString('es-AR')}</p>
             </div>
         </Link>
 

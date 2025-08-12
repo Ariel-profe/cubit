@@ -26,10 +26,8 @@ export const TaxAndTotals = () => {
             <span>Total</span>
             <span>$110.00</span>
           </div>
-
         </div>
       </CardContent>
-
     </Card>
   )
 }
