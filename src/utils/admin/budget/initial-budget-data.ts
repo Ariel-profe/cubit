@@ -11,10 +11,8 @@ export const initialBudgetData: IBudgetData = {
     items: [{
         id: "1",
         description: "",
-        image: null,
+        image: "",
         quantity: 1,
-        price: 0,
-        fee: 0,
-        feePrice: 0
+        price: ""
     }]
 };

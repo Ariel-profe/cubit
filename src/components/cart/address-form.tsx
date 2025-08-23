@@ -131,6 +131,7 @@ export const AddressForm = ({departments, userStoredAddress = {}}: Props) => {
                             required: true
                         }
                         )}
+                        defaultValue={"Mendoza"}
                     />
                 </div>
 

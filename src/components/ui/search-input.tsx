@@ -33,13 +33,13 @@ export const SearchInput = ({ setIsSearchVisible }: Props) => {
                 }}
             />
             <IoCloseOutline
-                size={23}
+                size={22}
                 className="absolute top-1.5 right-8 cursor-pointer hover:bg-background/20 rounded-full md:hover:text-red-600 md:hover:scale-90 transition-all"
                 onClick={() => setIsSearchVisible(false)}
             />
             <IoSearchOutline
-                size={23}
-                className="absolute top-1.5 right-2 cursor-pointer hover:bg-background/20 rounded-full md:hover:text-quaternary md:hover:scale-90 transition-all"
+                size={22}
+                className="absolute top-1.5 right-2 cursor-pointer hover:bg-background/20 rounded-full md:hover:text-tertiary md:hover:scale-90 transition-all"
                 onClick={onSearchTerm}
             />
         </div>

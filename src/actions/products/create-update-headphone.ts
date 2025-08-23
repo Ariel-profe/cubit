@@ -14,7 +14,7 @@ const headphoneSchema = z.object({
     code: z.string().min(3).max(100),
     title: z.string().min(3).max(255),
     slug: z.string().min(3).max(255),
-    brand: z.string().min(3).max(100),
+    brand: z.string().min(2).max(100),
     categoryId: z.string().uuid(),
     price: z.coerce
         .number()

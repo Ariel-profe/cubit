@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { IoTrashOutline } from "react-icons/io5";
 
 import { Select, SelectContent, SelectTrigger, SelectValue, Button, Input, Label, SelectItem } from "@/components";
-import { formatCurrency, measureUnits } from "@/utils";
+import { measureUnits } from "@/utils";
 
 interface Props {
     item: {

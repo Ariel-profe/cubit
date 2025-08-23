@@ -67,7 +67,7 @@ export const SourceForm = ({ product }: Props) => {
         const currentValue = getValues(name) || "";
         const options = new Set(currentValue.split(',').map(opt => opt.trim().toLowerCase()).filter(opt => opt));
         options.has(value.toLowerCase()) ? options.delete(value.toLowerCase()) : options.add(value.toLowerCase());
-        setValue(name, Array.from(options).join(', '));
+        setValue(name, Array.from(options).join(', '), { shouldValidate: true });
     };
 
     // Watch the radion buttons fields to update the UI accordingly

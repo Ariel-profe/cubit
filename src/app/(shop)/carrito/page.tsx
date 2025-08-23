@@ -14,15 +14,14 @@ export default function CartPage() {
 
           {/* Cart */}
           <div className="flex flex-col mt-5">
-            <GoBackButton text="Continuar comprando" href="/products" icon={IoArrowBackCircleOutline} />
+            <GoBackButton text="Continuar comprando" href="/productos" icon={IoArrowBackCircleOutline} />
 
             {/* Items */}
             <ProductsInCart />
-
           </div>
 
           {/* Checkout */}
-          <div className="bg-primary rounded-xl shadow-sm shadow-slate-800 p-4">
+          <div className="bg-primary rounded p-4">
             <h2 className="text-lg lg:text-2xl mb-2">Resumen de la orden:</h2>
 
             <OrderSummary />

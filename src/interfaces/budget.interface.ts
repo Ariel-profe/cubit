@@ -3,9 +3,7 @@ export interface IBudgetItem {
     description: string;
     image: string;
     quantity: number | string;
-    price: number | string;
-    fee?: number | string;
-    feePrice?: number | string;
+    price: string;
 };
 
 export interface IBudgetData {

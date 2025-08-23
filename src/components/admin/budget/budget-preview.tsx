@@ -14,7 +14,7 @@ interface Props {
 export const BudgetPreview = ({ onBack }: Props) => {
 
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
-  const {budget} = useBudgetStore(state => state);
+  const { budget } = useBudgetStore(state => state);
 
   const handleDownloadPDF = () => {
     const url = generatePDF(budget);
@@ -48,7 +48,7 @@ export const BudgetPreview = ({ onBack }: Props) => {
           <img src="/imgs/invoice/amn-logo.png" alt="amn-logo" />
         </div>
         <CardHeader>
-          <CardTitle className="text-sm">AMN tiene el agrado de dirigirse a usted con motivo de hacerle llegar esta cotización y así ofrecerle los artículos solicitados.</CardTitle>
+          <CardTitle className="text-sm text-center">AMN tiene el agrado de dirigirse a usted con motivo de hacerle llegar esta cotización y así ofrecerle los artículos solicitados.</CardTitle>
         </CardHeader>
         <CardContent>
           {/* Budget Header */}
@@ -59,65 +59,55 @@ export const BudgetPreview = ({ onBack }: Props) => {
           {/* From/To  */}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <h4 className="text-lg font-semibold">
-             De: 
-            <span className="font-normal ml-1">
-             {budget.companyName} | {" "}
-             {budget.companyEmail}
-            </span>
+              De:
+              <span className="font-normal ml-1">
+                {budget.companyName} | {" "}
+                {budget.companyEmail}
+              </span>
             </h4>
 
             <h4 className="text-lg font-semibold">
-             Para: 
-            <span className="font-normal ml-1">
-             {budget.clientName} | {" "}
-             {budget.clientEmail}
-            </span>
+              Para:
+              <span className="font-normal ml-1">
+                {budget.clientName} | {" "}
+                {budget.clientEmail}
+              </span>
             </h4>
           </div>
 
-        <div className="overflow-scroll">
-            {/* Invoice items */}
-            <table className="min-w-full my-4">
-              <thead>
-                <tr className="border-b-2">
-                  <th className="text-left">Descripción</th>
-                  <th className="text-left">Imagen</th>
-                  <th>Cantidad</th>
-                  <th className="text-right">Precio</th>
-                  <th className="text-right">Cuotas</th>
-                  <th className="text-right">Precio de cuotas</th>
-                </tr>
-              </thead>
+          {/* Invoice items */}
+          <table className="min-w-full my-4">
+            <thead>
+              <tr className="border-b-2">
+                <th className="text-left">Descripción</th>
+                <th className="text-left">Imagen</th>
+                <th>Cantidad</th>
+                <th className="text-right">Precio</th>
+              </tr>
+            </thead>
 
-              <tbody>
-                {
-                  budget.items.map(item => (
-                    <tr key={item.id} className="border-b py-2 text-sm lg:text-base">
-                      <td>{item.description}</td>
-                      <td>
-                        <img 
-                          src={item.image} 
-                          alt={item.description} 
-                          className="w-16 h-16 lg:w-32 lg:h-32 aspect-square object-cover" 
+            <tbody>
+              {
+                budget.items.map(item => (
+                  <tr key={item.id} className="border-b py-2 text-sm lg:text-base">
+                    <td>{item.description}</td>
+                    <td>
+                      <img
+                        src={item.image || "/imgs/placeholder.png"}
+                        alt={item.description}
+                        className="w-16 h-16 lg:w-32 lg:h-32 aspect-square object-cover"
 
-                        />
-                      </td>
-                      <td className="text-center">{item.quantity}</td>
-                      <td className="text-right">
-                        {typeof item.price === 'number' ? formatCurrency(item.price) : "$0.00"}
-                      </td>
-                      <td className="text-center">
-                        {item.fee ?? ""}
-                      </td>
-                      <td className="text-right">
-                        {typeof item.feePrice === 'number' ? formatCurrency(item.feePrice) : "$0.00"}
-                      </td>
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
-           </div>
+                      />
+                    </td>
+                    <td className="text-center">{item.quantity}</td>
+                    <td className="text-right">
+                      {item.price}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
 
           {/* Totals */}
           {/* <div className="flex justify-end">

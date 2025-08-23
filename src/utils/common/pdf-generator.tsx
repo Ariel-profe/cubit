@@ -3,7 +3,6 @@ import { jsPDF } from "jspdf";
 
 import { IBudgetData } from "@/interfaces/budget.interface";
 import { formatDate } from "./format-date";
-import { formatCurrency } from "./format-currency";
 
 export const generatePDF = (budget: IBudgetData) => {
     // Create a new PDF document
@@ -44,25 +43,25 @@ export const generatePDF = (budget: IBudgetData) => {
     //Items header
     doc.setFontSize(10);
     doc.text("Descripción", 5, y);
-    doc.text("Imagen", 100, y);
-    doc.text("Cantidad", 120, y);
-    doc.text("Precio", 140, y);
-    doc.text("Cuotas", 160, y);
-    doc.text("Precio de cuotas", 180, y);
+    doc.text("Imagen", 120, y);
+    doc.text("Cantidad", 140, y);
+    doc.text("Precio", 160, y);
     y += 4;
     doc.line(10, y, 200, y); // Horizontal line
     y += 4;
 
     //Items
     budget.items.forEach(item => {
-        doc.text(item.description, 5, y);
-        doc.addImage(item.image, "PNG", 100, y - 5, 20, 20);
-        doc.text(item.quantity.toString(), 120, y);
-        doc.text(`$${Number(item.price).toFixed(2)}`, 140, y);
-        {item.fee && doc.text(item.fee.toString(), 160, y)}
-        {item.feePrice && doc.text(`$${Number(item.feePrice).toFixed(2)}`, 180, y)}
+        doc.text(item.description, 5, y + 5);
+        doc.addImage(item.image, "PNG", 120, y, 20, 20);
+        doc.text(item.quantity.toString(), 145, y + 5);
+        doc.text(item.price, 160, y + 5);
         y += 10;
     });
+
+    // Signature
+    doc.addImage("/assets/firma-dani.png", "SVG", 10, y + 10, 50, 20);
+    y += 30;
 
     // Generate blob URL for preview
     const pdfBlob = doc.output("blob");

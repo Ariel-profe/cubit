@@ -107,7 +107,7 @@ export const CarryForm = ({ product }: Props) => {
 
         // If the product was created or updated successfully
         toast.success(message, { position: "bottom-right" });
-        router.replace("/admin/productos/caddys");
+        router.replace("/admin/productos/carrys");
     };
 
     const handleDeleteProductImage = async (imageId: number, imageUrl: string) => {

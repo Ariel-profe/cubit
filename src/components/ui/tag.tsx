@@ -8,7 +8,7 @@ interface Props {
 
 export const Tag = ({title}:Props) => {
   return (
-    <div className="inline-flex text-sm p-2 rounded-xl border border-white/30">
+    <div className="inline-flex text-sm p-2 mb-1 rounded-xl border border-white/30">
       <motion.span
         animate={{
           backgroundPositionX: "100%",

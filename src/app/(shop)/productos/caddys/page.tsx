@@ -6,18 +6,19 @@ import { Pagination, ProductsGrid, Title, ProductFilters } from "@/components";
 import { validCaddyBrands, validCaddyComp, validCaddyThickness } from "@/utils";
 
 interface Props {
-  searchParams?: {
+  searchParams?: Promise<{
     page?: string,
     brand?: string,
     // Specific
     thickness?: string,
-    compatibility?: string[],
-  };
+    compatibility?: string[]
+  }>;
 };
 
 export default async function CaddyPage({ searchParams }: Props) {
 
-  const resolvedSearchParams = searchParams ?? {};
+  const resolvedSearchParams = (await searchParams) ?? {};
+  
   const page = resolvedSearchParams.page ? parseInt(resolvedSearchParams.page) : 1;
   const brand = resolvedSearchParams.brand || "";
   const thickness = resolvedSearchParams.thickness || "";

@@ -4,22 +4,22 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --primary: oklch(16.049% 0.10227 265.732);
-  --secondary: rgb(8, 0, 114);
-  --tertiary: rgb(6, 90, 224);
-  --quaternary: #9333ea;
+  --primary: #020617;
+  --secondary: #1e40af;
+  --tertiary: rgb(37, 99, 235);
+  --quaternary: #d946ef;
 
   --button-ripple-color: oklch(0.145 0 0 / 0.3);
 
   --radius: 0.625rem;
 
-  --background: #030018;
+  --background: #010008;
 
   --foreground: oklch(0.129 0.042 264.695);
 
-  --card: oklch(100% 0.00011 271.152);
+  --card: #020617;
 
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(84.241% 0.00147 285.393);
 
   --popover: oklch(1 0 0);
 
@@ -37,11 +37,11 @@
 
   --accent-foreground: oklch(0.208 0.042 265.755);
 
-  --destructive: #c0020c;
+  --destructive: #dc2626;
 
   --border: oklch(0.929 0.013 255.508);
 
-  --input: oklch(0.929 0.013 255.508);
+  --input: oklch(27.746% 0.07259 256.238);
 
   --ring: oklch(0.704 0.04 256.788);
 
@@ -129,7 +129,7 @@
   }
 
   .section-title {
-    @apply text-center text-3xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-secondary to-tertiary text-transparent bg-clip-text;
+    @apply text-center text-3xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-linear-to-t from-secondary to-tertiary text-transparent bg-clip-text;
   }
 
   .section-description {
@@ -192,4 +192,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }

@@ -6,12 +6,14 @@ import { useAddressStore, useCartStore } from "@/store";
 import { placeOrder } from "@/actions";
 import { Button, Loading } from "@/components";
 import { formatCurrency } from "@/utils/common/format-currency";
+import { useSession } from "next-auth/react";
 
 export const PlaceOrder = () => {
 
     const [loaded, setLoaded] = useState<boolean>(false);
     const [isPlacingOrder, setIsPlacingOrder] = useState<boolean>(false);
     const [message, setMessage] = useState("");
+    const session = useSession();
 
     const address = useAddressStore(state => state.address);
 
@@ -41,7 +43,17 @@ export const PlaceOrder = () => {
             return;
         };
 
-        setMessage("Pedido creado. Email enviado.")
+        // sendEmail(
+        //     session.data!.user!.email,
+        //     "Nuevo pedido",
+        //     `
+        //         <h1>Gracias por tu pedido</h1>
+        //         <p>Hemos recibido tu pedido y estamos procesándolo.</p>
+        //     `
+        // );
+
+        setIsPlacingOrder(false);
+        setMessage("Pedido creado. Email enviado.");
 
         // En este punto todo ha salido bien
         setTimeout(() => {
@@ -55,7 +67,7 @@ export const PlaceOrder = () => {
     };
 
     return (
-        <div className="bg-primary rounded-xl shadow-sm shadow-primary/50 text-slate-100 p-4">
+        <div className="bg-primary rounded text-slate-100 p-4">
             <h2 className="text-2xl mb-2">Datos del cliente:</h2>
             <div className="text-sm text-slate-300">
                 <p className="font-semibold text-base text-white capitalize">{address.firstName} {address.lastName}</p>
@@ -77,7 +89,7 @@ export const PlaceOrder = () => {
 
             <div className="grid grid-cols-2">
                 <span>N.º Productos</span>
-                <span className="text-right">{itemsInCart === 1 ? 'artículo' : `${itemsInCart} artículos`}</span>
+                <span className="text-right">{itemsInCart === 1 ? '1 artículo' : `${itemsInCart} artículos`}</span>
 
                 <span>Subtotal</span>
                 <span className="text-right">{formatCurrency(subtotal)}</span>

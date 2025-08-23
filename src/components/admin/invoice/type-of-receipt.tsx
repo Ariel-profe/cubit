@@ -1,19 +1,4 @@
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-
-import { Label } from "@/components/ui/label";
+import {Card, CardContent, CardHeader, CardTitle, Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, Label} from "@/components";
 import { onicContactDetails } from "@/utils";
 
 export const TypeOfReceipt = () => {

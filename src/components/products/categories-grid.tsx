@@ -1,4 +1,4 @@
-import { CategoryCard } from "@/components/products/category-card";
+import { CategoryCard } from "@/components";
 import { ICategory } from "@/interfaces";
 
 interface Props {

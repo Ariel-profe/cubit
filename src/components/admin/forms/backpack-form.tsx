@@ -4,11 +4,12 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import clsx from "clsx";
 
 import { createUpdateBackpack, deleteProductImage } from "@/actions";
 import { ProductImage, Button } from "@/components";
 import { IBackpack, IProductImage } from "@/interfaces";
-import { validBackpackBrands, validBackpackColors, validBackpackCompartments, validBackpackNotebookSizes, validBackpackOptions, validBackpackPockets } from "@/utils/admin/products/backpacksValidations";
+import { validBackpackBrands, validBackpackColors, validBackpackCompartments, validBackpackNotebookSizes, validBackpackOptions, validBackpackPockets, validBackpackMaterials } from "@/utils/admin/products/backpacksValidations";
 
 interface Props {
     product: Partial<IBackpack> & { ProductImage?: IProductImage[] } | undefined;
@@ -63,9 +64,18 @@ export const BackpackForm = ({ product }: Props) => {
         return () => subscription.unsubscribe();
     }, [watch, setValue]);
 
+    const handleRadioChange = (name: "materials", value: string) => {
+        // Get the current values, split by comma, and trim each value
+        const currentValue = getValues(name) || "";
+        const options = new Set(currentValue.split(',').map(opt => opt.trim().toLowerCase()).filter(opt => opt));
+        options.has(value.toLowerCase()) ? options.delete(value.toLowerCase()) : options.add(value.toLowerCase());
+        setValue(name, Array.from(options).join(', '), { shouldValidate: true });
+    };
+
     // Watch the radion buttons fields to update the UI accordingly
     watch("notebookCompartment");
     watch("notebookSize");
+    watch("materials");
 
     const onSubmit = async (data: FormInputs) => {
 
@@ -258,15 +268,6 @@ export const BackpackForm = ({ product }: Props) => {
 
                     <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
                         <div className="flex flex-col mb-2 w-full">
-                            <span>Materiales</span>
-                            <input
-                                type="text"
-                                className="p-2 border rounded-md bg-slate-200 text-slate-800"
-                                {...register("materials", { required: true })}
-                            />
-                        </div>
-
-                        <div className="flex flex-col mb-2 w-full">
                             <span>Compartimientos</span>
                             <select
                                 className="p-2 border rounded-md bg-slate-200 text-slate-800 capitalize"
@@ -349,6 +350,28 @@ export const BackpackForm = ({ product }: Props) => {
                 {/* Checkboxes and Images */}
                 <div className="w-full">
                     {/* As checkboxes */}
+                    <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
+                        <div className="flex flex-col my-2 w-full">
+                            <span>Materiales</span>
+                            <div className="flex flex-wrap">
+                                {validBackpackMaterials.map((opt) => (
+                                    <div
+                                        key={opt}
+                                        onClick={() => handleRadioChange("materials", opt)}
+                                        className={clsx(
+                                            "p-2 border cursor-pointer rounded-md mr-2 mb-2 min-w-fit transition-all text-center",
+                                            {
+                                                "bg-secondary text-white": (getValues("materials") ?? "").includes(opt),
+                                            }
+                                        )}
+                                    >
+                                        <span className="capitalize">{opt}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="flex flex-col">
 
                         <div className="flex flex-col lg:flex-row justify-between items-center gap-2">

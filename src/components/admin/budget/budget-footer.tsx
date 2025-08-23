@@ -1,7 +1,7 @@
 
 export const BudgetFooter = () => {
     return (
-        <ul className="list-disc pl-5 mt-5 bg-slate-50 w-full p-4">
+        <ul className="list-disc pl-5 mt-5 w-full p-4">
             <li>
                 Los precios cotizados incluyen IVA.
             </li>

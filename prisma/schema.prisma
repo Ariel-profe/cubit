@@ -33,7 +33,6 @@ model User {
   // Relations
   address UserAddress?
   Order   Order[]
-  Invoice Invoice[]
 }
 
 model Department {
@@ -764,30 +763,4 @@ model VideoCard {
   OrderItem    OrderItem[]
 
   @@index([code, brand])
-}
-
-model InvoiceItem {
-  id          String @id @default(uuid())
-  description String
-  quantity    Int
-  rate        Int
-  total       Int
-
-  invoice   Invoice @relation(fields: [invoiceId], references: [id])
-  invoiceId String
-
-  @@index([invoiceId])
-}
-
-model Invoice {
-  id           String        @id @default(uuid())
-  number       Int           @unique
-  date         DateTime      @default(now())
-  total        Int
-  status       Boolean       @default(true)
-  userId       String
-  user         User          @relation(fields: [userId], references: [id])
-  invoiceItems InvoiceItem[]
-
-  @@index([userId])
 }

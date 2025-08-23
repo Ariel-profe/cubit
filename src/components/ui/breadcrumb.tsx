@@ -44,7 +44,7 @@ function BreadcrumbLink({
   return (
     <Comp
       data-slot="breadcrumb-link"
-      className={cn("hover:text-slate-100 transition-colors", className)}
+      className={cn("hover:text-slate-300 transition-colors", className)}
       {...props}
     />
   )
@@ -57,7 +57,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn("text-foreground font-normal", className)}
+      className={cn("text-slate-600 font-normal", className)}
       {...props}
     />
   )
@@ -114,7 +114,12 @@ export const AdminBreadcrumb = ({ title1, title2 = "", title3 = "", href1, href2
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={href1}>{title1}</Link>
+          {
+            href1
+              ? <Link href={href1}>{title1}</Link>
+              : <BreadcrumbPage>{title1}</BreadcrumbPage>
+          }
+            
           </BreadcrumbLink>
         </BreadcrumbItem>
         {
@@ -123,7 +128,11 @@ export const AdminBreadcrumb = ({ title1, title2 = "", title3 = "", href1, href2
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href={href2}>{title2}</Link>
+                  {
+                    href2
+                      ? <Link href={href2}>{title2}</Link>
+                      : <BreadcrumbPage>{title2}</BreadcrumbPage>
+                  }
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </>
@@ -135,7 +144,11 @@ export const AdminBreadcrumb = ({ title1, title2 = "", title3 = "", href1, href2
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href={href3}>{title3}</Link>
+                  {
+                    href3
+                      ? <Link href={href3}>{title3}</Link>
+                      : <BreadcrumbPage>{title3}</BreadcrumbPage>
+                  }
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </>

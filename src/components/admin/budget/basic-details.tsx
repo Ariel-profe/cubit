@@ -25,7 +25,8 @@ const { budget, updatedBudget } = useBudgetStore(state => state);
           <Input 
             id="budget-date" 
             type="date" 
-            value={budget.date} 
+            value={budget.date}
+            className="text-slate-200" 
             onChange={(e) => updatedBudget({ date: e.target.value })}
           />
         </div>

@@ -9,7 +9,7 @@ export default function EmptyPage() {
       <div className="flex flex-col items-center">
         <h1 className="text-xl font-light">Tu carrito está vacío</h1>
 
-        <Link href="/" className="text-secondary mt-2 text-3xl underline">Regresar</Link>
+        <Link href="/" className="text-tertiary mt-2 text-3xl underline">Regresar</Link>
       </div>
     </section>
   );

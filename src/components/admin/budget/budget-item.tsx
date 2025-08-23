@@ -38,11 +38,11 @@ export const BudgetItem = ({ item, index, canRemove }: Props) => {
  };
 
     return (
-        <fieldset className="border p-2 rounded fadeIn">
-            <legend className="text-xs">Opcion {index + 1}:</legend>
+        <fieldset className="border border-slate-800 p-2 rounded fadeIn">
+            <legend className="text-xs text-slate-400">Opcion {index + 1}:</legend>
             <div className="grid lg:grid-cols-12 gap-4 lg:gap-2 p-2">
-                <div className="lg:col-span-5">
-                    <Label htmlFor={`description-${index}`} className="mb-0.5 text-slate-600">
+                <div className="lg:col-span-6">
+                    <Label htmlFor={`description-${index}`} className="mb-0.5">
                         Descripción
                     </Label>
                     <Input 
@@ -52,12 +52,13 @@ export const BudgetItem = ({ item, index, canRemove }: Props) => {
                     />
                 </div>
                 <div className="lg:col-span-2">
-                    <Label htmlFor={`image-${index}`} className="mb-0.5 text-slate-600">
+                    <Label htmlFor={`image-${index}`} className="mb-0.5">
                         Imagen
                     </Label>
                     <Input 
                         id={`image-${index}`}
                         type="file"
+                        className="cursor-pointer"
                         onChange={e => {
                             const file = e.target.files?.[0] ?? null;
                             if (file) {
@@ -70,7 +71,7 @@ export const BudgetItem = ({ item, index, canRemove }: Props) => {
                     />
                 </div>
                 <div className="col-span-1">
-                    <Label htmlFor={`quantity-${index}`} className="mb-0.5 text-slate-600">
+                    <Label htmlFor={`quantity-${index}`} className="mb-0.5">
                         Cantidad
                     </Label>
                     <Input 
@@ -82,11 +83,11 @@ export const BudgetItem = ({ item, index, canRemove }: Props) => {
                         onBlur={handleQuantityBlur}
                     />
                 </div>
-                <div className="col-span-1">
-                    <Label htmlFor={`price-${index}`} className="mb-0.5 text-slate-600">
+                <div className="col-span-2">
+                    <Label htmlFor={`price-${index}`} className="mb-0.5">
                         Precio
                     </Label>
-                    <Input 
+                    {/* <Input 
                         id={`price-${index}`}
                         type="number"
                         step={0.01}
@@ -94,43 +95,18 @@ export const BudgetItem = ({ item, index, canRemove }: Props) => {
                         value={item.price}
                         onChange={ e => handleNumberChange(e.target.value, "price") }
                         onBlur={() => handleNumberBlur("price")}
-                        className="bg-slate-100"
-                    />
-                </div>
-                <div className="col-span-1">
-                    <Label htmlFor={`fee-${index}`} className="mb-0.5 text-slate-600">
-                        Cuotas
-                    </Label>
+                        className="bg-slate-800"
+                    /> */}
                     <Input 
-                        id={`fee-${index}`}
-                        type="number"
-                        min={0}
-                        value={item.fee}
-                        onChange={ e => handleNumberChange(e.target.value, "fee") }
-                        onBlur={() => handleNumberBlur("fee")}
-                        className="bg-slate-100"
-                    />
-                </div>
-                <div className="col-span-1">
-                    <Label htmlFor={`feePrice-${index}`} className="mb-0.5 text-slate-600">
-                        Precio cuotas
-                    </Label>
-                    <Input 
-                        id={`feePrice-${index}`}
-                        type="number"
-                        step={0.01}
-                        min={0}
-                        value={item.feePrice}
-                        onChange={ e => handleNumberChange(e.target.value, "feePrice") }
-                        onBlur={() => handleNumberBlur("feePrice")}
-                        className="bg-slate-100"
+                        id={`price-${index}`}
+                        value={item.price}
+                        onChange={ e => updateItem(index, "price", e.target.value )}
                     />
                 </div>
                 <div className="col-span-1 flex items-end">
-                    
                     <Button 
-                        variant="outline" 
-                        className="bg-transparent text-destructive"  
+                        variant="destructive" 
+                        size="icon"
                         onClick={() => removeItem(index)}
                         disabled={!canRemove}
                     >

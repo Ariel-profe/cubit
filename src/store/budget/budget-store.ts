@@ -31,9 +31,7 @@ export const useBudgetStore = create<State>()((set) => ({
                     description: "",
                     image: "",
                     quantity: 1,
-                    price: 0,
-                    fee: 0,
-                    feePrice: 0
+                    price: ""
                 }
             ]
         }

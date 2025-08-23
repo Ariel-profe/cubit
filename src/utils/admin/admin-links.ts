@@ -29,7 +29,7 @@ export const adminLinks:IAdminLink[] = [
         icon: IoNewspaperOutline,
     },
     {
-        title: "Facturacion",
+        title: "Facturación",
         href: "/admin/facturacion",
         icon: IoLayersOutline,
     },

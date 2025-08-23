@@ -26,19 +26,13 @@ export const Sidebar = () => {
         replace(`/buscar/${searchTerm}`);
         setSearchTerm('');
         closeSideMenu();
-    }
+    };
 
     const onLogout = async () => {
         await logout();
         window.location.reload();
         closeSideMenu();
     };
-
-    const splitName = (fullName: string | undefined) => {
-        return fullName?.split(" ")[0].toUpperCase();
-    };
-
-    const userName = splitName(session?.user.name)
 
     return (
         <div>
@@ -65,16 +59,16 @@ export const Sidebar = () => {
                     }
                 )
             }>
-                {userName && (<p>Hola <span className="text-tertiary">{userName}</span></p>)}
+                {session?.user.name && (<p>Hola <span className="text-tertiary capitalize">{session?.user.name.split(" ")[0]}</span></p>)}
 
                 <IoCloseOutline
                     size={30}
-                    className="absolute top-2 right-5 cursor-pointer hover:bg-background/20 rounded-full md:hover:text-red-600 md:hover:scale-90 transition-all"
+                    className="absolute top-2 right-5 cursor-pointer hover:bg-background/75 rounded-full md:hover:text-red-600 md:hover:scale-90 transition-all"
                     onClick={closeSideMenu}
                 />
 
                 {/* Input Search */}
-                <div className="relative mt-14 text-slate-400 flex items-center py-2 px-1 bg-background/20 rounded">
+                <div className="relative mt-14 text-slate-400 flex items-center py-2 px-1 bg-background/75 rounded">
                         <IoSearchOutline
                             size={20}
                             className="font-bold"
@@ -99,7 +93,7 @@ export const Sidebar = () => {
                         <Link
                             href="/auth/login"
                             onClick={(closeSideMenu)}
-                            className="flex items-center mt-4 py-2 px-1 hover:bg-background/20 rounded transition-all text-emerald-400"
+                            className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all text-emerald-400"
                         >
                             <IoLogInOutline size={20} />
                             <span className="ml-3 text-base tracking-wide">Ingresar</span>
@@ -111,7 +105,7 @@ export const Sidebar = () => {
                 <Link
                     href="/nosotros"
                     onClick={(closeSideMenu)}
-                    className="flex items-center mt-4 py-2 px-1 hover:bg-background/20 rounded transition-all sm:hidden"
+                    className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all sm:hidden"
                 >
                     <IoCubeOutline size={20} />
                     <span className="ml-3 text-base tracking-wide">Nosotros</span>
@@ -120,7 +114,7 @@ export const Sidebar = () => {
                 <Link
                     href="/productos"
                     onClick={(closeSideMenu)}
-                    className="flex items-center mt-4 py-2 px-1 hover:bg-background/20 rounded transition-all sm:hidden"
+                    className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all sm:hidden"
                 >
                     <IoCubeOutline size={20} />
                     <span className="ml-3 text-base tracking-wide">Productos</span>
@@ -129,7 +123,7 @@ export const Sidebar = () => {
                 <Link
                     href="/servicios"
                     onClick={(closeSideMenu)}
-                    className="flex items-center mt-4 py-2 px-1 hover:bg-background/20 rounded transition-all sm:hidden"
+                    className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all sm:hidden"
                 >
                     <IoPersonOutline size={20} />
                     <span className="ml-3 text-base tracking-wide">Servicios</span>
@@ -142,7 +136,7 @@ export const Sidebar = () => {
                             <Link
                                 href="/perfil"
                                 onClick={(closeSideMenu)}
-                                className="flex items-center mt-4 py-2 px-1 hover:bg-background/20 rounded transition-all"
+                                className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all"
                             >
                                 <IoPersonOutline size={20} />
                                 <span className="ml-3 text-base tracking-wide">Perfil</span>
@@ -150,7 +144,7 @@ export const Sidebar = () => {
                             <Link
                                 href="/ordenes"
                                 onClick={(closeSideMenu)}
-                                className="flex items-center mt-4 py-2 px-1 hover:bg-background/20 rounded transition-all"
+                                className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all"
                             >
                                 <IoTicketOutline size={20} />
                                 <span className="ml-3 text-base tracking-wide">Órdenes</span>
@@ -165,7 +159,7 @@ export const Sidebar = () => {
                                 closeSideMenu()
                                 onLogout()
                             }}
-                            className="flex w-full items-center mt-4 py-2 px-1 hover:bg-background/20 rounded transition-all cursor-pointer text-red-600"
+                            className="flex w-full items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all cursor-pointer text-red-600"
                         >
                             <IoLogOutOutline size={20} />
                             <span className="ml-3 text-base tracking-wide">Salir</span>
@@ -183,9 +177,9 @@ export const Sidebar = () => {
                             <span className="text-xs text-slate-400">Administrador</span>
 
                             <Link
-                                href="/admin"
+                                href="/admin/dashboard"
                                 onClick={(closeSideMenu)}
-                                className="flex items-center py-2 hover:bg-background/20 rounded transition-all px-1"
+                                className="flex items-center py-2 hover:bg-background/75 rounded transition-all px-1"
                             >
                                 <IoAnalyticsOutline size={20} />
                                 <span className="ml-3 text-base tracking-wide">Panel administrativo</span>

@@ -31,16 +31,14 @@ export const TopMenu = () => {
     <nav
       className={
         `sticky top-0 w-full mx-auto p-2 z-20 
-        ${scroll ? "bg-[#0d0220]" : "bg-transparent"} transition-all duration-200 ease-in`
+        ${scroll ? "bg-[#060329]" : "bg-transparent"} transition-all duration-200 ease-in`
       }
     >
       <div className="max-w-[1600px] mx-auto flex justify-between items-center w-full">
         {/* Logo */}
-        <div>
-          <Link href="/">
-            <img src="/imgs/common/logo.webp" alt="cubit-logo" className="h-12" />
-          </Link>
-        </div>
+        <Link href="/">
+          <img src="/imgs/common/logo.webp" alt="cubit-logo" className="h-12" />
+        </Link>
 
         {/* Center Menu */}
         <div className={`hidden ${!isSearchVisible ? "sm:flex lg:text-lg" : "sm:hidden"} fadeIn`}>
@@ -59,13 +57,13 @@ export const TopMenu = () => {
         </div>
 
         {/* Search */}
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center gap-x-2 p-1">
           {
             isSearchVisible ? (
               <SearchInput setIsSearchVisible={setIsSearchVisible} />
             ) : (
               <button
-                className="m-2 p-2 transition-all sm:hover:text-tertiary cursor-pointer"
+                className=" transition-all sm:hover:text-tertiary cursor-pointer"
                 onClick={() => setIsSearchVisible(true)}
               >
                 <IoSearchOutline className="w-5 h-5" />
