@@ -6,30 +6,33 @@ import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, Paginat
 import { categories } from "@/utils";
 
 interface Props {
-  params: { 
+  params: Promise<{ 
     query: string 
-  },
-  searchParams: { 
+  }>,
+  searchParams: Promise<{ 
     page?: string 
-  }
+  }>
 };
 
 export default async function SearchPage({ params, searchParams }: Props) {
 
-  if (!params.query) {
+  const resolvedParams = (await params) as { query: string };
+  const resolvedSearchParams = (await searchParams) as { page?: string };
+
+  if (!resolvedParams.query) {
     redirect("/");
   }
 
-  const page = searchParams?.page ? parseInt(searchParams.page) : 1;
+  const page = resolvedSearchParams?.page ? parseInt(resolvedSearchParams.page) : 1;
 
   const { totalPages, products } = await getProductsByTerm({ 
-    term: params.query, 
+    term: resolvedParams.query, 
     page 
   });  
 
   return (
     <section className="flex flex-col container mx-auto px-3 mt-10 lg:mt-20">
-      <Title title={`Resultados para: "${params.query}"`} subtitle="Buscar productos" />
+      <Title title={`Resultados para: "${resolvedParams.query}"`} subtitle="Buscar productos" />
 
       <div className="mt-5">
        {
@@ -37,14 +40,14 @@ export default async function SearchPage({ params, searchParams }: Props) {
             <div className="w-full">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {products.map(product => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard key={product.id} product={product}  />
                 ))}
               </div>
               <Pagination totalPages={totalPages} />
               </div>
           ) : (
             <div className="text-center text-gray-400 sm:text-lg md:text-xl">
-              <p>No encontramos productos para <span className="text-red-600">"{params.query}"</span></p>
+              <p>No encontramos productos para <span className="text-red-600">"{resolvedParams.query}"</span></p>
               <div className="mt-10 lg:mt-20 flex items-center justify-center gap-x-3">
                 <p>¿Quieres buscar en nuestras categorías?</p>
                 <DropdownMenu >

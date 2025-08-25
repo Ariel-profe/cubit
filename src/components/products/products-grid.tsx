@@ -16,7 +16,7 @@ export const ProductsGrid = ({ products }: Props) => {
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 fadeIn">
       {
         products.map((product, index) => (
-          <ProductCard key={product.slug} product={product} index={index} />
+          <ProductCard key={product.slug} product={product} />
         ))
       }
     </div>

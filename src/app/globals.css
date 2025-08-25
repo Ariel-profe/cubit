@@ -4,10 +4,14 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --primary: #020617;
+  --primary: #0b1438;
+  --secondary: #4117ff;
+  --tertiary: #6bd3ff;
+  --quaternary: #7452ff;
+  /* --primary: #020617;
   --secondary: #1e40af;
   --tertiary: rgb(37, 99, 235);
-  --quaternary: #d946ef;
+  --quaternary: #d946ef; */
 
   --button-ripple-color: oklch(0.145 0 0 / 0.3);
 

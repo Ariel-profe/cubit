@@ -1,4 +1,4 @@
-import { Footer, Sidebar, TopMenu } from "@/components";
+import { Footer, Sidebar, Navbar } from "@/components";
 
 export default function ShopLayout({
     children
@@ -7,7 +7,7 @@ export default function ShopLayout({
 }) {
     return (
         <main className="grid min-h-[100dvh] grid-rows-[auto_auto_1fr_auto]">
-            <TopMenu />
+            <Navbar />
             <Sidebar />
             {children}
             <Footer />

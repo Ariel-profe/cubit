@@ -26,7 +26,7 @@ export default async function BackpackPage({ searchParams }: Props) {
   const { products, totalPages } = await getPaginatedProductsWithImages({ page, model: "backpack", filters: { brand, notebookSize, color } });
 
   return (
-    <div className="container mx-auto px-3">
+    <div className="container mx-auto px-3 mt-10 lg:mt-20">
       <Title title="Mochilas" />
 
       <div className="flex flex-col lg:flex-row gap-4">

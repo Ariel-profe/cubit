@@ -4,7 +4,7 @@ interface NavbarProps {
   title: string;
 };
 
-export function Navbar({ title }: NavbarProps) {
+export function AdminNavbar({ title }: NavbarProps) {
   return (
     <header className="sticky top-0 z-10 w-full shadow backdrop-blur border-b border-slate-900">
       <div className="mx-4 sm:mx-8 flex h-14 items-center">

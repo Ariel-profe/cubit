@@ -113,7 +113,7 @@ export function CollapseMenuButton({
             </Button>
                 
             <Link href={`/admin/productos/${label}/new`}
-              className="absolute right-2 hover:text-background"
+              className="absolute right-2 hover:text-tertiary hover:border border-tertiary transition-all p-1 rounded-sm"
             >
               <IoAddOutline />
             </Link>

@@ -1,20 +1,22 @@
 // UI
 export * from './ui/avatar';
 export * from './ui/breadcrumb';
+export * from './ui/border-beam';
 export * from './ui/button';
 export * from './ui/card';
 export * from './ui/checkbox';
 export * from './ui/collapsible';
 export * from './ui/dropdown-menu';
+export * from './ui/flip-card';
 export * from './ui/footer';
 export * from './ui/go-back-button';
 export * from './ui/input';
 export * from './ui/label';
 export * from './ui/loading';
 export * from './ui/modal';
+export * from './ui/navbar';
 export * from './ui/page-not-found';
 export * from './ui/pagination';
-export * from './ui/rotating-text';
 export * from './ui/scroll-area';
 export * from './ui/search-input';
 export * from './ui/select';
@@ -25,7 +27,6 @@ export * from './ui/switch';
 export * from './ui/tag';
 export * from './ui/title';
 export * from './ui/tooltip';
-export * from './ui/top-menu';
 export * from './ui/transition-panel';
 
 //Homepage
@@ -41,6 +42,7 @@ export * from './homepage/testimonials';
 // About
 export * from './about/text-focus';
 export * from './about/laptop-scroll';
+export * from './about/about-hero';
 
 // Services
 export * from './services/features-grid';
@@ -105,7 +107,7 @@ export * from './admin/dashboard/admin-sidebar';
 export * from './admin/dashboard/collapse-menu-button';
 export * from './admin/dashboard/content-layout';
 export * from './admin/dashboard/menu';
-export * from './admin/dashboard/navbar';
+export * from './admin/dashboard/admin-navbar';
 export * from './admin/dashboard/sheet-menu';
 export * from './admin/dashboard/sidebar-toggle';
 export * from './admin/dashboard/user-nav';

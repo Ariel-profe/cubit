@@ -9,11 +9,10 @@ interface Props {
         category: string;
         price: number;
         images: string[];
-    },
-    index: number;
+    }
 };
 
-export const ProductCard = ({ product, index }: Props) => {
+export const ProductCard = ({ product }: Props) => {
 
     return (
         <Link

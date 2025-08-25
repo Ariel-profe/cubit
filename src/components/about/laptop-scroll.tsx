@@ -624,7 +624,7 @@ export function LaptopScroll() {
       <MacbookScroll
         title={
           <span>
-           Llevamos la tecnología a tu casa.
+           
           </span>
         }
         badge={

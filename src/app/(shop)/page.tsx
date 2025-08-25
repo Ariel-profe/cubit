@@ -1,4 +1,4 @@
-import { CallToAction, Hero, LogoTicker, Features, ProductShowcase, Testimonials, ContainerScroll, DemoOne } from "@/components";
+import { CallToAction, LogoTicker, Features, ProductShowcase, Testimonials, ContainerScroll, DemoOne, Hero } from "@/components";
 
 export default function Home() {
   return (
