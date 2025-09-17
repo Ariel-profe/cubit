@@ -1,5 +1,4 @@
-import { LaptopScroll, Tag, TransitionPanel } from "@/components";
-import { TextFocus } from "@/components/about/text-focus";
+import { StepsAnimated, Tag, TransitionPanel } from "@/components";
 
 const items = [
   {
@@ -25,17 +24,7 @@ const items = [
 const ServicesPage = () => {
   return (
     <section className="container mx-auto px-3 mt-10 lg:mt-20">
-
-        <TextFocus
-          sentence="Cubit Tecnología"
-          manualMode={false}
-          blurAmount={5}
-          borderColor="blue"
-          animationDuration={2}
-          pauseBetweenAnimations={1}
-        />      
-
-      <LaptopScroll />
+      <StepsAnimated />
     </section>
   )
 }

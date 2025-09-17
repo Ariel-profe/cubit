@@ -14,6 +14,9 @@ export const changeUserRole = async (userId: string, role: string) => {
         };
     };
 
+    console.log(userId);
+    
+
     try {
 
         const newRole = role === 'admin' ? 'admin' : role === 'client' ? 'client' : 'user';

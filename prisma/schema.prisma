@@ -33,6 +33,7 @@ model User {
   // Relations
   address UserAddress?
   Order   Order[]
+  Budget  Budget[]
 }
 
 model Department {
@@ -763,4 +764,36 @@ model VideoCard {
   OrderItem    OrderItem[]
 
   @@index([code, brand])
+}
+
+// Budget
+model Budget {
+  id           String   @id @default(uuid())
+  budgetNumber String   @unique
+  date         String
+  companyName  String
+  companyEmail String
+  clientName   String
+  clientEmail  String
+  createdAt    DateTime @default(now())
+
+  // Relations
+  BudgetItem   BudgetItem[]
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@index([id, clientName])
+}
+
+model BudgetItem {
+  id          Int      @id @default(autoincrement())
+  description String
+  image       String
+  quantity    Int      @default(1)
+  price       String
+  createdAt   DateTime @default(now())
+
+  budget   Budget @relation(fields: [budgetId], references: [id])
+  budgetId String
 }

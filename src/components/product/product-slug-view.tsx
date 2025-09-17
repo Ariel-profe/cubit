@@ -7,12 +7,12 @@ import { AddToCart } from "./add-to-cart";
 
 interface Props {
     product: any;
-}
+};
 
 export const ProductSlugView = ({ product }: Props) => {       
     
     return (
-        <section className="shadow-lg rounded-lg mt-10 container mx-auto px-3">
+        <section className="shadow-lg rounded-lg mt-10 container mx-auto px-3 lg:mt-32">
             <div className="grid md:grid-cols-2 w-full lg:gap-5">
 
                 {/* Mobile Slideshow */}

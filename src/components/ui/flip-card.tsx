@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { ArrowRight, Code2, Copy, Rocket, Zap } from 'lucide-react';
+import { Code2, Copy, Rocket, Zap } from 'lucide-react';
 
 export interface CardFlipProps {
   data: {
@@ -69,7 +69,7 @@ export const FlipCard = ({
                   key={i}
                   className={cn(
                     'h-3 w-full rounded-sm',
-                    'bg-primary/80',
+                    'bg-slate-800',
                     'animate-[slideIn_2s_ease-in-out_infinite]',
                     'opacity-0',
                   )}
@@ -118,7 +118,7 @@ export const FlipCard = ({
                     'opacity-0 group-hover/icon:opacity-100',
                   )}
                 />
-                <Zap className="text-quaternary relative z-10 h-5 w-5 transition-all duration-300 group-hover/icon:scale-110 group-hover/icon:rotate-12" />
+                <Zap className="text-tertiary relative z-10 h-5 w-5 transition-all duration-300 group-hover/icon:scale-110 group-hover/icon:rotate-12" />
               </div>
             </div>
           </div>
@@ -183,36 +183,6 @@ export const FlipCard = ({
                   </div>
                 );
               })}
-            </div>
-          </div>
-
-          <div className="relative z-10 mt-auto border-t border-slate-200 pt-4">
-            <div
-              className={cn(
-                'group/start relative',
-                'flex items-center justify-between',
-                'rounded-lg p-2.5',
-                'transition-all duration-300',
-                'bg-gradient-to-r from-slate-100 via-slate-100 to-slate-100',
-                'hover:from-primary/10 hover:via-primary/5 hover:to-transparent',
-                'dark:hover:from-primary/20',
-                'hover:scale-[1.02] hover:cursor-pointer',
-                'hover:border-primary/20 border border-transparent',
-              )}
-            >
-              <span className="group-hover/start:text-primary text-sm font-semibold text-zinc-900 transition-colors duration-300 dark:text-white">
-                Start Building
-              </span>
-              <div className="group/icon relative">
-                <div
-                  className={cn(
-                    'absolute inset-[-6px] rounded-lg transition-all duration-300',
-                    'from-primary/20 via-primary/10 bg-gradient-to-br to-transparent',
-                    'scale-90 opacity-0 group-hover/start:scale-100 group-hover/start:opacity-100',
-                  )}
-                />
-                <ArrowRight className="text-primary relative z-10 h-4 w-4 transition-all duration-300 group-hover/start:translate-x-1 group-hover/start:scale-110" />
-              </div>
             </div>
           </div>
         </div>

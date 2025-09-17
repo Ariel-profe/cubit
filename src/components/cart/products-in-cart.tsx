@@ -54,7 +54,7 @@ export const ProductsInCart = () => {
                   <h3 className="text-sm sm:text-base capitalize">{product.title}</h3>
                 </Link>
                 <button
-                  className="underline mt-3 text-rose-400 self-end cursor-pointer transition-all border border-transparent hover:border-rose-400 rounded-full p-1"
+                  className="underline mt-3 text-destructive self-end cursor-pointer transition-all border border-transparent hover:destructive/80 rounded-full p-1"
                   onClick={() => {
                     setIsModalOpened(true)
                     setProductSelected(product);

@@ -8,7 +8,7 @@ export default function CartPage() {
   return (
     <section className="flex justify-center items-center container mx-auto px-3 mt-10 lg:mt-20">
       <div className="flex flex-col w-full">
-        <Title title="Carrito de compras" className="text-2xl md:text-4xl" />
+        <Title title="Carrito de compras" subtitle="Revisa los productos que deseas pedir" className="text-2xl md:text-4xl" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
 

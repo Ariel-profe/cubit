@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { IoTrashOutline } from "react-icons/io5";
 
-import { deleteProduct } from "@/actions";
+import { deleteBudget, deleteProduct } from "@/actions";
 import { Modal } from "@/components";
 
 export const DeleteProduct = ({ productId, model }: { productId: string, model: string }) => {
@@ -14,11 +14,21 @@ export const DeleteProduct = ({ productId, model }: { productId: string, model: 
     // This function will handle the deletion of the product calling the deleteProduct action
     const handleDelete = async () => {
         try {
-            const {message, ok} = await deleteProduct(productId, model);
-            if (ok) {
-                toast.success(message, { position: "bottom-right" });
+
+            if(model === "budget") {
+                const {message, ok} = await deleteBudget(productId);
+                if (ok) {
+                    toast.success(message, { position: "bottom-right" });
+                } else {
+                    toast.error(message, { position: "bottom-right" });
+                }
             } else {
-                toast.error(message, { position: "bottom-right" });
+                const {message, ok} = await deleteProduct(productId, model);
+                if (ok) {
+                    toast.success(message, { position: "bottom-right" });
+                } else {
+                    toast.error(message, { position: "bottom-right" });
+                }
             }
             setIsModalOpened(false);
         } catch (error) {
@@ -27,7 +37,7 @@ export const DeleteProduct = ({ productId, model }: { productId: string, model: 
     };
 
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center h-full">
             <button
                 className="hover:underline text-red-600 hover:text-red-800 cursor-pointer"
                 onClick={() => {

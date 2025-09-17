@@ -351,7 +351,7 @@ export const Hero = () => {
               variants={itemVariants}
               className="mb-8 max-w-md px-6 text-center text-lg leading-relaxed text-slate-300/90 lg:text-end"
             >
-              En CUBIT somos abanderados en la venta de productos tecnológicos de la ciudad de Mendoza. Tenemos los mejores precios del mercado y amplias facilidades de pagos.
+              En <span className='font-semibold text-slate-100'>CUBIT</span> somos abanderados en la venta de productos tecnológicos de la ciudad de Mendoza. Tenemos los mejores precios del mercado y amplias facilidades de pagos.
             </motion.p>
 
             {/* Social proof */}

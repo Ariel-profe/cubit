@@ -4,7 +4,6 @@ export * from "./admin/admin-links";
 export * from "./admin/invoice/contact-details";
 export * from "./admin/invoice/receiver-data";
 export * from "./admin/invoice/item-list";
-export * from "./admin/budget/initial-budget-data";
 export * from "./admin/sidebar-menu-list";
 
 // Products

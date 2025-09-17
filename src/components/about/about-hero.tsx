@@ -17,6 +17,7 @@ interface AboutUsProps {
     title: string;
     description: string;
     icon: keyof typeof iconComponents;
+    features?: string[];
   }>;
   className?: string;
 }
@@ -37,24 +38,44 @@ const defaultValues: AboutUsProps['values'] = [
     description:
       'Fomentamos la innovación y la creatividad en todos los aspectos de nuestro trabajo.',
     icon: 'Lightbulb',
+    features: [
+      'Fomentamos un ambiente donde las ideas innovadoras pueden florecer.',
+      'Apoyamos la experimentación y la toma de riesgos calculados.',
+      'Celebramos los fracasos como oportunidades de aprendizaje.'
+    ]
   },
   {
     title: 'Colaboración',
     description:
       'Creemos en el poder del trabajo en equipo y las perspectivas diversas para lograr resultados extraordinarios.',
     icon: 'Users',
+    features: [
+      'Fomentamos un ambiente de colaboración donde todos pueden contribuir.',
+      'Valoramos la diversidad de pensamiento y experiencia en nuestro equipo.',
+      'Creemos que el trabajo en equipo produce los mejores resultados.'
+    ]
   },
   {
     title: 'Excelencia',
     description:
       'Buscamos la perfección en todo lo que hacemos, entregando constantemente un trabajo de alta calidad.',
     icon: 'Sparkles',
+    features: [
+      'Fomentamos un ambiente donde la excelencia es la norma.',
+      'Nos comprometemos a la mejora continua en todos los aspectos de nuestro trabajo.',
+      'Celebramos los logros y aprendemos de los fracasos.'
+    ]
   },
   {
     title: 'Impacto',
     description:
       "Medimos nuestro éxito por la diferencia positiva que hacemos en la vida y los negocios de las personas.",
     icon: 'Globe',
+    features: [
+      'Fomentamos un enfoque centrado en el cliente en todo lo que hacemos.',
+      'Buscamos constantemente formas de mejorar y agregar valor a nuestros clientes.',
+      'Celebramos los éxitos de nuestros clientes como nuestros propios éxitos.'
+    ]
   },
 ];
 

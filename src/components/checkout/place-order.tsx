@@ -98,7 +98,7 @@ export const PlaceOrder = () => {
                 <span className="text-right">{formatCurrency(tax)}</span>
 
                 <span className="text-xl mt-5 font-semibold">Total:</span>
-                <span className="text-right text-xl mt-5 text-quaternary font-semibold">{formatCurrency(totalPrice)}</span>
+                <span className="text-right text-xl mt-5 text-tertiary font-semibold">{formatCurrency(totalPrice)}</span>
             </div>
 
             <div className="mt-5 w-full relative">

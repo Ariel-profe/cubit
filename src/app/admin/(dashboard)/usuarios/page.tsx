@@ -17,10 +17,7 @@ export default async function UsersAdminPage() {
     <ContentLayout title='Usuarios'>
       <AdminBreadcrumb title1='Panel' href1='/admin/dashboard' title2='Usuarios' />
 
-      <div className="md:my-10 overflow-scroll">
-       <UsersTable users={users} />
-        {/* TODO: Implementar paginacion */}
-      </div>
+      <UsersTable users={users} />
     </ContentLayout>
   );
 }

@@ -1,10 +1,10 @@
-
 import { jsPDF } from "jspdf";
 
-import { IBudgetData } from "@/interfaces/budget.interface";
+import { IBudget } from "@/interfaces/budget.interface";
 import { formatDate } from "./format-date";
 
-export const generatePDF = (budget: IBudgetData) => {
+export const generatePDF = (budget: IBudget, userName: string | undefined) => {
+
     // Create a new PDF document
     const doc = new jsPDF();
     let y = 30;
@@ -43,7 +43,7 @@ export const generatePDF = (budget: IBudgetData) => {
     //Items header
     doc.setFontSize(10);
     doc.text("Descripción", 5, y);
-    doc.text("Imagen", 120, y);
+    doc.text("Imagen", 100, y);
     doc.text("Cantidad", 140, y);
     doc.text("Precio", 160, y);
     y += 4;
@@ -51,22 +51,27 @@ export const generatePDF = (budget: IBudgetData) => {
     y += 4;
 
     //Items
-    budget.items.forEach(item => {
-        doc.text(item.description, 5, y + 5);
-        doc.addImage(item.image, "PNG", 120, y, 20, 20);
-        doc.text(item.quantity.toString(), 145, y + 5);
-        doc.text(item.price, 160, y + 5);
-        y += 10;
+    budget.BudgetItem.forEach(item => {
+        y += 5;
+        doc.text(item.description, 5, y);
+        doc.addImage(item.image, "WEBP", 100, y - 5, 30, 30);
+        doc.text(item.quantity.toString(), 140, y);
+        doc.text(`$${item.price}`, 160, y);
+        y += 30; // Increased gap between items
     });
 
     // Signature
-    doc.addImage("/assets/firma-dani.png", "SVG", 10, y + 10, 50, 20);
-    y += 30;
+    {
+        userName === 'admin' && 
+            doc.addImage("/imgs/invoice/firma-dani.png", "SVG", 160, y + 70, 50, 20);
+            doc.text("Daniela Amin", 180, y + 70);
+            doc.text("Project Manager", 180, y + 76);
+    }
 
     // Generate blob URL for preview
-    const pdfBlob = doc.output("blob");
-    return URL.createObjectURL(pdfBlob);
+    // const pdfBlob = doc.output("blob");
+    // return URL.createObjectURL(pdfBlob);
 
-    // doc.save(`presupuesto_${budget.clientName}_${budget.budgetNumber}.pdf`);
+    doc.save(`presupuesto_${budget.clientName}_${budget.budgetNumber}.pdf`);
 };
 

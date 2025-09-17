@@ -112,7 +112,8 @@ export const createUpdateCarry = async (formData: FormData) => {
             };
 
             return { product }
-        });
+        }
+    );
 
         // Revalidate path
         revalidatePath('/admin/productos/carrys');

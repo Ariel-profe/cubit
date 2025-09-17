@@ -4,14 +4,15 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --primary: #0b1438;
-  --secondary: #4117ff;
-  --tertiary: #6bd3ff;
-  --quaternary: #7452ff;
-  /* --primary: #020617;
-  --secondary: #1e40af;
-  --tertiary: rgb(37, 99, 235);
-  --quaternary: #d946ef; */
+  --primary: #050b25;
+  /* slate-950 */
+  --secondary: #2563eb;
+  /* blue-600 */
+  --tertiary: #9333ea;
+  /* purple-600 */
+  --accent: #10b981;
+  /* emerald-500 */
+  --accent-foreground: #0c8f63;
 
   --button-ripple-color: oklch(0.145 0 0 / 0.3);
 
@@ -35,11 +36,7 @@
 
   --muted: oklch(0.968 0.007 247.896);
 
-  --muted-foreground: oklch(0.554 0.046 257.417);
-
-  --accent: oklch(0.968 0.007 247.896);
-
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --muted-foreground: #a5afbd;
 
   --destructive: #dc2626;
 
@@ -59,7 +56,7 @@
 
   --chart-5: oklch(0.769 0.188 70.08);
 
-  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar: #f8fafc;
 
   --sidebar-foreground: oklch(0.129 0.042 264.695);
 
@@ -81,7 +78,6 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-tertiary: var(--tertiary);
-  --color-quaternary: var(--quaternary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
@@ -151,6 +147,39 @@
   input {
     @apply focus:outline-none;
   }
+
+  /* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #050b25 inset !important;
+    -webkit-text-fill-color: #cccbcb !important;
+}
+
+  .login-btn {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .login-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent);
+    transition: left 0.5s;
+  }
+
+  .login-btn:hover::before {
+    left: 100%;
+  }
 }
 
 @keyframes fadeIn {
@@ -193,6 +222,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

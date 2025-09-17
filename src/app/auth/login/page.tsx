@@ -1,12 +1,8 @@
 import { LoginForm } from '@/components';
-import { titleFont } from '@/config/fonts';
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-col pt-20 sm:pt-32">
-
-      <h1 className={`${titleFont.className} text-4xl mb-5`}>Iniciar sesión</h1>
-
+    <div className="container mx-auto px-3 mt-10 lg:mt-20">
       <LoginForm />
     </div>
   );

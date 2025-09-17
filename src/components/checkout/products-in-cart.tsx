@@ -37,7 +37,7 @@ export const ProductsInCheckout = () => {
             <div className="flex flex-col w-full">
               <h3 className="text-sm sm:text-base capitalize">{product.title} - ({product.quantity})</h3>
 
-              <p className="font-bold text-quaternary">{formatCurrency(product.price * product.quantity)}</p>
+              <p className="font-bold text-tertiary">{formatCurrency(product.price * product.quantity)}</p>
             </div>
           </div>
         ))

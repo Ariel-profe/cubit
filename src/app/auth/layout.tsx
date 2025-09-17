@@ -15,11 +15,8 @@ export default async function AuthLayout({
     };   
 
     return (
-        <main className="w-full max-w-[450px] md:max-w-[550px] mt-10 mx-auto">
+        <main className="w-full container mx-auto">
             <div className="flex flex-col justify-center">
-                <Link href="/" className="h-12 self-center cursor-pointer">
-                    <img src="/imgs/common/logo.webp" alt="cubit-logo" className="h-12"  />
-                </Link>
                 {children}
             </div>
         </main>

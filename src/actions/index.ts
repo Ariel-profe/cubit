@@ -48,6 +48,13 @@ export * from './user/get-paginated-users';
 export * from './user/change-user-role';
 export * from './user/get-total-users';
 
+// Budget
+export * from './budget/create-update-budget';
+export * from './budget/get-budget-by-id';
+export * from './budget/get-paginated-budgets';
+export * from './budget/delete-budget';
+export * from './budget/delete-budget-image';
+
 
 // Email
 // export * from './email/post-email';

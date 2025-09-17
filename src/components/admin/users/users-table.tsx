@@ -1,12 +1,14 @@
 "use client";
 
-import { changeUserRole } from "@/actions";
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { toast } from 'react-toastify';
+
+import { changeUserRole } from '@/actions';
 import { IUser } from "@/interfaces";
-import { toast } from "react-toastify";
 
 interface Props {
     users: IUser[];
-};
+}
 
 export const UsersTable = ({ users }: Props) => {
 
@@ -14,67 +16,52 @@ export const UsersTable = ({ users }: Props) => {
         const { ok, message } = await changeUserRole(userId, role);
 
         if (!ok) {
-            toast.error(message, {position: "bottom-right"});
+            toast.error(message, { position: "bottom-right" });
             return;
         }
 
-        toast.success(message, {position: "bottom-right"});
+        toast.success(message, { position: "bottom-right" });
     };
 
-    return (
-        <table className="min-w-full">
-            <thead className="bg-gray-200 border-b">
-                <tr>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-4 py-2 text-left">
-                        #ID
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-4 py-2 text-left">
-                        Imagen
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-4 py-2 text-left">
-                        Email
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-4 py-2 text-left">
-                        Nombre completo
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-4 py-2 text-left">
-                        Rol
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    users.map(user => (
-                        <tr key={user.id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm max-w-28 font-medium text-gray-900">{user.id.split('-').at(-1)}</td>
-                            <td className="text-sm text-gray-900 font-light max-w-14 px-2 py-4 whitespace-nowrap capitalize">
-                                <img src={user?.image || '/imgs/common/user-not-image.avif'} alt={`imagen-${user.name}`} className="h-12 w-12 aspect-square" />
-                            </td>
-                            <td className="text-sm text-quaternary px-6 py-4 whitespace-nowrap">
-                                {user.email}
-                            </td>
-                            <td className="text-sm text-gray-900 px-6 py-4 whitespace-nowrap capitalize">
-                                {user.name}
-                            </td>
-                            <td className="text-sm text-gray-900 px-6 py-4 whitespace-nowrap capitalize">
-                                <select
-                                    name=""
-                                    id=""
-                                    className="text-sm text-blue-600 w-32 sm:w-40 p-2"
-                                    value={user.role}
-                                    onChange={e => onChangeUserRole(user.id, e.target.value)}
-                                // TODO: Implementar Toast para mostrar el cambio de rol
+    const columns: GridColDef[] = [
+        { field: 'id', headerName: '#ID', width: 150 },
+        { field: 'email', headerName: 'Email', width: 250 },
+        { field: 'name', headerName: 'Nombre', width: 300 },
+        { field: 'counterVisits', headerName: 'Visitas', width: 200 },
+        {
+            field: 'role', headerName: 'Rol', width: 150,
+            renderCell: ({ row }) => {
+                return (
+                    <select
+                            value={row.role}
+                            onChange={e => onChangeUserRole(row.id, e.target.value)}
+                            className='text-sm text-secondary w-32 p-2'
+                          >
+                            <option value="admin">Admin</option>
+                            <option value="user">Usuario</option>
+                            <option value="client">Cliente</option>
+                          </select>
+                )
+            },
+        },
+    ];
 
-                                >
-                                    <option value="user">Usuario</option>
-                                    <option value="client">Cliente</option>
-                                    <option value="admin">Administrador</option>
-                                </select>
-                            </td>
-                        </tr>
-                    ))
-                }
-            </tbody>
-        </table>
+    const rows = users.map(user => ({
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        counterVisits: user.counterVisits
+    }));
+
+    return (
+        <div className="grid fadeIn mt-20">
+            <div className='container h-[650px] w-full'>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                />
+            </div>
+        </div>
     )
 }

@@ -76,7 +76,7 @@ export const TextFocus: React.FC<TrueFocusProps> = ({
 
     return (
         <div
-            className="relative flex gap-4 justify-center items-center flex-wrap h-[30vh] mb-20 lg:mb-32"
+            className="relative flex gap-4 justify-center items-center flex-wrap h-[20vh] "
             ref={containerRef}
         >
             {words.map((word, index) => {

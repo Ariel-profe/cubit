@@ -219,7 +219,7 @@ export const NetworkCardForm = ({ product }: Props) => {
                     </div>
 
                     {/* Divider */}
-                    <div className="flex items-center gap-x-1 my-3 text-tertiary w-full text-sm">
+                    <div className="flex items-center gap-x-1 my-3 text-secondary w-full text-sm">
                         <hr className="w-full" />
                         <span className="w-full text-center">Especificaciones técnicas</span>
                         <hr className="w-full" />

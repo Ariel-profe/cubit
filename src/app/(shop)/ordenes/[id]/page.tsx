@@ -69,16 +69,13 @@ export default async function OrderByIdPage({ params }: Props) {
                 const image = item.caddy?.ProductImage[0].url || item.notebook?.ProductImage[0].url; //TODO: Agregar los demas productos
                 const title = item.caddy?.title || item.notebook?.title; //TODO: Agregar los demas productos
 
-
-
-
                 return (
                   <div key={slug} className="flex mb-5">
                     <img src={`/products/${image}`} alt={title} className="w-20 h-20 mr-5 rounded aspect-square" />
 
                     <div className="flex flex-col w-full">
                       <p className="text-sm sm:text-base capitalize">{title}</p>
-                      <p className="text-sm">{formatCurrency(item.price)} x <span className="text-quaternary">{item.quantity} {item.quantity === 1 ? 'artículo' : 'artículos'}</span></p>
+                      <p className="text-sm">{formatCurrency(item.price)} x <span className="text-tertiary">{item.quantity} {item.quantity === 1 ? 'artículo' : 'artículos'}</span></p>
                       <p className="font-bold text-white">Subtotal: {formatCurrency(item.price * (item.quantity))}</p>
                     </div>
                   </div>

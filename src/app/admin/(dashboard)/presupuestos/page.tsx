@@ -1,33 +1,38 @@
-"use client";
+export const revalidate = 0; // Disable revalidation for this page
 
-import { useState } from "react";
-import { IoEyeOutline } from "react-icons/io5";
+import { getPaginatedBudgets } from '@/actions';
+import { AdminBreadcrumb, BudgetTable, Button } from '@/components';
+import Link from 'next/link';
 
-import { Button, BudgetForm, BudgetPreview, ContentLayout, AdminBreadcrumb } from "@/components";
+interface Props {
+  searchParams: Promise<{ page?: string }>
+};
 
-export default function BudgetPage() {
+export default async function BudgetAdminPage({ searchParams }: Props) {
 
-    const [showPreview, setShowPreview] = useState<boolean>(false);
+  const page = (await searchParams).page ? parseInt((await searchParams).page!) : 1;
 
-    if (showPreview) {
-        return <BudgetPreview onBack={() => setShowPreview(false)} />;
-    };
+  const { budgets } = await getPaginatedBudgets({ page });  
 
   return (
-    <ContentLayout title="Presupuestos">
-       <AdminBreadcrumb title1='Panel' href1='/admin/dashboard' title2='Presupuestos' />
+    <section className="flex flex-col container mx-auto px-3 mt-10 lg:mt-20 overflow-hidden">
+      <AdminBreadcrumb title1="Administración" href1="/admin/dashboard" title2="Presupuestos" href2="/admin/presupuestos" />
 
-        <div className="flex justify-end mt-2">
-            <Button
-                className="mb-4 w-fit"
-                onClick={() => setShowPreview(true)}
-                >
-                <IoEyeOutline />
-                Vista previa
-            </Button>
-        </div>
+      <div className='mt-5 flex justify-end'>
+        <Button>
+          <Link href="/admin/presupuestos/new">Crear Presupuesto</Link>
+        </Button>
+      </div>
 
-        <BudgetForm />
-    </ContentLayout>
-  )
+      {
+        budgets.length === 0
+          ? (
+            <div className='flex justify-center items-center h-[calc(100vh_-_300px)]'>
+              <p>No hay presupuestos disponibles</p>
+            </div>
+          )
+          : <BudgetTable budgets={budgets} />
+      }
+    </section>
+  );
 }

@@ -41,11 +41,15 @@ export * from './homepage/testimonials';
 
 // About
 export * from './about/text-focus';
-export * from './about/laptop-scroll';
 export * from './about/about-hero';
 
 // Services
 export * from './services/features-grid';
+export * from './services/steps-animated';
+
+// Contact
+export * from './contact/banner';
+export * from './contact/faqs';
 
 // Product
 export * from './product/add-to-cart';
@@ -100,6 +104,7 @@ export * from './admin/forms/ssd-form';
 export * from './admin/forms/support-form';
 export * from './admin/forms/video-card-form';
 export * from './admin/users/users-table';
+export * from './admin/orders/orders-table';
 
 // Admin Dashboard
 export * from './admin/dashboard/admin-panel-layout';
@@ -113,14 +118,10 @@ export * from './admin/dashboard/sidebar-toggle';
 export * from './admin/dashboard/user-nav';
 
 // Admin Budget
-export * from './admin/budget/basic-details';
 export * from './admin/budget/budget-form';
-export * from './admin/budget/budget-item';
 export * from './admin/budget/budget-footer';
-export * from './admin/budget/budget-preview';
-export * from './admin/budget/contact-details';
-export * from './admin/budget/item-list';
 export * from './admin/budget/tax-and-totals';
+export * from './admin/budget/budget-table';
 
 // Admin Invoice
 export * from './admin/invoice/emission-data-1';

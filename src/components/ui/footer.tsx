@@ -19,7 +19,7 @@ export const Footer = () => {
                             {
                                 footerLinks.map(item => (
                                     <div key={item.title}>
-                                        <h5 className="block mb-1 text-base font-semibold text-tertiary">{item.title}</h5>
+                                        <h5 className="block mb-1 text-base font-semibold text-secondary">{item.title}</h5>
                                         {
                                             item.links.map(i => (
                                                 <li key={i.id}>
@@ -40,7 +40,7 @@ export const Footer = () => {
                 <div className="flex flex-col items-center justify-center w-full py-4 mt-12 md:flex-row md:justify-between">
                     <p className="block mb-4 text-sm text-center text-slate-400 md:mb-0">
                         Copyright © {year} {" "}
-                        <a href="https://amn.com.ar" target="_blank" className="underline text-tertiary hover:text-tertiary/80 transition-colors">AMN Consultora Informática</a>. <br className="sm:hidden" /> Todos los derechos reservados.
+                        <a href="https://amn.com.ar" target="_blank" className="underline text-secondary hover:text-secondary/80 transition-colors">AMN Consultora Informática</a>. <br className="sm:hidden" /> Todos los derechos reservados.
                     </p>
 
                     {/* Social links */}
