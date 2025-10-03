@@ -24,7 +24,15 @@ export default async function ProductAdminPage({ params }: Props) {
   return (
     <section className="container mx-auto px-3 mt-10 lg:mt-20">
       <AdminBreadcrumb title1="Administración" href1="/admin" title2="Productos" href2="/admin/productos" title3="Soportes" href3={`/admin/productos/soportes`} />
-      <Title title={title} />
+      <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        {title}
+      </Title>
       <SupportForm product={product ?? {}} />
     </section>
   )

@@ -146,10 +146,6 @@ export const Faqs = () => {
 
   return (
     <section className="relative w-full overflow-hidden py-16">
-      {/* Decorative elements */}
-      <div className="bg-tertiary/5 absolute top-20 -left-20 h-64 w-64 rounded-full blur-3xl animate-pulse" />
-      <div className="bg-tertiary/5 absolute -right-20 bottom-20 h-64 w-64 rounded-full blur-3xl animate-pulse" />
-
       <div className="relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -169,7 +165,7 @@ export const Faqs = () => {
           </p>
         </motion.div>
 
-        <div className="mx-auto max-w-2xl space-y-2">
+        <div className="grid gap-4 md:gap-6 lg:gap-8">
           {faqs.map((faq, index) => (
             <FAQItem
               key={index}

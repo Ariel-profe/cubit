@@ -24,14 +24,22 @@ export default async function PadPage({ searchParams }: Props) {
   const rgbLighting = resolvedSearchParams.rgbLighting || "";
   const size = resolvedSearchParams.size || "";
   const colorStamp = Array.isArray(resolvedSearchParams.colorStamp)
-  ? resolvedSearchParams.colorStamp.join(",")
-  : resolvedSearchParams.colorStamp || "";
+    ? resolvedSearchParams.colorStamp.join(",")
+    : resolvedSearchParams.colorStamp || "";
 
   const { products, totalPages } = await getPaginatedProductsWithImages({ page, model: "pad", filters: { brand, rgbLighting, size, colorStamp } });
 
   return (
     <section className="container mx-auto px-3 mt-10 lg:mt-20">
-      <Title title="Pads" />
+      <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        Los mejores pads del mercado
+      </Title>
 
       <div className="flex flex-col lg:flex-row gap-4">
         <ProductFilters

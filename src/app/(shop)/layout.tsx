@@ -6,7 +6,7 @@ export default function ShopLayout({
     children: React.ReactNode;
 }) {
     return (
-        <main className="grid min-h-[100dvh] grid-rows-[auto_auto_1fr_auto]">
+        <main className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto]">
             <Navbar />
             <Sidebar />
             {children}

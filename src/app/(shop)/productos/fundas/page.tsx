@@ -25,14 +25,22 @@ export default async function CoverPage({ searchParams }: Props) {
   const materials = resolvedSearchParams.materials || "";
 
   const colors = Array.isArray(resolvedSearchParams.colors)
-  ? resolvedSearchParams.colors.join(",")
-  : resolvedSearchParams.colors || "";
+    ? resolvedSearchParams.colors.join(",")
+    : resolvedSearchParams.colors || "";
 
   const { products, totalPages } = await getPaginatedProductsWithImages({ page, model: "cover", filters: { brand, notebookSize, materials, colors } });
 
   return (
     <section className="container mx-auto px-3 mt-10 lg:mt-20">
-      <Title title="Fundas" />
+      <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        Las mejores fundas del mercado
+      </Title>
 
       <div className="flex flex-col lg:flex-row gap-4">
         <ProductFilters

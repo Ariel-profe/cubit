@@ -32,8 +32,19 @@ export default async function SearchPage({ params, searchParams }: Props) {
 
   return (
     <section className="flex flex-col container mx-auto px-3 mt-10 lg:mt-20">
-      <Title title={`Resultados para: "${resolvedParams.query}"`} subtitle="Buscar productos" />
-
+     <Title
+          from="top"
+          split="word"
+          blur={3}
+          delay={0.2}
+          duration={1.2}
+        >
+          {
+            products.length > 0 
+            ? `Búsqueda de productos para "${resolvedParams.query}"`
+            : ""
+          }
+        </Title>
       <div className="mt-5">
        {
           products.length > 0 ? (
@@ -53,7 +64,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
                 <DropdownMenu >
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline">
-                      Seleccionar categoría
+                      Seleccionar
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="max-w-72 bg-primary grid sm:grid-cols-2">

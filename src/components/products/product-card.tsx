@@ -23,15 +23,15 @@ export const ProductCard = ({ product }: Props) => {
                 <img
                     src={product.images[0]}
                     alt={product.title}
-                    className="h-full w-full object-cover rounded lg:group-hover:scale-105 transition-transform opacity-90 group-hover:opacity-100"
+                    className="h-full w-full object-cover rounded lg:group-hover:scale-105 transition-transform"
                 />
             </div>
             <div className="flex justify-end px-1">
-                <p className="text-tertiary text-xl font-semibold">
+                <p className="text-secondary text-xl font-semibold">
                     ${product.price.toLocaleString('es-AR')}
                 </p>
             </div>
-            <h5 className="lg:group-hover:text-white text-xl leading-normal font-semibold px-1 pb-1 capitalize">
+            <h5 className="lg:group-hover:text-white text-base leading-normal font-semibold px-1 pb-1 capitalize">
                 {product.title}
             </h5>
         </Link>

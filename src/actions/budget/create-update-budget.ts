@@ -148,7 +148,7 @@ export const createBudget = async (formData: FormData) => {
             await tx.budgetItem.createMany({
                 data: budgetItems.map(item => ({
                     description: item.description,
-                    image: id ? item.image : '',
+                    image: item.image,
                     quantity: item.quantity,
                     price: item.price,
                     budgetId: budget.id

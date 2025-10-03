@@ -351,5 +351,4 @@ export const getProductsByTerm = async ({ term, page = 1, take = 12 }: Paginatio
         console.error("Error fetching products by term:", error);
         throw new Error("Failed to fetch products");
     }
-
 };

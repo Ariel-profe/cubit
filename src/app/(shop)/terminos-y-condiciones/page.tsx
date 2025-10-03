@@ -3,7 +3,18 @@ import { Title } from "@/components";
 export default function TermsPage() {
     return (
         <section className="container mx-auto px-3 mt-10 lg:mt-20">
-            <Title title="Política de términos y condiciones" subtitle="Reglas y regulaciones de nuestro sitio web" />
+            <Title
+                from="top"
+                split="word"
+                blur={3}
+                delay={0.2}
+                duration={1.2}
+            >
+                Política de términos y condiciones
+            </Title>
+            <p className="text-sm text-slate-400 mb-5">
+                Por favor, lee cuidadosamente los siguientes términos y condiciones antes de utilizar nuestro sitio web.
+            </p>
 
             <h3 className="text-xl md:text-2xl text-slate-100 mb-5">Cubit, empresa de venta de insumos tecnológicos de la provincia de Mendoza.</h3>
 

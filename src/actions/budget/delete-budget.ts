@@ -1,10 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { v2 as cloudinary } from 'cloudinary';
 import { prisma } from "@/lib/prisma";
+import { deleteBudgetImage } from "./delete-budget-image";
+
+// Configure Cloudinary
+cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 export const deleteBudget = async (budgetId: string) => {    
-
     try {
         //Delete first the BudgetItem
         const budgetItems = await prisma.budgetItem.findMany({ where: { budgetId: budgetId } });
@@ -13,6 +17,13 @@ export const deleteBudget = async (budgetId: string) => {
             return {
                 ok: false,
                 message: "No se encontraron items para el presupuesto"
+            }
+        }
+
+        // Delete each item image from cloudinary
+        for (const item of budgetItems) {
+            if (item.image) {
+                await deleteBudgetImage(item.image);
             }
         }
 

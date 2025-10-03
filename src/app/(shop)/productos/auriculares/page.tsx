@@ -30,16 +30,24 @@ export default async function HeadphonePage({ searchParams }: Props) {
   const microphone = resolvedSearchParams.microphone || "";
   const ledLighting = resolvedSearchParams.ledLighting || "";
   const gamer = resolvedSearchParams.gamer || "";
-  
+
   const colors = Array.isArray(resolvedSearchParams.colors)
-  ? resolvedSearchParams.colors.join(",")
-  : resolvedSearchParams.colors || "";
+    ? resolvedSearchParams.colors.join(",")
+    : resolvedSearchParams.colors || "";
 
   const { products, totalPages } = await getPaginatedProductsWithImages({ page, model: "headphone", filters: { brand, type, connectionType, microphone, colors, ledLighting, gamer } });
 
   return (
     <section className="container mx-auto px-3 mt-10 lg:mt-20">
-      <Title title="Auriculares" />
+      <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        Los mejores auriculares del mercado
+      </Title>
 
       <div className="flex flex-col lg:flex-row gap-4">
         <ProductFilters

@@ -3,4 +3,5 @@ export interface ICategory {
     title: string;
     href: string;
     image: string;
+    bgColor?: string;
 };

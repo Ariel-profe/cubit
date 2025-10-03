@@ -1,10 +1,12 @@
 // Products
 export * from './products/get-product-by-slug';
 export * from './products/get-stock-by-slug';
+export * from './products/get-featured-notebooks';
 export * from './products/product-pagination';
 export * from './products/delete-product-image';
 export * from './products/delete-product';
 export * from './products/get-products-by-term';
+export * from './products/get-products-by-brand';
 export * from './products/create-update-backpack';
 export * from './products/create-update-headphone';
 export * from './products/create-update-caddy';
@@ -47,6 +49,8 @@ export * from './order/get-total-orders';
 export * from './user/get-paginated-users';
 export * from './user/change-user-role';
 export * from './user/get-total-users';
+export * from './user/get-user-by-id';
+export * from './user/delete-user';
 
 // Budget
 export * from './budget/create-update-budget';

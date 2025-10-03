@@ -31,17 +31,17 @@ export const footerLinks = [
             {
                 id: 1,
                 title: "nosotros",
-                href: "/about"
+                href: "/nosotros"
             },
             {
                 id: 2,
                 title: "servicios",
-                href: "/services"
+                href: "/servicios"
             },
             {
                 id: 3,
                 title: "marcas",
-                href: "/brands"
+                href: "/marcas"
             }
         ]
     },
@@ -50,12 +50,12 @@ export const footerLinks = [
         links: [
             {
                 id: 1,
-                title: "térm y condiciones",
+                title: "política t&c",
                 href: "/terminos-y-condiciones"
             },
             {
                 id: 2,
-                title: "privacidad",
+                title: "política privacidad",
                 href: "/politica-de-privacidad"
             }
         ]

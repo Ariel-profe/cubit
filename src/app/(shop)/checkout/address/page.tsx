@@ -20,10 +20,22 @@ export default async function AddressPage() {
     <section className="flex flex-col sm:justify-center sm:items-center container mx-auto px-3 mt-10 lg:mt-20">
 
       <div className="w-full flex flex-col justify-center text-left">
-
-        <Title title="Información personal" subtitle="Coloca tus datos para generar el pedido" className='text-2xl md:text-4xl' />
+        <Title
+          from="top"
+          split="word"
+          blur={3}
+          delay={0.2}
+          duration={1.2}
+        >
+          Dirección e información de envío
+        </Title>
+        <p className="text-sm text-slate-400 mb-5">Completa tus datos para continuar con el pedido</p>
         
-        <AddressForm departments={departments} userStoredAddress={userAddress} />
+        <AddressForm 
+          departments={departments} 
+          userStoredAddress={userAddress}
+          newUser={false}
+        />
       </div>
     </section>
   );

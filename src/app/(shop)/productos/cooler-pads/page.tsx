@@ -31,7 +31,15 @@ export default async function CoolerPadPage({ searchParams }: Props) {
 
   return (
     <section className="container mx-auto px-3 mt-10 lg:mt-20">
-      <Title title="Cooler Pads" />
+       <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        Los mejores cooler pads del mercado
+      </Title>
 
       <div className="flex flex-col lg:flex-row gap-4">
         <ProductFilters

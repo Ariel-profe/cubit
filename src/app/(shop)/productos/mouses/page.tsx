@@ -31,7 +31,15 @@ export default async function MousePage({ searchParams }: Props) {
 
   return (
     <section className="container mx-auto px-3 mt-10 lg:mt-20">
-      <Title title="Mouses" />
+       <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        Los mejores mouses del mercado
+      </Title>
 
       <div className="flex flex-col lg:flex-row gap-4">
         <ProductFilters

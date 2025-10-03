@@ -218,7 +218,7 @@ export const BudgetForm = ({ budget }: Props) => {
           <ul className="flex flex-col gap-2">
             {watch("BudgetItem") && watch("BudgetItem").map((item, index) => (
               <fieldset className="border border-slate-800 p-2 rounded fadeIn" key={item.id ?? index}>
-                <legend className="text-xs text-slate-400">Opcion {index + 1}:</legend>
+                <legend className="text-xs text-slate-400">Opción {index + 1}:</legend>
                 <div className="grid lg:grid-cols-12 gap-4 lg:gap-2 p-2">
                   <div className="lg:col-span-6">
                     <Label htmlFor={`description-${index}`} className="mb-0.5">
@@ -255,7 +255,6 @@ export const BudgetForm = ({ budget }: Props) => {
                             <input
                               id={`images-${index}`}
                               type="file"
-                              multiple
                               className="file:bg-secondary file:px-2 file:py-1 file:rounded file:text-slate-200 file:hover:bg-secondary/80 file:hover:text-white file:cursor-pointer"
                               accept="image/png, image/jpeg, image/avif, image/webp, image/jpg"
                               {...register(`BudgetItem.${index}.image` as const, { required: true })}

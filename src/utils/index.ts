@@ -8,6 +8,7 @@ export * from "./admin/sidebar-menu-list";
 
 // Products
 export * from "./products/categories";
+export * from "./products/brands";
 export * from "./products/dictionary";
 
 // Product validations

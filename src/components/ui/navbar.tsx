@@ -29,43 +29,45 @@ export const Navbar = () => {
   });
 
   return (
-    <nav className={`fixed flex items-center justify-between p-4 top-0 w-full mx-auto z-20 ${scroll ? "bg-background" : "bg-transparent"} transition-all duration-200 ease-in`}>
-      <NavLeft />
+    <nav className={`fixed  p-4 top-0 w-full mx-auto z-20 ${scroll ? "bg-[#01030e]" : "bg-transparent"} transition-all duration-200 ease-in `}>
+      <div className="max-w-[1600px] mx-auto flex justify-between items-center">
+        <NavLeft />
 
-      {/* Search */}
-      <div className="flex items-center gap-x-2 p-1">
-        {
-          isSearchVisible ? (
-            <SearchInput setIsSearchVisible={setIsSearchVisible} />
-          ) : (
-            <button
-              className=" transition-all sm:hover:text-white cursor-pointer"
-              onClick={() => setIsSearchVisible(true)}
-            >
-              <IoSearchOutline className="w-5 h-5" />
-            </button>
-          )
-        }
+        {/* Search */}
+        <div className="flex items-center gap-x-2 p-1">
+          {
+            isSearchVisible ? (
+              <SearchInput setIsSearchVisible={setIsSearchVisible} />
+            ) : (
+              <button
+                className=" transition-all sm:hover:text-white cursor-pointer"
+                onClick={() => setIsSearchVisible(true)}
+              >
+                <IoSearchOutline className="w-5 h-5" />
+              </button>
+            )
+          }
 
-        {/* Cart */}
-        <Link href={
-          ((totalItemsInCart === 0) && loaded)
-            ? "/empty"
-            : "/carrito"
-        }>
-          <div className="relative sm:hover:text-white rounded-full p-2 transition-all">
-            {
-              (loaded && totalItemsInCart > 0) && (
-                <span className="absolute text-xs rounded-full px-1 font-bold -top-0.5 -right-0.5 bg-secondary text-white fadeIn">
-                  {totalItemsInCart}
-                </span>
-              )
-            }
+          {/* Cart */}
+          <Link href={
+            ((totalItemsInCart === 0) && loaded)
+              ? "/empty"
+              : "/carrito"
+          }>
+            <div className="relative sm:hover:text-white rounded-full p-2 transition-all">
+              {
+                (loaded && totalItemsInCart > 0) && (
+                  <span className="absolute text-xs rounded-full px-1 font-bold -top-0.5 -right-0.5 bg-secondary text-white fadeIn">
+                    {totalItemsInCart}
+                  </span>
+                )
+              }
 
-            <IoCartOutline className="w-5 h-5" />
-          </div>
-        </Link>
-        <Button onClick={openSideMenu}>Menú</Button>
+              <IoCartOutline className="w-5 h-5" />
+            </div>
+          </Link>
+          <Button onClick={openSideMenu}>Menú</Button>
+        </div>
       </div>
     </nav>
   );

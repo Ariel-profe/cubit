@@ -12,7 +12,7 @@ export default async function BudgetAdminPage({ searchParams }: Props) {
 
   const page = (await searchParams).page ? parseInt((await searchParams).page!) : 1;
 
-  const { budgets } = await getPaginatedBudgets({ page });  
+  const { budgets } = await getPaginatedBudgets({ page });    
 
   return (
     <section className="flex flex-col container mx-auto px-3 mt-10 lg:mt-20 overflow-hidden">

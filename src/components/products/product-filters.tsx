@@ -53,7 +53,7 @@ export const ProductFilters = ({ filters }: ProductFiltersProps) => {
     };
 
     return (
-        <div className="w-full lg:w-1/6 shadow-lg space-y-4 mt-2">
+        <div className="w-full lg:w-1/6 shadow-lg space-y-4 mt-2 lg:sticky top-20 h-fit">
             {filters.map(filter => (
                 <div key={filter.id}>
                     <label htmlFor={filter.id} className="block mb-2 font-medium">

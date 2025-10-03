@@ -2,17 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { easeInOut, motion, spring } from 'motion/react';
-import { Button } from '@/components/ui/button';
 import {
-  ArrowRight,
   Database,
   Sparkles,
   Zap,
   ArrowUpRight,
 } from 'lucide-react';
 
-import React from 'react';
-import { Tag } from '../ui/tag';
+import { Tag } from '@/components';
+import Link from 'next/link';
+import { IoBagCheckOutline } from 'react-icons/io5';
 
 type Particle = {
   top: number;
@@ -64,35 +63,35 @@ function ParticleEffects({ count }: { count: number }) {
 export const Hero = () => {
   // State for animated counters
   const [stats, setStats] = useState({
-    users: 0,
-    transactions: 0,
-    networks: 0,
+    products: 0,
+    clients: 0,
+    categories: 0,
   });
 
   // Animation to count up numbers
   useEffect(() => {
     const interval = setInterval(() => {
       setStats((prev) => {
-        const newUsers = prev.users >= 4000 ? 4000 : prev.users + 100;
-        const newTransactions =
-          prev.transactions >= 200 ? 200 : prev.transactions + 50;
-        const newNetworks = prev.networks >= 15 ? 15 : prev.networks + 1;
+        const newProducts = prev.products >= 4000 ? 4000 : prev.products + 100;
+        const newClients =
+          prev.clients >= 200 ? 200 : prev.clients + 50;
+        const newCategories = prev.categories >= 15 ? 15 : prev.categories + 1;
 
         if (
-          newUsers === 4000 &&
-          newTransactions === 200 &&
-          newNetworks === 15
+          newProducts === 4000 &&
+          newClients === 200 &&
+          newCategories === 15
         ) {
           clearInterval(interval);
         }
 
         return {
-          users: newUsers,
-          transactions: newTransactions,
-          networks: newNetworks,
+          products: newProducts,
+          clients: newClients,
+          categories: newCategories,
         };
       });
-    }, 50);
+    }, 100);
 
     return () => clearInterval(interval);
   }, []);
@@ -301,21 +300,21 @@ export const Hero = () => {
             >
               <div className="rounded-lg border border-purple-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
-                  {stats.users.toLocaleString()}+
+                  {stats.products.toLocaleString()}+
                 </p>
                 <p className="text-xs text-gray-400">Productos en venta</p>
               </div>
               <div className="rounded-lg border border-blue-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
-                  {stats.transactions.toLocaleString()}+
+                  {stats.clients.toLocaleString()}+
                 </p>
-                <p className="text-xs text-gray-400">Clientes</p>
+                <p className="text-xs text-gray-400">Clientes suscriptos</p>
               </div>
               <div className="rounded-lg border border-indigo-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
-                  {stats.networks}+
+                  {stats.categories.toLocaleString()}+
                 </p>
-                <p className="text-xs text-gray-400">Categorías</p>
+                <p className="text-xs text-gray-400">Categorías para elegir</p>
               </div>
             </motion.div>
 
@@ -327,22 +326,22 @@ export const Hero = () => {
               <span className="text-xs font-medium text-gray-400">
                 Consultá por:
               </span>
-              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
-                <div className="h-2 w-2 rounded-full bg-blue-400"></div>
+              <Link href="/productos/notebooks" className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-blue-950">
+                <div className="h-2 w-2 rounded-full bg-blue-500"></div>
                 Notebooks
-              </div>
-              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
-                <div className="h-2 w-2 rounded-full bg-purple-400"></div>
+              </Link>
+              <Link href="/productos/auriculares" className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
+                <div className="h-2 w-2 rounded-full bg-purple-500"></div>
                 Auriculares
-              </div>
-              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
-                <div className="h-2 w-2 rounded-full bg-green-400"></div>
+              </Link>
+              <Link href="/productos/mouses" className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-green-950">
+                <div className="h-2 w-2 rounded-full bg-green-500"></div>
                 Mouses
-              </div>
-              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
-                <div className="h-2 w-2 rounded-full bg-yellow-400"></div>
+              </Link>
+              <Link href="/productos" className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-yellow-950">
+                <div className="h-2 w-2 rounded-full bg-yellow-500"></div>
                 y mucho más
-              </div>
+              </Link>
             </motion.div>
           </div>
 
@@ -363,9 +362,9 @@ export const Hero = () => {
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-900 bg-slate-800"
+                    className="h-6 w-6 bg-gradient-to-br from-primary to-tertiary opacity-80 rounded-full flex items-center justify-center"
                   >
-                    <div className="h-full w-full bg-gradient-to-br from-purple-500 to-blue-600 opacity-80"></div>
+                    <IoBagCheckOutline />
                   </div>
                 ))}
               </div>

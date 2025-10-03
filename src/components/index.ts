@@ -1,19 +1,19 @@
 // UI
 export * from './ui/avatar';
 export * from './ui/breadcrumb';
-export * from './ui/border-beam';
 export * from './ui/button';
 export * from './ui/card';
 export * from './ui/checkbox';
 export * from './ui/collapsible';
+export * from './ui/dialog';
 export * from './ui/dropdown-menu';
 export * from './ui/flip-card';
 export * from './ui/footer';
 export * from './ui/go-back-button';
+export * from './ui/glowing-cards';
 export * from './ui/input';
 export * from './ui/label';
 export * from './ui/loading';
-export * from './ui/modal';
 export * from './ui/navbar';
 export * from './ui/page-not-found';
 export * from './ui/pagination';
@@ -22,7 +22,6 @@ export * from './ui/search-input';
 export * from './ui/select';
 export * from './ui/sheet';
 export * from './ui/sidebar';
-export * from './ui/spotlight-card';
 export * from './ui/switch';
 export * from './ui/tag';
 export * from './ui/title';
@@ -38,10 +37,12 @@ export * from './homepage/logo-ticker';
 export * from './homepage/preloader';
 export * from './homepage/product-showcase';
 export * from './homepage/testimonials';
+export * from './homepage/featured-notebooks';
 
 // About
 export * from './about/text-focus';
-export * from './about/about-hero';
+export * from './about/values';
+export * from './about/Identifications';
 
 // Services
 export * from './services/features-grid';
@@ -61,11 +62,9 @@ export * from './product/product-slideshow';
 export * from './product/product-slug-view';
 export * from './product/quantity-selector';
 export * from './product/stock-label';
-export * from './product/delete-product';
 
 // Products
 export * from './products/categories-grid';
-export * from './products/category-card';
 export * from './products/product-card';
 export * from './products/products-grid';
 export * from './products/product-filters';
@@ -91,6 +90,7 @@ export * from './admin/forms/caddy-form';
 export * from './admin/forms/carry-form';
 export * from './admin/forms/coolerpad-form';
 export * from './admin/forms/cover-form';
+export * from './admin/handle-delete';
 export * from './admin/forms/docking-form';
 export * from './admin/forms/hdd-form';
 export * from './admin/forms/headphone-form';
@@ -105,6 +105,7 @@ export * from './admin/forms/support-form';
 export * from './admin/forms/video-card-form';
 export * from './admin/users/users-table';
 export * from './admin/orders/orders-table';
+export * from './admin/products/tables/products-table';
 
 // Admin Dashboard
 export * from './admin/dashboard/admin-panel-layout';

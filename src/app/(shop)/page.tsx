@@ -1,11 +1,11 @@
-import { CallToAction, LogoTicker, Features, ProductShowcase, Testimonials, ContainerScroll, DemoOne, Hero } from "@/components";
+import { CallToAction, LogoTicker, Features, ProductShowcase, Testimonials, ContainerScroll, DemoOne, Hero, FeaturedNotebooks } from "@/components";
 
 export default function Home() {
   return (
     <section className="overflow-hidden">
       <DemoOne>
         <Hero />
-        <LogoTicker />
+        <FeaturedNotebooks />
         <ProductShowcase />
         <Features />
         <ContainerScroll
@@ -29,6 +29,7 @@ export default function Home() {
             draggable={false}
           />
         </ContainerScroll>
+        <LogoTicker />
         <Testimonials />
         <CallToAction />
       </DemoOne>

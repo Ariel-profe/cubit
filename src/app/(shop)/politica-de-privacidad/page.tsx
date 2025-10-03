@@ -3,7 +3,18 @@ import { Title } from "@/components";
 export default function PrivacyPage() {
     return (
         <section className="container mx-auto px-3 mt-10 lg:mt-20">
-            <Title title="Política de privacidad" subtitle="Cómo se recopila, utiliza y comparte tu información personal en nuestro sitio web" />
+              <Title
+                from="top"
+                split="word"
+                blur={3}
+                delay={0.2}
+                duration={1.2}
+            >
+                Política de privacidad
+            </Title>
+            <p className="text-sm text-slate-400 mb-5">
+                Cómo y para qué se utiliza y recopila tu información personal en nuestro sitio web.
+            </p>
 
             <h3 className="text-xl md:text-2xl text-slate-100 mb-5">Cubit, empresa de venta de insumos tecnológicos de la provincia de Mendoza.</h3>
 

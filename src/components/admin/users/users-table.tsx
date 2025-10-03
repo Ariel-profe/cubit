@@ -1,14 +1,15 @@
 "use client";
 
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { toast } from 'react-toastify';
 
 import { changeUserRole } from '@/actions';
 import { IUser } from "@/interfaces";
+import { HandleDelete } from '@/components';
 
 interface Props {
     users: IUser[];
-}
+};
 
 export const UsersTable = ({ users }: Props) => {
 
@@ -24,7 +25,7 @@ export const UsersTable = ({ users }: Props) => {
     };
 
     const columns: GridColDef[] = [
-        { field: 'id', headerName: '#ID', width: 150 },
+        { field: 'id', headerName: '#ID', width: 250 },
         { field: 'email', headerName: 'Email', width: 250 },
         { field: 'name', headerName: 'Nombre', width: 300 },
         { field: 'counterVisits', headerName: 'Visitas', width: 200 },
@@ -44,6 +45,15 @@ export const UsersTable = ({ users }: Props) => {
                 )
             },
         },
+        {
+                    field: 'delete',
+                    headerName: 'Eliminar',
+                    renderCell: ({ row }: GridRenderCellParams) => {
+                        return (
+                            <HandleDelete id={row.id} model="user" />
+                        )
+                    }
+                },
     ];
 
     const rows = users.map(user => ({
@@ -55,7 +65,7 @@ export const UsersTable = ({ users }: Props) => {
     }));
 
     return (
-        <div className="grid fadeIn mt-20">
+        <div className="grid fadeIn mt-10">
             <div className='container h-[650px] w-full'>
                 <DataGrid
                     rows={rows}

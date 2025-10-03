@@ -23,7 +23,15 @@ export default async function ProductAdminPage({ params }: Props) {
   return (
     <section className="container mx-auto px-3 mt-10 lg:mt-20">
       <AdminBreadcrumb title1="Administración" href1="/admin" title2="Productos" href2="/admin/productos" title3="Discos sólidos" href3={`/admin/productos/discos-solidos`} />
-      <Title title={title} />
+      <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        {title}
+      </Title>
       <SsdForm product={product ?? {}} />
     </section>
   )

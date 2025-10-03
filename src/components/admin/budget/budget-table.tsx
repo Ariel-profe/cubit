@@ -6,7 +6,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { IoCloudDownloadOutline, IoEyeOffOutline, IoPencilSharp } from 'react-icons/io5';
 
 import { IBudget } from '@/interfaces/budget.interface';
-import { DeleteProduct } from '@/components/product/delete-product';
+import { DeleteProduct } from '@/components/admin/handle-delete';
 import { generatePDF } from '@/utils';
 
 interface Props {

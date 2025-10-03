@@ -21,13 +21,21 @@ export default async function BackpackPage({ searchParams }: Props) {
   const page = resolvedSearchParams.page ? parseInt(resolvedSearchParams.page) : 1;
   const brand = resolvedSearchParams.brand || "";
   const notebookSize = resolvedSearchParams.notebookSize || "";
-  const color = resolvedSearchParams.color || "";  
+  const color = resolvedSearchParams.color || "";
 
   const { products, totalPages } = await getPaginatedProductsWithImages({ page, model: "backpack", filters: { brand, notebookSize, color } });
 
   return (
     <div className="container mx-auto px-3 mt-10 lg:mt-20">
-      <Title title="Mochilas" />
+      <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        Las mejores mochilas del mercado
+      </Title>
 
       <div className="flex flex-col lg:flex-row gap-4">
         <ProductFilters

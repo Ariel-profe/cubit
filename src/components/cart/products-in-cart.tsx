@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
-import { IoTrashOutline } from "react-icons/io5";
+import { IoTrashOutline, IoWarningOutline } from "react-icons/io5";
 
 import { useCartStore } from "@/store";
-import { Loading, ProductImage, QuantitySelector, Modal } from "@/components";
+import { Button, Loading, ProductImage, QuantitySelector } from "@/components";
 import { ICartProduct } from "@/interfaces/cart/cart-product";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 
 export const ProductsInCart = () => {
 
@@ -17,8 +18,6 @@ export const ProductsInCart = () => {
   const removeProductFromCart = useCartStore(state => state.removeProductFromCart);
 
   const [loaded, setLoaded] = useState(false);
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const [productSelected, setProductSelected] = useState({} as ICartProduct);
 
   useEffect(() => {
     setLoaded(true)
@@ -37,8 +36,6 @@ export const ProductsInCart = () => {
   const onDeletedProduct = (product: ICartProduct) => {
     removeProductFromCart(product);
     toast.error(`El producto fue eliminado del carrito`, { position: "bottom-right" });
-    setIsModalOpened(false);
-    setProductSelected({} as ICartProduct);
   };
 
   return (
@@ -53,15 +50,32 @@ export const ProductsInCart = () => {
                 <Link href={`/products/${product.category}/${product.slug}`} className="text-tertiary hover:underline">
                   <h3 className="text-sm sm:text-base capitalize">{product.title}</h3>
                 </Link>
-                <button
-                  className="underline mt-3 text-destructive self-end cursor-pointer transition-all border border-transparent hover:destructive/80 rounded-full p-1"
-                  onClick={() => {
-                    setIsModalOpened(true)
-                    setProductSelected(product);
-                  }}
-                >
-                  <IoTrashOutline size={20} />
-                </button>
+                <Dialog>
+                  <form>
+                    <DialogTrigger asChild>
+                      <Button variant="destructive" size="icon">
+                        <IoTrashOutline className="" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>
+                          {`¿Deseas eliminar este producto?`}
+                        </DialogTitle>
+                        <DialogDescription className="flex items-center gap-x-1 text-amber-400">
+                          <IoWarningOutline />
+                          Esta acción no se puede deshacer.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <DialogFooter>
+                        <DialogClose asChild>
+                          <Button variant="outline">Cancelar</Button>
+                        </DialogClose>
+                        <Button type="submit" variant="destructive" onClick={() => onDeletedProduct(product)}>Eliminar</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </form>
+                </Dialog>
               </div>
               <p>${product.price}</p>
               <QuantitySelector
@@ -69,31 +83,6 @@ export const ProductsInCart = () => {
                 onQuantityChange={(quantity) => updateProductQuantity(product, quantity)}
               />
             </div>
-
-            {/* Background black */}
-            {
-              isModalOpened && product.id === productSelected.id && (
-                <div className="fixed top-0 left-0 bg-black opacity-40 w-screen h-screen z-20" />
-              )
-            }
-
-            {/* Background blur */}
-            {
-              isModalOpened && product.id === productSelected.id && (
-                <div className="fadeIn fixed top-0 left-0 w-screen h-screen z-20 backdrop-blur-sm" />
-              )
-            }
-            {
-              isModalOpened && product.id === productSelected.id && (
-              <Modal 
-                isModalOpened={isModalOpened} 
-                onDelete={onDeletedProduct} 
-                objectSelected={productSelected} 
-                setIsModalOpened={setIsModalOpened} 
-              />
-              )
-            }
-
           </div>
         ))
       }
