@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { INotebook } from "@/interfaces";
 
 export const getFeaturedNotebooks = async () => {
     try {
@@ -11,12 +10,20 @@ export const getFeaturedNotebooks = async () => {
             where: {
                 status: true
             },
-            include: {
-                ProductImage: true,
+            select: {
+                title: true,
+                slug: true,
                 category: {
                     select: {
                         name: true
                     }
+                },
+                price: true,
+                ProductImage: {
+                    select: {
+                        url: true
+                    },
+                    take: 1
                 }
             }
         });
@@ -26,7 +33,7 @@ export const getFeaturedNotebooks = async () => {
                 ok: false,
                 message: "No hay notebooks para mostrar"
             }
-        };
+        };       
 
         return {
             ok: true,
@@ -34,7 +41,14 @@ export const getFeaturedNotebooks = async () => {
                 ...notebook,
                 category: notebook.category.name,
                 images: notebook.ProductImage?.map(image => image.url)
-            })) as INotebook[]
+            })) as {
+                title: string;
+                slug: string;
+                category: string;
+                price: number;
+                images: string[];
+                ProductImage: { url: string }[];
+            }[]
         }
     } catch (error) {
         console.log(error);

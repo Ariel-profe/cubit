@@ -1,29 +1,35 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getFeaturedNotebooks } from "@/actions";
-import { INotebook } from "@/interfaces";
-import DashboardPage from "@/app/admin/(dashboard)/dashboard/page";
-import { ProductsGrid } from "../products/products-grid";
-import { Loading } from "../ui/loading";
-import { Title } from "../ui/title";
-import Link from "next/link";
+import { ProductsGrid, Loading, Title, Button } from "@/components";
+
+type FeaturedNotebooksProps = {
+    title: string;
+    slug: string;
+    category: string;
+    price: number;
+    images: string[];
+    ProductImage: { url: string }[];
+}[];
 
 export const FeaturedNotebooks = () => {
 
-    const [featuredNotebooks, setFeaturedNotebooks] = useState<INotebook[]>([]);
+    const [featuredNotebooks, setFeaturedNotebooks] = useState<FeaturedNotebooksProps | undefined>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-
         const fetchNotebooks = async () => {
             try {
                 const { notebooks } = await getFeaturedNotebooks();
                 setFeaturedNotebooks(notebooks || []);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
+                setLoading(false);
             }
         }
-
         fetchNotebooks();
     }, []);
 
@@ -41,18 +47,20 @@ export const FeaturedNotebooks = () => {
             </Title>
 
             <div className="min-h-[200px] flex items-center justify-center">
-            {
-                !featuredNotebooks || featuredNotebooks.length === 0 ? (
-                    <Loading />
-                ) : (
-                    <ProductsGrid products={featuredNotebooks} />
-                )
-            }
+                {
+                    loading
+                        ? <Loading />
+                        : (<ProductsGrid products={featuredNotebooks ?? []} />)
+                }
             </div>
-
-            <Link href="/productos/notebooks" className="text-center mt-5 block">
-                Ver todas las notebooks
-            </Link>
+            
+            <div className="mt-8 flex justify-center">    
+                <Button variant="secondary" size="sm">
+                    <Link href="/productos/notebooks">
+                        Ver todas las notebooks
+                    </Link>
+                </Button>
+            </div>
         </div>
     )
 }

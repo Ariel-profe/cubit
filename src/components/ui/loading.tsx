@@ -1,39 +1,9 @@
 "use client";
 
-import { motion } from "motion/react";
-
 export const Loading = () => {
 
-    const text = "Cargando...";
-
   return (
-    <div className="font-sans font-bold [--shadow-color:var(--color-neutral-500)] dark:[--shadow-color:var(--color-neutral-100)]">
-      {text.split("").map((char, i) => (
-        <motion.span
-          key={i}
-          className="inline-block"
-          initial={{ scale: 1, opacity: 0.5 }}
-          animate={{
-            scale: [1, 1.1, 1],
-            textShadow: [
-              "0 0 0 var(--shadow-color)",
-              "0 0 1px var(--shadow-color)",
-              "0 0 0 var(--shadow-color)",
-            ],
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{
-            duration: 0.5,
-            repeat: Infinity,
-            repeatType: "loop",
-            delay: i * 0.05,
-            ease: "easeInOut",
-            repeatDelay: 2,
-          }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
-    </div>
+    <div className="w-12 text-blue-600"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="12" r="3"><animate id="spinner_qFRN" begin="0;spinner_OcgL.end+0.25s" attributeName="cy" calcMode="spline" dur="0.6s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"></animate></circle><circle cx="12" cy="12" r="3"><animate begin="spinner_qFRN.begin+0.1s" attributeName="cy" calcMode="spline" dur="0.6s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"></animate></circle><circle cx="20" cy="12" r="3"><animate id="spinner_OcgL" begin="spinner_qFRN.begin+0.2s" attributeName="cy" calcMode="spline" dur="0.6s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"></animate></circle></svg></div>
   );
 };
+

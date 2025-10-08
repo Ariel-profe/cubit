@@ -16,14 +16,70 @@ type FormInputs = {
     password: string;
 };
 
+type StrengthLevel = "empty" | "weak" | "medium" | "strong" | "very-strong";
+
+// Password strength calculation based on common rules
+const calculateStrength = (password: string): { score: number; level: StrengthLevel } => {
+  if (!password) return { score: 0, level: "empty" };
+  
+  let score = 0;
+  
+  // Length check
+  if (password.length > 5) score += 1;
+  if (password.length > 8) score += 1;
+  
+  // Character variety checks
+  if (/[A-Z]/.test(password)) score += 1;
+  if (/[a-z]/.test(password)) score += 1;
+  if (/[0-9]/.test(password)) score += 1;
+  if (/[^A-Za-z0-9]/.test(password)) score += 1;
+  
+  // Determine level based on score
+  let level: StrengthLevel = "empty";
+  if (score === 0) level = "empty";
+  else if (score <= 2) level = "weak";
+  else if (score <= 4) level = "medium";
+  else if (score <= 5) level = "strong";
+  else level = "very-strong";
+  
+  return { score, level };
+};
+
+// Colors for different strength levels
+const strengthColors = {
+  empty: "bg-gray-200",
+  weak: "bg-red-500",
+  medium: "bg-orange-500",
+  strong: "bg-green-500",
+  "very-strong": "bg-emerald-500",
+};
+
+// Text labels for different strength levels
+const strengthLabels = {
+  empty: "Vacía",
+  weak: "Débil",
+  medium: "Media",
+  strong: "Fuerte",
+  "very-strong": "Muy fuerte",
+};
+
 export const RegisterForm = () => {
 
     const [showPassword, setShowPassword] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>();
+    const [strength, setStrength] = useState<StrengthLevel>("empty");
+    const [passwordValue, setPasswordValue] = useState("");
+
+    const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm<FormInputs>();
 
     const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-
         const { name, email, password } = data;
+
+        // Prevent submission if password strength is below medium
+        const { level } = calculateStrength(password);
+        if (level === "weak" || level === "empty") {
+            setError("password", { type: "manual", message: "La contraseña debe ser al menos de fuerza media (incluye alguna mayúscula, minúscula, número y carácter especial)." });
+            return;
+        }
 
         //Server actions
         const { message, ok } = await registerUser(name, email, password);
@@ -37,6 +93,19 @@ export const RegisterForm = () => {
 
         await login(email.toLowerCase(), password);
         window.location.replace("/")
+    };
+
+    // Handle password input change
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setPasswordValue(value);
+        const { level } = calculateStrength(value);
+        setStrength(level);
+
+        // Clear manual error if strength is sufficient
+        if (level !== "weak" && level !== "empty") {
+            clearErrors("password");
+        }
     };
 
     return (
@@ -130,6 +199,8 @@ export const RegisterForm = () => {
                                                     required: true,
                                                     minLength: 6
                                                 })}
+                                                value={passwordValue}
+                                                onChange={handlePasswordChange}
                                                 className={clsx(
                                                     "border-slate-600 bg-background block w-full rounded-sm border py-3 pr-3 pl-10 text-sm",
                                                     {
@@ -138,9 +209,6 @@ export const RegisterForm = () => {
                                                 )}
                                                 placeholder="********"
                                             />
-                                            {errors.password?.type === "minLength" && (
-                                                <span className="text-rose-500 p-0">La contraseña debe tener al menos 6 caracteres</span>
-                                            )}
                                             <button
                                                 type="button"
                                                 className="absolute inset-y-0 right-0 flex items-center pr-3"
@@ -153,6 +221,17 @@ export const RegisterForm = () => {
                                                 )}
                                             </button>
                                         </div>
+                                        {/* Password strength indicator */}
+                                        <div className="mt-2 flex items-center gap-2 w-full">
+                                            <div className={clsx("h-1 w-24 rounded flex-1", strengthColors[strength])}></div>
+                                            <span className="text-xs font-medium">{strengthLabels[strength]}</span>
+                                        </div>
+                                        {errors.password?.type === "minLength" && (
+                                            <span className="text-rose-500 p-0">La contraseña debe tener al menos 6 caracteres</span>
+                                        )}
+                                        {errors.password?.type === "manual" && (
+                                            <span className="text-rose-500 p-0">{errors.password.message}</span>
+                                        )}
                                     </div>
 
                                     <Button variant='default' className='w-full'>

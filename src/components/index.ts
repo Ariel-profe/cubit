@@ -13,6 +13,7 @@ export * from './ui/go-back-button';
 export * from './ui/glowing-cards';
 export * from './ui/input';
 export * from './ui/label';
+export * from './ui/lens';
 export * from './ui/loading';
 export * from './ui/navbar';
 export * from './ui/page-not-found';
