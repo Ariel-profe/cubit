@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 
 export const getFeaturedNotebooks = async () => {
     try {
@@ -31,7 +31,8 @@ export const getFeaturedNotebooks = async () => {
         if (!notebooksDB) {
             return {
                 ok: false,
-                message: "No hay notebooks para mostrar"
+                message: "No hay notebooks para mostrar",
+                notebooks: []
             }
         };       
 

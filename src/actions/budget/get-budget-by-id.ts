@@ -1,22 +1,22 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 
 export const getBudgetById = async (id: string) => {
 
     try {
         const budget = await prisma.budget.findUnique({
             where: { id },
-           include: {
-            BudgetItem: true
-           }
+            include: {
+                BudgetItem: true
+            }
         })
 
         if (!budget) return null;
 
         return {
             ...budget,
-           
+
         };
 
     } catch (error) {

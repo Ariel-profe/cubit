@@ -1,11 +1,14 @@
 "use server";
 
-import { auth } from "@/auth.config";
-import { prisma } from "@/lib/prisma";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
 export const getOrderById = async (id: string) => {
 
-    const session = await auth();
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
 
     if (!session?.user) {
         return {
@@ -49,7 +52,7 @@ export const getOrderById = async (id: string) => {
                             select: {
                                 title: true,
                                 slug: true,
-                                
+
                                 ProductImage: {
                                     select: {
                                         url: true

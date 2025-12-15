@@ -1,8 +1,16 @@
-import Link from "next/link";
-import { GoBackButton, PlaceOrder, ProductsInCheckout, Title } from "@/components";
-import { IoArrowBackCircleOutline } from "react-icons/io5";
 
-export default function CheckoutPage() {
+import { unauthorized } from "next/navigation";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { GoBackButton, PlaceOrder, ProductsInCheckout, Title } from "@/components";
+import { getServerSession } from "@/lib/get-server-session";
+
+export default async function CheckoutPage() {
+
+    const session = await getServerSession();
+      const user = session?.user;
+  
+      if(!user) unauthorized();
+      
   return (
     <section className="flex justify-center items-center container mx-auto px-3 mt-10 lg:mt-20">
       <div className="flex flex-col w-full">

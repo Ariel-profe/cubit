@@ -26,9 +26,6 @@ export * from './products/create-update-support';
 export * from './products/create-update-video-card';
 
 // Auth
-export * from './auth/login';
-export * from './auth/logout';
-export * from './auth/register';
 
 // Departments
 export * from './department/get-departments';

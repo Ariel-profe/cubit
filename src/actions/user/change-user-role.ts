@@ -1,21 +1,17 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { auth } from "@/auth.config";
-import { prisma } from "@/lib/prisma";
+import { forbidden, unauthorized } from "next/navigation";
+
+import prisma from "@/lib/prisma";
+import { getServerSession } from "@/lib/get-server-session";
 
 export const changeUserRole = async (userId: string, role: string) => {
 
-    const session = await auth();
-    if (session?.user.role !== 'admin') {
-        return {
-            ok: false,
-            message: 'Usted no tiene permisos para realizar esta acción.'
-        };
-    };
-
-    console.log(userId);
-    
+    const session = await getServerSession();
+    const user = session?.user;
+    if (!user) unauthorized();
+    if (user.role !== 'admin') forbidden();
 
     try {
 
@@ -32,14 +28,14 @@ export const changeUserRole = async (userId: string, role: string) => {
             ok: true,
             message: `El rol del usuario "${user.name}" ha sido cambiado a "${role}".`
         };
-        
+
     } catch (error) {
         console.error('Error al cambiar el rol del usuario:', error);
         return {
             ok: false,
             message: 'Ocurrió un error al cambiar el rol del usuario.'
         };
-        
+
     }
 
 };

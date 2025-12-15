@@ -1,10 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { forbidden, unauthorized } from "next/navigation";
 import { v2 as cloudinary } from 'cloudinary';
 import z from "zod";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Ssd, Prisma } from "@prisma/client";
+import { getServerSession } from "@/lib/get-server-session";
 
 // Configure Cloudinary
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
@@ -37,6 +39,10 @@ const ssdSchema = z.object({
 });
 
 export const createUpdateSsd = async (formData: FormData) => {
+    const session = await getServerSession();
+    const user = session?.user;
+    if (!user) unauthorized();
+    if (user.role !== 'admin') forbidden();
     const data = Object.fromEntries(formData);
 
     let productParsed = ssdSchema.safeParse(data);

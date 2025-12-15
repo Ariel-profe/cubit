@@ -1,5 +1,7 @@
 // UI
+export * from './ui/alert';
 export * from './ui/avatar';
+export * from './ui/badge';
 export * from './ui/breadcrumb';
 export * from './ui/button';
 export * from './ui/card';
@@ -7,6 +9,7 @@ export * from './ui/checkbox';
 export * from './ui/collapsible';
 export * from './ui/dialog';
 export * from './ui/dropdown-menu';
+export * from './ui/form';
 export * from './ui/flip-card';
 export * from './ui/footer';
 export * from './ui/go-back-button';
@@ -15,19 +18,23 @@ export * from './ui/input';
 export * from './ui/label';
 export * from './ui/lens';
 export * from './ui/loading';
+export * from './ui/loading-button';
 export * from './ui/navbar';
 export * from './ui/page-not-found';
 export * from './ui/pagination';
+export * from './ui/password-input';
 export * from './ui/scroll-area';
 export * from './ui/search-input';
 export * from './ui/select';
 export * from './ui/sheet';
+export * from './ui/sonner';
 export * from './ui/sidebar';
 export * from './ui/switch';
 export * from './ui/tag';
 export * from './ui/title';
 export * from './ui/tooltip';
 export * from './ui/transition-panel';
+export * from './ui/user-avatar';
 
 //Homepage
 export * from './homepage/container-scroll';
@@ -76,10 +83,10 @@ export * from './cart/products-in-cart';
 export * from './cart/address-form';
 
 // Auth
-export * from './auth/login-form';
-
-//Provider
-export * from './provider/provider';
+export * from './auth/sign-in-form';
+export * from './auth/sign-up-form';
+export * from './auth/forgot-password-form';
+export * from './auth/reset-password-form';
 
 // Checkout
 export * from './checkout/products-in-cart';
@@ -134,5 +141,12 @@ export * from './admin/invoice/invoice-item';
 export * from './admin/invoice/invoice-preview';
 export * from './admin/invoice/type-of-receipt';
 
+// Profile
+export * from './profile/email-form';
+export * from './profile/logout-everywhere-button';
+export * from './profile/password-form';
+export * from './profile/profile-details-form';
+export * from './profile/email-verification-alert';
+export * from './profile/profile-information';
 
 

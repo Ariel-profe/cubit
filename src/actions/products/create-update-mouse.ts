@@ -3,8 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { v2 as cloudinary } from 'cloudinary';
 import z from "zod";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Mouse, Prisma } from "@prisma/client";
+import { getServerSession } from "@/lib/get-server-session";
+import { forbidden, unauthorized } from "next/navigation";
 
 // Configure Cloudinary
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
@@ -44,6 +46,10 @@ const mouseSchema = z.object({
 });
 
 export const createUpdateMouse = async (formData: FormData) => {
+    const session = await getServerSession();
+    const user = session?.user;
+    if (!user) unauthorized();
+    if (user.role !== 'admin') forbidden();
     const data = Object.fromEntries(formData);
 
     let productParsed = mouseSchema.safeParse(data);

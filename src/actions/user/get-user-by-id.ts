@@ -1,9 +1,9 @@
 "use server";
 
-import { IUser } from "@/interfaces";
-import { prisma } from "@/lib/prisma";
+import { User } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
-export const getUserById = async (id: string): Promise<{ ok: boolean; message?: string; user?: IUser }> => {
+export const getUserById = async (id: string): Promise<{ ok: boolean; message?: string; user?: User }> => {
     try {
         const user = await prisma.user.findUnique({
             where: { id }

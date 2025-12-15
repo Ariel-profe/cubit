@@ -1,5 +1,5 @@
+import prisma from "@/lib/prisma";
 import { IBudget } from "@/interfaces/budget.interface";
-import { prisma } from "@/lib/prisma";
 
 interface PaginationOptions {
     page?: number;

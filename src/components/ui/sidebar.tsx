@@ -3,23 +3,26 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession } from 'next-auth/react'
+
 import { IoAnalyticsOutline, IoCloseOutline, IoCubeOutline, IoLogInOutline, IoLogOutOutline, IoPersonOutline, IoSearchOutline, IoTicketOutline } from "react-icons/io5";
 import clsx from "clsx";
 
-import { logout } from "@/actions";
 import { useUIStore } from "@/store";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { User } from "@/lib/auth";
 
-export const Sidebar = () => {
+interface Props {
+    user: User | null;
+}
+
+export const Sidebar = ({ user }: Props) => {
 
     const [searchTerm, setSearchTerm] = useState<string>('');
     const { isSideMenuOpen, closeSideMenu } = useUIStore(state => state);
     const { replace } = useRouter();
 
-    const { data: session } = useSession();
-
-    const isAuthenticated = !!session?.user;
-    const isAdmin = (session?.user.role === "admin");
+    const isAdmin = (user?.role === "admin");
 
     const onSearchTerm = () => {
         if (searchTerm.trim().length === 0) return;
@@ -29,9 +32,15 @@ export const Sidebar = () => {
     };
 
     const onLogout = async () => {
-        await logout();
-        window.location.reload();
-        closeSideMenu();
+        const { error } = await authClient.signOut();
+
+        if (error) {
+            toast.error('Error al cerrar sesión');
+        } else {
+            toast.success('Sesión cerrada correctamente');
+            replace('/sign-in');
+            closeSideMenu();
+        }
     };
 
     return (
@@ -59,7 +68,7 @@ export const Sidebar = () => {
                     }
                 )
             }>
-                {session?.user.name && (<p>Hola <span className="text-tertiary capitalize">{session?.user.name.split(" ")[0]}</span></p>)}
+                {user && <p className="text-xs text-secondary">{user.email}</p>}
 
                 <IoCloseOutline
                     size={30}
@@ -68,37 +77,78 @@ export const Sidebar = () => {
                 />
 
                 {/* Input Search */}
-                <div className="relative mt-14 text-slate-400 flex items-center py-2 px-1 bg-background/75 rounded">
-                        <IoSearchOutline
-                            size={20}
-                            className="font-bold"
-                            onClick={onSearchTerm}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Buscar productos..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    onSearchTerm();
-                                }
-                            }}
-                            className="ml-3 tracking-wider"
-                        />
+                <div className="relative mt-10 text-slate-400 flex items-center py-2 px-1 bg-background/75 rounded">
+                    <IoSearchOutline
+                        size={20}
+                        className="font-bold"
+                        onClick={onSearchTerm}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Buscar productos..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                onSearchTerm();
+                            }
+                        }}
+                        className="ml-3 tracking-wider"
+                    />
                 </div>
 
                 {
-                    !isAuthenticated && (
-                        <Link
-                            href="/auth/login"
-                            onClick={(closeSideMenu)}
-                            className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all text-emerald-400"
-                        >
-                            <IoLogInOutline size={20} />
-                            <span className="ml-3 text-base tracking-wide">Ingresar</span>
-                        </Link>
+                    !user ? (
+                        <>
+                            <Link
+                                href="/sign-in"
+                                onClick={(closeSideMenu)}
+                                className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all text-emerald-400"
+                            >
+                                <IoLogInOutline size={20} />
+                                <span className="ml-3 text-base tracking-wide">Ingresar</span>
+                            </Link>
+                            <Link
+                                href="/sign-up"
+                                onClick={(closeSideMenu)}
+                                className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all text-blue-400"
+                            >
+                                <IoLogInOutline size={20} />
+                                <span className="ml-3 text-base tracking-wide">Registrarse</span>
+                            </Link>
+                        </>
                     )
+                        : (
+                            <>
+                                {/* User links */}
+                                <Link
+                                    href="/perfil"
+                                    onClick={(closeSideMenu)}
+                                    className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all"
+                                >
+                                    <IoPersonOutline size={20} />
+                                    <span className="ml-3 text-base tracking-wide">Perfil</span>
+                                </Link>
+                                <Link
+                                    href="/ordenes"
+                                    onClick={(closeSideMenu)}
+                                    className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all"
+                                >
+                                    <IoTicketOutline size={20} />
+                                    <span className="ml-3 text-base tracking-wide">Órdenes</span>
+                                </Link>
+                                <button
+                                    onClick={() => {
+                                        closeSideMenu()
+                                        onLogout()
+                                    }}
+                                    className="flex w-full items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all cursor-pointer text-red-600"
+                                >
+                                    <IoLogOutOutline size={20} />
+                                    <span className="ml-3 text-base tracking-wide">Salir</span>
+                                </button>
+                            </>
+                        )
                 }
 
                 {/* Links */}
@@ -128,44 +178,6 @@ export const Sidebar = () => {
                     <IoPersonOutline size={20} />
                     <span className="ml-3 text-base tracking-wide">Servicios</span>
                 </Link>
-
-                {
-                    isAuthenticated && (
-                        <>
-                            {/* User links */}
-                            <Link
-                                href="/perfil"
-                                onClick={(closeSideMenu)}
-                                className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all"
-                            >
-                                <IoPersonOutline size={20} />
-                                <span className="ml-3 text-base tracking-wide">Perfil</span>
-                            </Link>
-                            <Link
-                                href="/ordenes"
-                                onClick={(closeSideMenu)}
-                                className="flex items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all"
-                            >
-                                <IoTicketOutline size={20} />
-                                <span className="ml-3 text-base tracking-wide">Órdenes</span>
-                            </Link>
-                        </>
-                    )
-                }
-                {
-                    isAuthenticated && (
-                        <button
-                            onClick={() => {
-                                closeSideMenu()
-                                onLogout()
-                            }}
-                            className="flex w-full items-center mt-4 py-2 px-1 hover:bg-background/75 rounded transition-all cursor-pointer text-red-600"
-                        >
-                            <IoLogOutOutline size={20} />
-                            <span className="ml-3 text-base tracking-wide">Salir</span>
-                        </button>
-                    )
-                }
 
                 {
                     isAdmin && (

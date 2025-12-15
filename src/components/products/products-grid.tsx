@@ -11,10 +11,15 @@ interface Props {
   }[];
 };
 
-export const ProductsGrid = ({ products }: Props) => {
+export const ProductsGrid = ({ products }: Props) => {  
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 fadeIn mt-10">
       {
+        !products || products.length === 0 ? (
+          <p className="text-center w-full col-span-full">
+            No hay productos para mostrar.
+          </p>
+        ) :
         products.map((product) => (
           <ProductCard key={product.slug} product={product} />
         ))

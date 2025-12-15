@@ -12,7 +12,7 @@ const items = [
 export const InvoicePreview = () => {
   return (
     <section className="flex flex-col container mx-auto px-3 mt-10 lg:mt-20 bg-slate-900">
-      <Title title="Vista previa de la factura" subtitle="Revise los detalles de la factura antes de descargar." />
+      <Title>Vista previa de la factura</Title>
 
       <div className="flex items-center justify-end gap-2 mt-2">
         <Button variant="outline">

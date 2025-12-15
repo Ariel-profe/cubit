@@ -3,12 +3,12 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 import { useAddressStore } from "@/store";
 import { deleteUserAddress, setUserAddress } from "@/actions";
 import { Button } from "@/components";
 import type { IAddress, IDepartment } from "@/interfaces";
+import { authClient } from "@/lib/auth-client";
 
 interface Props {
     departments: IDepartment[];
@@ -41,9 +41,7 @@ export const AddressForm = ({ departments, userStoredAddress = {}, newUser }: Pr
         }
     });
 
-    const { data: session } = useSession({
-        required: true
-    });
+    const { data: session } = authClient.useSession();
 
     const setAddress = useAddressStore(state => state.setAddress);
     const address = useAddressStore(state => state.address);

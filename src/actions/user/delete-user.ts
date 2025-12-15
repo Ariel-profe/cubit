@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export const deleteUser = async (userId: string): Promise<{ ok: boolean; message: string }> => {
@@ -27,7 +27,7 @@ export const deleteUser = async (userId: string): Promise<{ ok: boolean; message
         console.error(error);
         return {
             ok: false,
-            message: "Error al eliminar el usuario"
+            message: "500 - Error al eliminar el usuario"
         };
     }
 };

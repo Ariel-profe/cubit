@@ -1,23 +1,38 @@
 export const revalidate = 0; // Disable revalidation for this page
 
 import Link from 'next/link';
+import { redirect, unauthorized } from 'next/navigation';
 import { IoMailOutline, IoMailOpenOutline } from 'react-icons/io5';
 
 import { Title } from '@/components';
 import { getOrdersByUser } from '@/actions';
-import { redirect } from 'next/navigation';
+import { getServerSession } from '@/lib/get-server-session';
 
 export default async function OrdersPage() {
+
+    const session = await getServerSession();
+      const user = session?.user;
+  
+      if(!user) unauthorized();
 
   const { ok, orders = [] } = await getOrdersByUser();
 
   if (!ok) {
-    redirect("/auth/login");
+    redirect("/auth/sign-in");
   };
 
   return (
     <section className="flex flex-col container mx-auto px-3 mt-10 lg:mt-20 overflow-hidden">
-      <Title title="Órdenes" subtitle='Aquí están tus pedidos solicitados' />
+      <Title
+        from="top"
+        split="word"
+        blur={3}
+        delay={0.2}
+        duration={1.2}
+      >
+        Mis órdenes
+      </Title>
+      <p className="text-sm text-slate-400 mb-5">Aquí puedes ver el estado de tus órdenes</p>
 
       <div className="md:my-10 overflow-scroll">
         <table className="min-w-full">

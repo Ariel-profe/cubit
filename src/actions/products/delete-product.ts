@@ -1,12 +1,19 @@
 "use server";
 
+import { forbidden, unauthorized } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { categoriesDictionary } from "@/utils/products/dictionary";
+import { getServerSession } from "@/lib/get-server-session";
 
-export const deleteProduct = async(productId: string, model: any)=> {
+export const deleteProduct = async (productId: string, model: any) => {
 
-     switch (model) {
+    const session = await getServerSession();
+    const user = session?.user;
+    if (!user) unauthorized();
+    if (user.role !== 'admin') forbidden();
+
+    switch (model) {
         case "backpack":
             model = prisma.backpack;
             break;
@@ -66,18 +73,19 @@ export const deleteProduct = async(productId: string, model: any)=> {
         // Check if the product exists
         const product = await model.findUnique({ where: { id: productId } });
         if (!product) {
-           return {
-            ok: false,
-            message: "Producto no encontrado"
-           }
+            return {
+                ok: false,
+                message: "Producto no encontrado"
+            }
         };
         // Delete the product from the database
         await model.update({
             where: { id: productId },
             data: {
                 status: false
-            }}
-        );       
+            }
+        }
+        );
 
         // Revalidate the path to update the cache
         revalidatePath(`/admin/productos/${categoriesDictionary[model]}`);

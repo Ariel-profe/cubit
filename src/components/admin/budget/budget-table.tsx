@@ -1,13 +1,13 @@
 "use client";
 
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { IoCloudDownloadOutline, IoEyeOffOutline, IoPencilSharp } from 'react-icons/io5';
 
 import { IBudget } from '@/interfaces/budget.interface';
-import { DeleteProduct } from '@/components/admin/handle-delete';
+import { HandleDelete } from '@/components/admin/handle-delete';
 import { generatePDF } from '@/utils';
+import { authClient } from '@/lib/auth-client';
 
 interface Props {
     budgets: IBudget[];
@@ -15,7 +15,7 @@ interface Props {
 
 export const BudgetTable = ({ budgets }: Props) => {
 
-    const {data: sessionData} = useSession();
+    const { data: session } = authClient.useSession();
 
     const columns: GridColDef[] = [
         { field: 'budgetNumber', headerName: 'N.º presupuesto', width: 250 },
@@ -40,7 +40,7 @@ export const BudgetTable = ({ budgets }: Props) => {
                 return (
                    <button 
                     className='text-violet-600 hover:text-violet-800 flex items-center justify-center h-full cursor-pointer'
-                    onClick={() => generatePDF(budgets.find(b => b.id === row.id) as IBudget, sessionData?.user?.name)}
+                    onClick={() => generatePDF(budgets.find(b => b.id === row.id) as IBudget, session?.user?.name)}
                    >
                      <IoCloudDownloadOutline size={20} />
                    </button>
@@ -63,7 +63,7 @@ export const BudgetTable = ({ budgets }: Props) => {
             headerName: 'Eliminar',
             renderCell: ({ row }: GridRenderCellParams) => {
                 return (
-                    <DeleteProduct productId={row.id} model='budget' />
+                    <HandleDelete id={row.id} model='budget' />
                 )
             }
         },

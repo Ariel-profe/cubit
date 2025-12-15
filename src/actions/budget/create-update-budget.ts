@@ -1,11 +1,15 @@
 "use server";
 
+import { headers } from 'next/headers';
 import { v2 as cloudinary } from 'cloudinary';
 import z from "zod";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Budget, BudgetItem } from "@prisma/client";
-import { auth } from "@/auth.config";
+
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/lib/auth';
+import { getServerSession } from '@/lib/get-server-session';
+import { forbidden, unauthorized } from 'next/navigation';
 
 // Configure Cloudinary
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
@@ -22,17 +26,11 @@ const budgetSchema = z.object({
 });
 
 export const createBudget = async (formData: FormData) => {
-
-    const session = await auth();
-    const userId = session?.user.id;
-
-    // Verificar sesion de usuario
-    if (!userId) {
-        return {
-            ok: false,
-            message: 'No hay sesión de usuario'
-        }
-    };
+    const session = await getServerSession();
+    const user = session?.user;
+    const userId = user?.id;
+    if (!user) unauthorized();
+    if (user.role !== 'admin') forbidden();
 
     const data = Object.fromEntries(formData);
 
@@ -61,7 +59,7 @@ export const createBudget = async (formData: FormData) => {
         });
 
         index++;
-    };    
+    };
 
     // // Validate the product data avoiding undefined or nullable values
     if (Object.values(data).some(value => value === 'undefined')) {
@@ -91,7 +89,7 @@ export const createBudget = async (formData: FormData) => {
         createdAt: budgetParsed.data.createdAt ? new Date(budgetParsed.data.createdAt) : new Date()
     };
 
-    const {id, ...rest} = budget;
+    const { id, ...rest } = budget;
 
     try {
 
@@ -99,18 +97,18 @@ export const createBudget = async (formData: FormData) => {
 
             let budget: Budget;
 
-           if(id){
-            // Update budget
-            budget = await tx.budget.update({
-                where: { id },
-                data: { ...rest  }
-            });
-           } else {
-            // Create budget
-           budget = await tx.budget.create({
-                data: { ...rest }
-            });
-           }          
+            if (id) {
+                // Update budget
+                budget = await tx.budget.update({
+                    where: { id },
+                    data: { ...rest }
+                });
+            } else {
+                // Create budget
+                budget = await tx.budget.create({
+                    data: { ...rest }
+                });
+            }
 
             // Upload images to Cloudinary and update budgetItems
             for (let i = 0; i < budgetItems.length; i++) {
@@ -127,7 +125,7 @@ export const createBudget = async (formData: FormData) => {
             };
 
             // Delete existing budget items if updating, but if the image is not changed, keep the old one
-            if(id){
+            if (id) {
                 // Fetch existing items to preserve images if not updated
                 const existingItems = await tx.budgetItem.findMany({
                     where: { budgetId: budget.id },

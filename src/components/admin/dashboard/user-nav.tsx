@@ -1,19 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { LayoutGrid, LogOut, User } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage, Button, Tooltip, TooltipContent, TooltipTrigger, TooltipProvider, DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components";
-import { logout } from "@/actions";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export function UserNav() {
 
-  const { data: session } = useSession();
+  const { data: session } = authClient.useSession();
 
   const onLogout = async () => {
-    await logout();
-    window.location.href = '/';
+    const { error } = await authClient.signOut();
+    if (error) {
+      toast.error(error.message || 'Error al cerrar sesión');
+      return;
+    } else {
+      toast.success('Sesión cerrada');
+      window.location.href = '/';
+    }
   };
 
   return (

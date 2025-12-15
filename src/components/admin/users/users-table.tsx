@@ -1,7 +1,7 @@
 "use client";
 
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 import { changeUserRole } from '@/actions';
 import { IUser } from "@/interfaces";
@@ -17,11 +17,11 @@ export const UsersTable = ({ users }: Props) => {
         const { ok, message } = await changeUserRole(userId, role);
 
         if (!ok) {
-            toast.error(message, { position: "bottom-right" });
+            toast.error(message);
             return;
         }
 
-        toast.success(message, { position: "bottom-right" });
+        toast.success(message);
     };
 
     const columns: GridColDef[] = [
@@ -34,26 +34,26 @@ export const UsersTable = ({ users }: Props) => {
             renderCell: ({ row }) => {
                 return (
                     <select
-                            value={row.role}
-                            onChange={e => onChangeUserRole(row.id, e.target.value)}
-                            className='text-sm text-secondary w-32 p-2'
-                          >
-                            <option value="admin">Admin</option>
-                            <option value="user">Usuario</option>
-                            <option value="client">Cliente</option>
-                          </select>
+                        value={row.role}
+                        onChange={e => onChangeUserRole(row.id, e.target.value)}
+                        className='text-sm text-secondary w-32 p-2'
+                    >
+                        <option value="admin">Admin</option>
+                        <option value="user">Usuario</option>
+                        <option value="client">Cliente</option>
+                    </select>
                 )
             },
         },
         {
-                    field: 'delete',
-                    headerName: 'Eliminar',
-                    renderCell: ({ row }: GridRenderCellParams) => {
-                        return (
-                            <HandleDelete id={row.id} model="user" />
-                        )
-                    }
-                },
+            field: 'delete',
+            headerName: 'Eliminar',
+            renderCell: ({ row }: GridRenderCellParams) => {
+                return (
+                    <HandleDelete id={row.id} model="user" />
+                )
+            }
+        },
     ];
 
     const rows = users.map(user => ({

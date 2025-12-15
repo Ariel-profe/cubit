@@ -17,7 +17,7 @@ type FeaturedNotebooksProps = {
 export const FeaturedNotebooks = () => {
 
     const [featuredNotebooks, setFeaturedNotebooks] = useState<FeaturedNotebooksProps | undefined>([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);    
 
     useEffect(() => {
         const fetchNotebooks = async () => {
@@ -53,8 +53,8 @@ export const FeaturedNotebooks = () => {
                         : (<ProductsGrid products={featuredNotebooks ?? []} />)
                 }
             </div>
-            
-            <div className="mt-8 flex justify-center">    
+
+            <div className="mt-8 flex justify-center">
                 <Button variant="secondary" size="sm">
                     <Link href="/productos/notebooks">
                         Ver todas las notebooks

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 import { createUpdateSsd, deleteProductImage } from "@/actions";
 import { ProductImage, Button } from "@/components";
@@ -101,12 +101,12 @@ export const SsdForm = ({ product }: Props) => {
 
         if (!ok) {
             toast.error(
-                message?.includes('code') ? "El código ya existe" : message, { position: "bottom-right" });
+                message?.includes('code') ? "El código ya existe" : message);
             return;
         };
 
         // If the product was created or updated successfully
-        toast.success(message, { position: "bottom-right" });
+        toast.success(message);
         router.replace("/admin/productos/discos-solidos");
     };
 
@@ -114,11 +114,11 @@ export const SsdForm = ({ product }: Props) => {
         const { ok, message } = await deleteProductImage(imageId, imageUrl);
 
         if (!ok) {
-            toast.error(message, { position: "bottom-right" });
+            toast.error(message);
             return;
         };
 
-        toast.success("Imagen eliminada correctamente", { position: "bottom-right" });
+        toast.success("Imagen eliminada correctamente");
         // Optionally, you can refresh the page or update the state to reflect the changes
         // router.refresh();
     };

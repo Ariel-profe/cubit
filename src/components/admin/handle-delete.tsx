@@ -1,6 +1,6 @@
 "use client"
 
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { IoTrashOutline, IoWarningOutline } from "react-icons/io5";
 
 import { deleteBudget, deleteProduct, deleteUser } from "@/actions";
@@ -12,23 +12,23 @@ export const HandleDelete = ({ id, model }: { id: string, model: string }) => {
             if (model === "budget") {
                 const { message, ok } = await deleteBudget(id);
                 if (ok) {
-                    toast.success(message, { position: "bottom-right" });
+                    toast.success(message);
                 } else {
-                    toast.error(message, { position: "bottom-right" });
+                    toast.error(message);
                 }
             } else if (model === "user") {
                 const { message, ok } = await deleteUser(id);
                 if (ok) {
-                    toast.success(message, { position: "bottom-right" });
+                    toast.success(message);
                 } else {
-                    toast.error(message, { position: "bottom-right" });
+                    toast.error(message);
                 }
             } else {
                 const { message, ok } = await deleteProduct(id, model);
                 if (ok) {
-                    toast.success(message, { position: "bottom-right" });
+                    toast.success(message);
                 } else {
-                    toast.error(message, { position: "bottom-right" });
+                    toast.error(message);
                 }
             }
         } catch (error) {

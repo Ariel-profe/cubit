@@ -1,13 +1,20 @@
 "use server";
 
-import { prisma } from '@/lib/prisma';
-import { v2 as cloudinary } from 'cloudinary';
 import { revalidatePath } from 'next/cache';
+import { forbidden, unauthorized } from 'next/navigation';
+import { v2 as cloudinary } from 'cloudinary';
+import { getServerSession } from '@/lib/get-server-session';
+import prisma from '@/lib/prisma';
 
 // Configure Cloudinary
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 export const deleteProductImage = async (imageId: number, imageUrl: string) => {
+
+    const session = await getServerSession();
+    const user = session?.user;
+    if (!user) unauthorized();
+    if (user.role !== 'admin') forbidden();
 
         if(!imageUrl.startsWith("http")){
             return {

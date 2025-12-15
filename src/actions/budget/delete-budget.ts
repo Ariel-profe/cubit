@@ -2,13 +2,19 @@
 
 import { revalidatePath } from "next/cache";
 import { v2 as cloudinary } from 'cloudinary';
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { deleteBudgetImage } from "./delete-budget-image";
+import { getServerSession } from "@/lib/get-server-session";
+import { forbidden, unauthorized } from "next/navigation";
 
 // Configure Cloudinary
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 export const deleteBudget = async (budgetId: string) => {    
+    const session = await getServerSession();
+    const user = session?.user;
+    if (!user) unauthorized();
+    if (user.role !== 'admin') forbidden();
     try {
         //Delete first the BudgetItem
         const budgetItems = await prisma.budgetItem.findMany({ where: { budgetId: budgetId } });

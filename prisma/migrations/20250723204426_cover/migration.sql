@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Cover" ALTER COLUMN "materials" SET NOT NULL,
-ALTER COLUMN "materials" SET DATA TYPE TEXT;

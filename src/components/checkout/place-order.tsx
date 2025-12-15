@@ -6,14 +6,14 @@ import { useAddressStore, useCartStore } from "@/store";
 import { placeOrder } from "@/actions";
 import { Button, Loading } from "@/components";
 import { formatCurrency } from "@/utils/common/format-currency";
-import { useSession } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 
 export const PlaceOrder = () => {
 
     const [loaded, setLoaded] = useState<boolean>(false);
     const [isPlacingOrder, setIsPlacingOrder] = useState<boolean>(false);
     const [message, setMessage] = useState("");
-    const session = useSession();
+    const session = authClient.useSession();
 
     const address = useAddressStore(state => state.address);
 

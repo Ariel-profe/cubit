@@ -1,18 +1,15 @@
 "use server";
 
-import { auth } from "@/auth.config";
-import { prisma } from "@/lib/prisma";
+import { forbidden, unauthorized } from "next/navigation";
+import { getServerSession } from "@/lib/get-server-session";
+import prisma from "@/lib/prisma";
 
 export const getPaginatedUsers = async () => {
 
-    const session = await auth();
-
-    if (session?.user.role !== 'admin') {
-        return {
-            ok: false,
-            message: 'Usted no tiene permisos para ver esta página.'
-        };
-    };
+    const session = await getServerSession();
+    const user = session?.user;
+    if (!user) unauthorized();
+    if (user.role !== 'admin') forbidden();
 
     const users = await prisma.user.findMany({
         where: {

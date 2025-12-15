@@ -2,7 +2,7 @@
 
 import { IoAddOutline, IoTrashOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
 import { IBudget, IBudgetItem } from "@/interfaces/budget.interface";
@@ -31,10 +31,7 @@ interface FormInputs {
   }[];
 };
 
-export const BudgetForm = ({ budget }: Props) => {
-
-  console.log(budget);
-  
+export const BudgetForm = ({ budget }: Props) => {  
 
   const { register, setValue, getValues, watch, handleSubmit, formState: { isValid } } = useForm<FormInputs>({
     defaultValues: {
@@ -113,11 +110,11 @@ export const BudgetForm = ({ budget }: Props) => {
     const { ok, message } = await createBudget(formData);
 
     if (!ok) {
-      toast.error(message.toString(), { position: "bottom-right" });
+      toast.error(message.toString());
       return;
     };
 
-    toast.success(message.toString(), { position: "bottom-right" });
+    toast.success(message.toString());
     window.location.href = '/admin/presupuestos';
   };
 
@@ -125,11 +122,11 @@ export const BudgetForm = ({ budget }: Props) => {
     const { ok, message } = await deleteBudgetImage(image);
 
     if (!ok) {
-      toast.error(message, { position: "bottom-right" });
+      toast.error(message);
       return;
     };
 
-    toast.success("Imagen eliminada correctamente", { position: "bottom-right" });
+    toast.success("Imagen eliminada correctamente");
   };
 
   return (

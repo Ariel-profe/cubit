@@ -4,7 +4,6 @@ import { getProductBySlug } from "@/actions";
 import { AdminBreadcrumb, CarryForm, Title } from "@/components";
 import { ICarry } from "@/interfaces";
 
-
 interface Props {
   params: Promise<{ slug: string }>
 };

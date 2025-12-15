@@ -1,8 +1,9 @@
 "use server";
 
-import { auth } from "@/auth.config";
-import { prisma } from "@/lib/prisma";
+import { headers } from "next/headers";
+import prisma from "@/lib/prisma";
 import type { IAddress } from "@/interfaces";
+import { auth } from "@/lib/auth";
 
 interface ProductToOrder {
     productId: string;
@@ -11,7 +12,9 @@ interface ProductToOrder {
 
 export const placeOrder = async (productIds: ProductToOrder[], address: IAddress) => {
 
-    const session = await auth();
+     const session = await auth.api.getSession({
+        headers: await headers()
+    })
     const userId = session?.user.id;
 
     // Verificar sesion de usuario

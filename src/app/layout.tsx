@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { roboto } from "@/config/fonts";
 
 import "./globals.css";
-import { Provider } from "@/components";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: {
@@ -20,9 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.className} antialiased bg-background text-slate-300 relative`}>
-        <Provider>
-          {children}
-        </Provider>
+        {children}
+        <Toaster position='bottom-right' />
       </body>
     </html>
   );

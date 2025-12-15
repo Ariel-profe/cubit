@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { IoTrashOutline, IoWarningOutline } from "react-icons/io5";
 
 import { useCartStore } from "@/store";
@@ -35,7 +35,7 @@ export const ProductsInCart = () => {
 
   const onDeletedProduct = (product: ICartProduct) => {
     removeProductFromCart(product);
-    toast.error(`El producto fue eliminado del carrito`, { position: "bottom-right" });
+    toast.error(`El producto fue eliminado del carrito`);
   };
 
   return (

@@ -11,7 +11,7 @@ export default async function UsersAdminPage() {
   const { ok, users = [] } = await getPaginatedUsers();
 
   if (!ok) {
-    redirect("/auth/login");
+    redirect("/auth/sign-in");
   };
 
   return (

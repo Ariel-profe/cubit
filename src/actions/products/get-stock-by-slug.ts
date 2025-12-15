@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 
 export const getStockBySlug = async (slug: string, model: any): Promise<number> => {
 

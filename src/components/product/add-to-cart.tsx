@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import {toast} from 'react-toastify';
+import {toast} from 'sonner';
 
 import { QuantitySelector } from './quantity-selector';
 import { useCartStore } from '@/store';
@@ -37,7 +37,7 @@ export const AddToCart = ({ product }: Props) => {
 
         setQuantity(1);
         setIsAddingProductToCart(false);
-        toast.success('¡Producto añadido al carrito!', {position: "bottom-right"});
+        toast.success('¡Producto añadido al carrito!');
     };
 
     return (

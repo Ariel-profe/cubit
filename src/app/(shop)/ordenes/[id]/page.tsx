@@ -21,11 +21,12 @@ export default async function OrderByIdPage({ params }: Props) {
   };
 
   const address = order!.OrderAddress;  
+  const orderNumber = id.split('-').at(-1) ?? '';
 
   return (
     <section className="flex justify-center items-center container mx-auto px-3 mt-10 lg:mt-20">
       <div className="flex flex-col w-full">
-        <Title title={`Orden #${id.split('-').at(-1)}`} />
+        <Title>{`Orden #${orderNumber}`}</Title>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:mt-5">
 
